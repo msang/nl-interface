@@ -25,19 +25,32 @@ To begin using the agent, follow these steps:
     git clone https://github.com/msang/nl-interface.git
     ```
 
-2. Install the necessary dependencies:
+2. Navigate to the project directory:
+
+    ```bash
+    cd nl-interface
+    ```
+
+3. Create and activate a virtual environment:
+
+    ```bash
+    python -m venv rasa
+    source rasa/bin/activate   
+    ```
+
+4. Install the necessary dependencies:
 
     ```bash
     pip install -r requirements.txt
     ```
 
-3. Train the RASA model with the training data already available in data/nlu.yml:
+5. Train the RASA model with the training data already available in data/nlu.yml:
 
     ```bash
     rasa train
     ```
 
-4. Start the RASA server and the SDK server (in a separate terminal) to interact with the agent:
+6. Start the RASA server and the SDK server (in a separate terminal) to interact with the agent:
 
     ```bash
     rasa run
