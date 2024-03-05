@@ -1,7 +1,8 @@
 
 ## Description
 
-This repository contains the source code and resources required to create and train a conversational agent using RASA, an open-source platform for chatbot and virtual assistant development.
+This repository contains the source code and resources required to create and train a conversational agent using RASA.
+
 
 ## Repository Structure
 
