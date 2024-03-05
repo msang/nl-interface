@@ -1,0 +1,98 @@
+version: "3.1"
+
+stories:
+
+- story: convo starter
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- story: convo ending
+  steps:
+    - intent: goodbye
+    - action: utter_goodbye_pos
+
+- story: happy path on optimization feedback w/o explanation
+  steps:
+  - intent: ask_optimization
+  - action: answer_optimization_request
+  - intent: deny
+  - action: utter_goodbye_pos
+
+- story: happy path on optimization feedback w/ explanation
+  steps:
+  - intent: ask_optimization
+  - action: answer_optimization_request
+  - intent: affirm
+  - action: answer_explanation_request
+
+- story: happy path on consumption monitoring
+  steps:
+    - intent: check_consumption
+    - action: answer_consumption_request
+
+- story: happy path on renewable monitoring
+  steps:
+    - intent: check_production
+    - action: answer_renewable_request
+
+
+#- story: happy path
+#  steps:
+#  - intent: greet
+#  - action: utter_greet
+#  - intent: monitor_appliance
+#  - action: answer_request
+#  - action: utter_did_that_help
+#  - intent: affirm
+#  - action: utter_happy
+#  - intent: deny
+#  - action: utter_goodbye_pos
+
+
+#- story: sad path on consumption
+#  steps:
+#  - intent: greet
+#  - action: utter_greet
+#  - intent: monitor_consumption
+#  - action: answer_request
+#  - action: utter_did_that_help
+#  - intent: deny
+#  - action: utter_goodbye_neg
+
+#- story: sad path consumption comparison
+#  steps:
+#  - intent: greet
+#  - action: utter_greet
+#  - intent: compare_consumption
+#  - action: utter_deny_request
+#  - action: utter_goodbye_neg
+
+#- story: happy path monitor consumption
+#  steps:
+#  - intent: monitor_consumption
+#  - action: answer_request
+#  - action: utter_did_that_help
+#  - intent: affirm
+#  - action: utter_happy
+
+
+
+- story: interactive_story_1
+  steps:
+  - intent: check_consumption
+  - action: answer_consumption_request
+  - intent: ask_optimization
+    entities:
+    - device: washing_machine
+  - slot_was_set:
+    - device_name: washing_machine
+  - action: answer_optimization_request
+  - intent: deny
+  - action: utter_goodbye_pos
+  - intent: ask_optimization
+  - action: answer_optimization_request
+  - intent: affirm
+  - action: answer_explanation_request
+  - intent: goodbye
+  - action: utter_goodbye_pos

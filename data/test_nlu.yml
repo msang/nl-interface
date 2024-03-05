@@ -1,0 +1,39 @@
+version: "3.1"
+nlu:
+- intent: check_consumption
+  examples: |
+    - mostra l'energia della mia casa
+    - vorrei sapere quanto stanno variando gli usi energetici
+    - qual è la situazione ora che la lavatrice è in funzione?
+    - quanto sto impiegando di energia autoprodotta?
+    - vorrei un resoconto sull'utilizzo dell'energia rinnovabile
+    - sto prendendo più dalla rete o dalla batteria?
+    - quant'è il mio autoconsumo al momento?
+    - monitora l'energia proveniente dalla rete
+    - dimmi se c'è un picco
+    - dimmi se sto usando i pannelli o la corrente
+- intent: check_production
+  examples: |
+     - aggiornami sulla produzione attuale
+     - quanto sto producendo?
+     - quanto sto immettendo in rete?
+     - sta andando meglio il solare o la batteria?
+     - dimmi dei pannelli e a quant'è la batteria
+     - quanto sta caricando la batteria?
+     - quanta autonomia ho?
+     - dimmi che livello di autonomia ho raggiunto al momento
+     - dimmi quanto ho ceduto oggi
+     - aggiornami sull'impianto
+- intent: ask_optimization
+  examples: |
+    - sai dirmi quando posso consumare meno?
+    - dimmi quando la lavatrice consuma meno
+    - ho bisogno delle informazioni sul livello dei consumi se uso l'asciugatrice
+    - come posso usare meglio i consumi?
+    - di quanto ridurre il consumo?
+    - informami sui momenti in cui la lavatrice richiede meno energia
+    - vorrei informazioni sulle fasce orarie di minor consumo con l'asciugatrice
+    - c'è un modo per migliorare l'uso del solare?
+    - è meglio usare il solare o la batteria?
+    - come posso sfruttare il surplus di energia?
+

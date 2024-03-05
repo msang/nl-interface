@@ -1,0 +1,41 @@
+version: ' 3.1'
+intents:
+- affirm
+- ask_optimization:
+    use_entities: true
+- check_consumption
+- check_production
+- deny
+- goodbye
+- greet
+- start
+entities:
+- device
+slots:
+  device_name:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: device
+responses:
+  utter_greet:
+  - text: Ciao, in cosa posso esserti utile?
+  utter_goodbye_pos:
+  - text: Va bene. Ciao, alla prossima
+  utter_greet_telegram:
+  - text: ciao, mi chiamo Energy Feedbot e posso aiutarti nella gestione dei tuoi consumi domestici
+actions:
+- answer_optimization_request
+- answer_consumption_request
+- answer_explanation_request
+- answer_renewable_request
+- utter_goodbye_pos
+- utter_greet
+- utter_greet_telegram
+- answer_request
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+config:
+  store_entities_as_slots: true

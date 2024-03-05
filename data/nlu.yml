@@ -1,0 +1,190 @@
+version: "3.1"
+nlu:
+- intent: start
+  examples: |
+    - /start
+- intent: greet
+  examples: |
+    - ciao
+    - buongiorno
+    - salve
+    - buonasera
+    - buondì
+    - oè
+    - uè
+    - ehi
+    - hei
+- intent: goodbye
+  examples: |
+    - a presto
+    - grazie, arrivederci
+    - grazie, ciao
+    - grazie, buona giornata
+    - grazie, buona serata
+    - grazie, alla prossima
+    - ti saluto
+    - buona serata
+    - arrivederci
+    - buona giornata
+    - alla prossima
+- intent: affirm
+  examples: |
+    - sì
+    - ok
+    - infatti
+    - esatto
+    - va bene
+    - certamente
+    - sì, grazie
+    - sì grazie
+    - va bene, ciao
+    - ok grazie
+- intent: deny
+  examples: |
+    - no
+    - no, grazie
+    - assolutamente no
+    - non proprio
+    - non esattamente
+    - non serve, grazie
+    - no, non serve
+    - non c'è bisogno
+    - veramente no
+    - insomma
+    - mica tanto
+    - non molto
+    - no grazie
+- intent: check_production
+  examples: |
+    - come stanno andando i pannelli?
+    - situazione batteria
+    - quanto stanno producendo i pannelli?
+    - quanto è carica la batteria?
+    - quanto sto immettendo in rete?
+    - quant'è il mio autoconsumo?
+    - hai informazioni sulla produzione attuale dei pannelli solari?
+    - mostra i dati di produzione dell'impianto fotovoltaico
+    - quanto sta generando l'impianto solare adesso?
+    - dammi i dettagli sulla generazione attuale dei pannelli
+    - voglio avere un resoconto della produzione energetica dei pannelli solari.
+    - quanto sta producendo l'impianto
+    - vorrei conoscere lo stato attuale dell'autosufficienza
+    - qual è la resa attuale dei pannelli?
+    - livello di carica della batteria al momento
+    - controlla lo stato della batteria
+    - mostrami l'energia solare disponibile
+    - vorrei delle informazioni sulla potenza generata dai pannelli
+    - stato corrente dell'energia rinnovabile
+    - verifica la percentuale di energia autoprodotta
+    - controlla l'utilizzo dell'energia solare
+    - situazione attuale dell'energia proveniente dai pannelli
+    - verifica la quantità di energia immessa nella rete
+    - quanta energia sto inviando alla rete?
+    - dimmi quanta energia sta generando l'impianto
+    - controllo della capacità della batteria
+    - voglio sapere qual è la prestazione dei pannelli solari
+    - la batteria è piena?
+    - sta caricando la batteria?
+    - c'è un surplus di energia?
+- intent: check_consumption
+  examples: |
+    - come stanno andando i consumi?
+    - mostra i consumi
+    - dammi i consumi
+    - quanto sto prendendo dai panneli?
+    - quanto energia sto prendendo dalla rete?
+    - quanti kW sto consumando?
+    - dammi i consumi dei pannelli
+    - qual è la situazione attuale dei consumi?
+    - verifica quanto stiamo utilizzando a casa
+    - fammi un report dei consumi energetici
+    - ho bisogno delle informazioni sui consumi 
+    - puoi darmi uno sguardo agli attuali livelli di consumo?
+    - vorrei conoscere i dati relativi al consumo di energia.
+    - dimmi come si comportano i consumi in questo momento.
+    - aggiornami sui consumi energetici
+    - quanta energia sto usando
+    - posso ottenere informazioni sull'energia nella mia abitazione?
+    - voglio sapere tutto sull'andamento dei consumi di casa
+    - dammi un'idea di come stanno andando i consumi oggi.
+    - ho bisogno delle statistiche attuali sui consumi.
+    - mi serve un quadro completo dei consumi
+    - Puoi mostrarmi i dettagli sui consumi degli ultimi giorni?
+    - dammi un rapporto dettagliato sull'utilizzo dell'energia.
+    - fammi vedere i numeri relativi all'andamento dei consumi
+    - Hai informazioni sull'energia presa dai pannelli solari?
+    - Fammi sapere i dettagli sulla generazione attuale dei pannelli.
+    - Voglio avere un resoconto della produzione energetica dei pannelli solari.
+    - voglio vedere i consumi
+    - desidero sapere come stanno variando gli usi energetici in casa mia
+    - vorrei avere un aggiornamento sull'energia di casa
+- intent: ask_optimization
+  examples: |
+    - vorrei capire se conviene avviare la [lavatrice]{"entity": "device", "value": "washing_machine"} adesso o più tardi
+    - qual è il momento migliore per avviare la [lavatrice]{"entity": "device", "value": "washing_machine"} considerando l'energia solare disponibile?
+    - ho intenzione di avviare la [lavatrice]{"entity": "device", "value": "washing_machine"} più tardi
+    - voglio far partire l'[acqua]{"entity": "device", "value": "boiler"} oggi, quando dovrei farlo?
+    - qual è il momento ideale per usare la [lavatrice]{"entity": "device", "value": "washing_machine"}?
+    - consigli su quando accendere la [lavatrice]{"entity": "device", "value": "washing_machine"}?
+    - mi serve la [lavatrice]{"entity": "device", "value": "washing_machine"}
+    - avvio la [lavatrice]{"entity": "device", "value": "washing_machine"} subito o aspetto?
+    - sto cercando di pianificare l'uso della [lavatrice]{"entity": "device", "value": "washing_machine"}, quando dovrei farlo?
+    - quando sarebbe più efficiente avviare la [lavatrice]{"entity": "device", "value": "washing_machine"}?
+    - posso accendere la [lavatrice]{"entity": "device", "value": "washing_machine"} ora o meglio aspettare?
+    - meglio avviare la [lavastoviglie]{"entity": "device", "value": "dishwasher"} di notte o durante il giorno?
+    - qual è il momento più adatto per far funzionare l'[asciugatrice]{"entity": "device", "value": "dryer"}?
+    - devo fare il [bucato]{"entity": "device", "value": "washing_machine"}, quando mi conveniene?
+    - quando dovrei avviare la [lavatrice]{"entity": "device", "value": "washing_machine"}?
+    - meglio avviare la [lavatrice]{"entity": "device", "value": "washing_machine"} adesso o più tardi?
+    - mi serve l'[acqua calda]{"entity": "device", "value": "boiler"}, quando farla partire?
+    - voglio ottimizzare l'uso dell'[asciugatrice]{"entity": "device", "value": "dryer"}, cosa suggerisci?
+    - quando è il momento migliore per fare una [lavatrice]{"entity": "device", "value": "washing_machine"}?
+    - cosa mi consigli per massimizzare l'efficienza del [riscaldamento]{"entity": "device", "value": "heat_pump"}?
+    - quando è meglio avviare la [lavatrice]{"entity": "device", "value": "washing_machine"}?
+    - voglio ottimizzare l'uso dell'[acqua calda]{"entity": "device", "value": "boiler"}
+    - a che ora programmo la [lavastoviglie]{"entity": "device", "value": "dishwasher"}?
+    - dimmi quando posso usare l'[asciugatrice]{"entity": "device", "value": "dryer"}
+    - quando mi conviene aumentare l'[acqua]{"entity": "device", "value": "boiler"} al massimo?
+    - quando è consigliabile far partire il [riscaldamento]{"entity": "device", "value": "heat_pump"} oggi?
+    - quale elettrodomestico posso utilizzare in serata per massimizzare l'uso di energia solare dai pannelli fotovoltaici
+    - dimmi se posso utilizzare l'[asciugatrice]{"entity": "device", "value": "dryer"} nei prossimi giorni 
+    - come è meglio impostare il [termostato]{"entity": "device", "value": "heat_pump"}?
+    - voglio che l'[acqua calda]{"entity": "device", "value": "boiler"} sia sempre disponibile
+    - gestisci [riscaldamento]{"entity": "device", "value": "heat_pump"} in base alla produzione solare
+    - regola il funzionamento dell'[asciugatrice]{"entity": "device", "value": "dryer"} in base ai consumi energetici
+    - ottimizza il [riscaldamento]{"entity": "device", "value": "heat_pump"} in base alle previsioni meteo
+    - regola il [condizionatore]{"entity": "device", "value": "heat_pump"} in base alla temperatura esterna
+    - voglio regolare il funzionamento delle [pompe di calore]{"entity": "device", "value": "heat_pump"}
+    - come risparmiare tenendo il [climatizzatore]{"entity": "device", "value": "heat_pump"} sempre acceso?
+    - mi serve l'[aria condizionata]{"entity": "device", "value": "heat_pump"} accesa
+    - mi serve la [lavatrice]{"entity": "device", "value": "washing_machine"} dopo pranzo
+    - e se voglio farla domani?
+    - quando posso sfruttare il sole?
+- synonym: washing_machine
+  examples: |
+    - lavatrice
+    - bucato
+    - lavatrici
+- synonym: boiler
+  examples: |
+    - acqua
+    - acqua calda
+    - ACS
+    - antilegionella
+- synonym: dishwasher
+  examples: |
+    - lavastoviglie
+- synonym: dryer
+  examples: |
+    - asciugatrice
+- synonym: heat_pump
+  examples: |
+    - riscaldamento
+    - termostato
+    - condizionatore
+    - pompe di calore
+    - climatizzatore
+    - aria condizionata
+- synonym: ask_optimization
+  examples: |
+    - in modo ottimale
