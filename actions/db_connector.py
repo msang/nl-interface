@@ -38,17 +38,14 @@ def save_chat_hist(cursor):
 
     try:
         # Connect to an existing database
-        connection = psycopg2.connect(user="postgres",
-                                    password="psql_pwd",
-                                    host="localhost",
-                                    port="5432",
-                                    database="rasa")
+        connection = psycopg2.connect(user="...", #postgres username
+                                    password="...", #
+                                    host="...",
+                                    port="...",
+                                    database="...")
 
         cursor = connection.cursor()
         save_chat_hist(cursor)
-        #cursor.execute("ALTER TABLE rasa_chat_history ADD COLUMN IF NOT EXISTS input_channel INTEGER;")
-        #cursor.execute("ALTER TABLE rasa_chat_history ALTER COLUMN event TYPE VARCHAR(50)")
-        #connection.commit()
 
 
     except (Exception, Error) as error:
