@@ -1,6 +1,4 @@
-Here is a possible content for a README.md file to include within a GitHub repository containing a conversational agent built with RASA:
 
-```markdown
 # RASA Chatbot
 
 Welcome to the repository of our conversational agent built with RASA!
