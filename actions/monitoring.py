@@ -1,18 +1,21 @@
-import json, requests 
+import json, os, requests 
 import pandas as pd
 from collections import defaultdict as ddict
 from datetime import datetime
 from solaredge_interface.api.SolarEdgeAPI import SolarEdgeAPI
 from typing import Text
+from dotenv import find_dotenv, load_dotenv
 
-SE_APIKEY = "MDYHBO9KZV0RQ4OS1DWE6YGS4HS9ELPH"
+
 
 class EnergyMonitoring():
     
      def _init_(self) -> None:
         pass
         
-     def get_consumption_data(self) -> Text:          
+     def get_consumption_data(self) -> Text:   
+        load_dotenv(find_dotenv())
+        SE_APIKEY = os.environ.get("SOLAREDGE_KEY")       
         api = SolarEdgeAPI(api_key=SE_APIKEY, datetime_response=True, pandas_response=True)
         SITEID = api.get_sites().pandas['sites.site.id'][0]
         data = api.get_site_current_power_flow(SITEID).data
