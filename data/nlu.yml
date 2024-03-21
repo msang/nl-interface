@@ -63,10 +63,10 @@ nlu:
     - quanto sto immettendo in rete?
     - quant'è il mio autoconsumo?
     - hai informazioni sulla produzione attuale dei pannelli solari?
-    - mostra i dati di produzione dell'impianto fotovoltaico
+    - mostra i dati di produzione dell'impianto
     - quanto sta generando l'impianto solare adesso?
     - dammi i dettagli sulla generazione attuale dei pannelli
-    - voglio avere un resoconto della produzione energetica dei pannelli solari.
+    - voglio avere un resoconto della produzione energetica dei pannelli solari
     - quanto sta producendo l'impianto
     - vorrei conoscere lo stato attuale dell'autosufficienza
     - qual è la resa attuale dei pannelli?
@@ -92,7 +92,7 @@ nlu:
     - mostra i consumi
     - dammi i consumi
     - quanto sto prendendo dai panneli?
-    - quanto energia sto prendendo dalla rete?
+    - quanta energia sto prendendo dalla rete?
     - quanti kW sto consumando?
     - dammi i consumi dei pannelli
     - qual è la situazione attuale dei consumi?
@@ -158,8 +158,19 @@ nlu:
     - come risparmiare tenendo il [climatizzatore]{"entity": "device", "value": "heat_pump"} sempre acceso?
     - mi serve l'[aria condizionata]{"entity": "device", "value": "heat_pump"} accesa
     - mi serve la [lavatrice]{"entity": "device", "value": "washing_machine"} dopo pranzo
-    - e se voglio farla domani?
     - quando posso sfruttare il sole?
+    - necessito dell'[acqua calda]{"entity": "device", "value": "boiler"} tutte le mattine alle 8
+    - voglio che la temperatura del [condizionatore]{"entity": "device", "value": "heat_pump"} sia sempre di 24 gradi
+    - dimmi quali elettrodomestici posso utilizzare per massimizzare l'uso dell'energia dai pannelli solari
+    - imposta aria fresca a 26 gradi 
+    - solo per domani acqua calda alle 18
+    - abbassa la temperatura del termostato di 2° dopo le 10 di sera
+    - imposta l'acqua a 55°
+    - abbassa l'acqua al minimo
+    - aumenta l'acqua al massimo se ho la batteria carica
+    - aumenta la temperatura dell'acqua in previsione dell'anti legionella
+    - aria a 26 gradi
+
 - synonym: washing_machine
   examples: |
     - lavatrice
