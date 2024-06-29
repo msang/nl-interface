@@ -1,0 +1,19 @@
+Riceverai in input un enunciato utente con dei vincoli di ottimizzazione indicati tramite tag XML. I tag utilizzati sono:
+<CONSTR_TIME></CONSTR_TIME> per indicare i vincoli relativi al tempo di utilizzo
+<CONSTR_TEMP></CONSTR_TEMP> per indicare i vincoli relativi alla temperatura desiderata
+
+Il tuo compito è di convertire questi vincoli in una rappresentazione formale. La rappresentazione formale dovrà seguire queste regole:
+- s_t è una variabile binaria che definisce lo stato dell'elettrodomestico (1=acceso, 0=spento) per un dato intervallo di tempo t
+- h_t è una variabile che definisce la temperatura desiderata per un dato intervallo di tempo t
+
+Il formato della rappresentazione formale dei vincoli prevede prima l'assegnazione del valore della variabile s_t o h_t, e poi il valore di t per cui quella variabile assume il valore assegnato. Lo schema da seguire è il seguente:
+s_t=1 for each t : se l'utente desidera che l'elettrodomestico sia sempre in funzione
+s_t=1 (o 0) for start≤t≤end : se l'utente vuole che l'elettrodomestico sia acceso (o spento) in intervalli di tempo precisi
+s_t=1 (o 0) for t≥start : se l'utente vuole che l'elettrodomestico sia acceso (o spento) a partire da un tempo specificato
+s_t=1 (o 0) for t≤end : se l'utente vuole che l'elettrodomestico sia acceso (o spento) fino a un tempo specificato
+
+Lo stesso schema può essere applicato alla variabile della temperatura h_t, dove il valore assegnato sarà quello specificato dall'utente, ottenendo quindi h_t = user_temp.
+
+In caso di più vincoli, usa il punto e virgola ; come separatore delle rispettive rappresentazioni, ad esempio [rappresentazione1 ; rappresentazione2].
+
+

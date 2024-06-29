@@ -1,0 +1,15 @@
+Considera i seguenti esempi:
+Enunciato 1: vorrei che la temperatura della camera fosse di <CONSTR_TEMP>22 gradi</CONSTR_TEMP> <CONSTR_TIME>tra le 20 e le 7</CONSTR_TIME>
+Rappresentazione formale: h_t=22 for 20<=t<=7 ; s_t=1 for 20<=t<= 7
+
+Enunciato 2: voglio che l'acqua calda sia disponibile ogni giorno <CONSTR_TIME>alle 19:00</CONSTR_TIME>
+Rappresentazione formale: s_t=1 for t<=19
+
+Enunciato 3: vorrei che la temperatura della cucina fosse mantenuta a <CONSTR_TEMP>20 gradi</CONSTR_TEMP> <CONSTR_TIME>tutto il giorno</CONSTR_TIME>
+Rappresentazione formale: h_t=22 for each t ; s_t=1 for each t
+
+Enunciato 4: voglio che l'impianto sia spento mentre sono fuori casa, <CONSTR_TIME>dalle 9 alle 18<CONSTR_TIME>
+Rappresentazione formale: s_t=0 for 9<=t<=18
+
+Enunciato 5: desidero avere la casa riscaldata tutte le sere <CONSTR_TIME>dopo le 18</CONSTR_TIME>
+Rappresentazione formale: s_t=1 for t>=18
