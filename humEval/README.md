@@ -1,6 +1,6 @@
 This repository contains the evaluation dataset and related material used in the experiments conducted to assess the performance of several Italian language models in generating energy feedback. 
  
-# Contents
+# Content
 ## 1. Evaluation Dataset
 The evaluation dataset is provided in the Excel file and contains the models' responses and the corresponding evaluations, organized into separate spreadsheets for each model. 
 Each spreadsheet includes:
