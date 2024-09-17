@@ -1,16 +1,16 @@
 version: "3.1"
 
 stories:
+#Implementate come rules
+# - story: convo starter
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
 
-- story: convo starter
-  steps:
-  - intent: greet
-  - action: utter_greet
-
-- story: convo ending
-  steps:
-    - intent: goodbye
-    - action: utter_goodbye_pos
+# - story: convo ending
+#   steps:
+#     - intent: goodbye
+#     - action: utter_goodbye_pos
 
 - story: happy path on optimization feedback w/o explanation
   steps:
@@ -50,7 +50,7 @@ stories:
 #  - action: utter_goodbye_pos
 
 
-#- story: sad path on consumption
+#- story: unhappy path on consumption
 #  steps:
 #  - intent: greet
 #  - action: utter_greet
@@ -60,7 +60,7 @@ stories:
 #  - intent: deny
 #  - action: utter_goodbye_neg
 
-#- story: sad path consumption comparison
+#- story: unhappy path consumption comparison
 #  steps:
 #  - intent: greet
 #  - action: utter_greet

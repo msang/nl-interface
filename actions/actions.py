@@ -56,9 +56,8 @@ class AnswerRenewableRequest(Action):
              domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
          
           data = EnergyMonitoring()
-          load, grid_import, from_pv, storage_pow = data.get_renwable_data()
-          text = f"Al momento stai consumando {load} kW, di cui {grid_import} dalla rete, {from_pv} dal fotovoltaico  \
-                         e {storage_pow} dalla batteria."
+          pv, storage_lev, storage_status = data.get_renwable_data()
+          text = f"Al momento i pannelli solari stanno producendo {pv} kW"
 
           dispatcher.utter_message(text=text)
 
@@ -117,7 +116,7 @@ class AnswerExplanationRequest(Action):
              tracker: Tracker,
              domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 #
-         dispatcher.utter_message(text="[TEMPLATE DA COMPETARE]")
+         dispatcher.utter_message(text="[TEMPLATE DA COMPLETARE]")
 
          return []
 

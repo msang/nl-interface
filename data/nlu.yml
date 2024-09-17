@@ -3,6 +3,7 @@ nlu:
 - intent: start
   examples: |
     - /start
+
 - intent: greet
   examples: |
     - ciao
@@ -14,6 +15,7 @@ nlu:
     - uè
     - ehi
     - hei
+
 - intent: goodbye
   examples: |
     - a presto
@@ -27,6 +29,7 @@ nlu:
     - arrivederci
     - buona giornata
     - alla prossima
+
 - intent: affirm
   examples: |
     - sì
@@ -39,6 +42,7 @@ nlu:
     - sì grazie
     - va bene, ciao
     - ok grazie
+
 - intent: deny
   examples: |
     - no
@@ -54,6 +58,7 @@ nlu:
     - mica tanto
     - non molto
     - no grazie
+
 - intent: check_production
   examples: |
     - come stanno andando i [pannelli]{"entity":"source","value":"pv"}?
@@ -70,8 +75,8 @@ nlu:
     - quanto sta producendo l'[impianto]{"entity":"source","value":"pv"}
     - vorrei conoscere lo stato attuale dell'autosufficienza
     - qual è la resa attuale dei [pannelli]{"entity":"source","value":"pv"}?
-    - livello di carica della batteria al momento
-    - controlla lo stato della batteria
+    - livello di carica della [batteria](source) al momento
+    - controlla lo stato della [batteria](source)
     - mostrami l'[energia solare]{"entity":"source","value":"pv"} disponibile
     - vorrei delle informazioni sulla potenza generata dai [pannelli]{"entity":"source","value":"pv"}
     - stato corrente dell'energia rinnovabile
@@ -80,12 +85,13 @@ nlu:
     - verifica la quantità di energia immessa nella rete
     - quanta energia sto inviando alla rete?
     - dimmi quanta energia sta generando l'impianto
-    - controllo della capacità della batteria
+    - controllo della capacità della [batteria](source)
     - voglio sapere qual è la prestazione dei [pannelli solari]{"entity":"source","value":"pv"}
     - la [batteria]{"entity":"source","value":"bess"} è piena?
     - sta caricando la [batteria]{"entity":"source","value":"bess"}?
     - c'è un surplus di energia?
     - [batteria]{"entity":"source","value":"bess"} disponibile
+
 - intent: check_consumption
   examples: |
     - controlla l'utilizzo dell'[energia solare]{"entity":"source","value":"pv"}
@@ -116,9 +122,11 @@ nlu:
     - Hai informazioni sull'energia presa dai [pannelli solari]{"entity":"source","value":"pv"}?
     - desidero sapere come stanno variando gli usi energetici in casa mia
     - vorrei avere un aggiornamento sull'energia di casa
+
 - intent: ask_optimization
   examples: |
     - vorrei capire se avviare la [lavatrice]{"entity": "device", "value": "washing_machine"} adesso o più tardi
+    - meglio avviare la [lavatrice]{"entity": "device", "value": "washing_machine"} adesso o più tardi?
     - qual è il momento migliore per avviare la [lavatrice]{"entity": "device", "value": "washing_machine"} considerando l'energia solare disponibile?
     - ho intenzione di avviare la [lavatrice]{"entity": "device", "value": "washing_machine"} più tardi
     - voglio far partire l'[acqua]{"entity": "device", "value": "boiler"} oggi, quando dovrei farlo?
@@ -133,7 +141,6 @@ nlu:
     - qual è il momento più adatto per far funzionare l'[asciugatrice]{"entity": "device", "value": "dryer"}?
     - devo fare il [bucato]{"entity": "device", "value": "washing_machine"}, quando mi conveniene?
     - quando dovrei avviare la [lavatrice]{"entity": "device", "value": "washing_machine"}?
-    - meglio avviare la [lavatrice]{"entity": "device", "value": "washing_machine"} adesso o più tardi?
     - mi serve l'[acqua calda]{"entity": "device", "value": "boiler"}, quando farla partire?
     - cosa suggerisci per ottimizzare l'uso dell'[asciugatrice]{"entity": "device", "value": "dryer"}?
     - quando è il momento migliore per fare una [lavatrice]{"entity": "device", "value": "washing_machine"}?
@@ -147,44 +154,57 @@ nlu:
     - quale elettrodomestico posso utilizzare in serata per massimizzare l'uso di energia solare dai pannelli fotovoltaici
     - dimmi se posso utilizzare l'[asciugatrice]{"entity": "device", "value": "dryer"} nei prossimi giorni 
     - come è meglio impostare il [termostato]{"entity": "device", "value": "heat_pump"}?
-    - voglio che l'[acqua calda]{"entity": "device", "value": "boiler"} sia [sempre]{"entity":"constraint","value":"time"} disponibile
+    - voglio che l'[acqua calda]{"entity": "device", "value": "boiler"} sia sempre disponibile
     - gestisci [riscaldamento]{"entity": "device", "value": "heat_pump"} in base alla produzione solare
     - regola il funzionamento dell'[asciugatrice]{"entity": "device", "value": "dryer"} 
     - ottimizza il [riscaldamento]{"entity": "device", "value": "heat_pump"}
-    - regola il [condizionatore]{"entity": "device", "value": "heat_pump"} in base alla temperatura esterna
     - voglio regolare il funzionamento delle [pompe di calore]{"entity": "device", "value": "heat_pump"}
-    - come risparmiare tenendo il [climatizzatore]{"entity": "device", "value": "heat_pump"} [sempre]{"entity":"constraint","value":"time"} acceso?
-    - mi serve l'[aria condizionata]{"entity": "device", "value": "heat_pump"} accesa
-    - mi serve la [lavatrice]{"entity": "device", "value": "washing_machine"} [dopo pranzo]{"entity":"constraint","value":"time"}
+    - come risparmiare tenendo il [climatizzatore]{"entity": "device", "value": "heat_pump"} sempre acceso?
     - quando posso sfruttare il sole?
-    - necessito dell'[acqua calda]{"entity": "device", "value": "boiler"} [alle 8 di domani]{"entity":"constraint","value":"time"}
-    - voglio che la temperatura del [condizionatore]{"entity": "device", "value": "heat_pump"} sia [sempre]{"entity":"constraint","value":"time"} di [24 gradi]{"entity":"constraint","value":"temp"}
     - dimmi quali elettrodomestici posso utilizzare per massimizzare l'uso dei [pannelli solari]{"entity":"source","value":"pv"}
-    - imposta [aria fresca]{"entity": "device", "value": "heat_pump"}  a [26 gradi]{"entity":"constraint","value":"temp"} 
-    - solo per [domani]{"entity":"constraint","value":"time"} [acqua calda]{"entity": "device", "value": "boiler"} [alle 18]{"entity":"constraint","value":"time"}
-    - imposta l'[acqua]{"entity": "device", "value": "boiler"} [55°]{"entity":"constraint","value":"temp"}
-    - abbassa l'[acqua]{"entity": "device", "value": "boiler"} al [minimo]{"entity":"constraint","value":"temp"}
-    - aumenta l'[acqua]{"entity": "device", "value": "boiler"} al [massimo]{"entity":"constraint","value":"temp"} se ho la batteria carica
-    - aumenta la temperatura dell'[acqua]{"entity": "device", "value": "boiler"} in previsione dell'anti legionella
-    - aria a [26 gradi]{"entity":"constraint","value":"temp"}
+    - posso far partire la [lavatrice]("entity": "device", "value": "dishwasher") alle 7 di domani?
+  
+    
+#Opzioni in cui è possibile che implicitamente voglia sapere se quello che sta dicendo è ottimale 
+
+#mi serve l'[aria condizionata]{"entity": "device", "value": "heat_pump"} accesa
+#mi serve la [lavatrice]{"entity": "device", "value": "washing_machine"} [dopo pranzo]{"entity":"constraint","value":"time"}
+#voglio che la temperatura del [condizionatore]{"entity": "device", "value": "heat_pump"} sia [sempre]{"entity":"constraint","value":"time"} di [24 gradi]{"entity":"constraint","value":"temp"}
+#solo per [domani]{"entity":"constraint","value":"time"} [acqua calda]{"entity": "device", "value": "boiler"} [alle 18]{"entity":"constraint","value":"time"}
+#necessito dell'[acqua calda]{"entity": "device", "value": "boiler"} [alle 8 di domani]{"entity":"constraint","value":"time"}
+
+
+#Opzioni in cui bisogna informarlo che non può farlo lui e nel caso dirgli cosa conviene fare
+
+#regola il [condizionatore]{"entity": "device", "value": "heat_pump"} in base alla temperatura esterna
+#imposta [aria fresca]{"entity": "device", "value": "heat_pump"}  a [26 gradi]{"entity":"constraint","value":"temp"} 
+#imposta l'[acqua]{"entity": "device", "value": "boiler"} a [55°]{"entity":"constraint","value":"temp"}
+#abbassa l'[acqua]{"entity": "device", "value": "boiler"} al [minimo]{"entity":"constraint","value":"temp"}
+#aumenta l'[acqua]{"entity": "device", "value": "boiler"} al [massimo]{"entity":"constraint","value":"temp"} se ho la batteria carica
+#aumenta la temperatura dell'[acqua]{"entity": "device", "value": "boiler"} in previsione dell'anti legionella
+#aria a [26 gradi]{"entity":"constraint","value":"temp"}
 
 - synonym: washing_machine
   examples: |
     - lavatrice
     - bucato
     - lavatrici
+
 - synonym: boiler
   examples: |
     - acqua
     - acqua calda
     - ACS
     - antilegionella
+
 - synonym: dishwasher
   examples: |
     - lavastoviglie
+  
 - synonym: dryer
   examples: |
     - asciugatrice
+
 - synonym: heat_pump
   examples: |
     - riscaldamento
@@ -193,6 +213,7 @@ nlu:
     - pompe di calore
     - climatizzatore
     - aria condizionata
+
 - synonym: ask_optimization
   examples: |
     - in modo ottimale

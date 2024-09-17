@@ -31,13 +31,13 @@ nlu:
     - ho bisogno delle informazioni sul livello dei consumi se uso l'[asciugatrice]{"entity": "device", "value": "dryer"}
     - come posso usare meglio i consumi?
     - di quanto ridurre il consumo?
-    - torno a casa [stasera]{"entity":"constraint","value":"time"} e voglio la [casa calda]{"entity": "device", "value": "heat_pump"}
+    - torno a casa stasera e voglio la [casa calda]{"entity": "device", "value": "heat_pump"}
     - fasce orarie di minor consumo con l'[asciugatrice]{"entity": "device", "value": "dryer"}
-    - devo fare la [doccia]{"entity": "device", "value": "boiler"} [domani mattina]{"entity":"constraint","value":"time"}
+    - devo fare la [doccia]{"entity": "device", "value": "boiler"} domani mattina
     - è meglio usare il [solare]{"entity":"source","value":"pv"} o la [batteria]{"entity":"source","value":"bess"}?
     - come posso sfruttare il surplus di energia?
-    - fai in modo che l'[acqua calda]{"entity": "device", "value": "boiler"} sia disponibile per un'ora [ogni mattina]{"entity":"constraint","value":"time"} [alle 7]{"entity":"constraint","value":"time"}
-    - mi serve l'[acqua]{"entity": "device", "value": "boiler"} a [45°]{"entity":"constraint","value":"temp"} nel [weekend]{"entity":"constraint","value":"time"}
-    - [tutti i giorni]{"entity":"constraint","value":"time"} ho una [lavatrice]{"entity": "device", "value": "washing_machine"} da fare
-    - mi serve l'[acqua calda]{"entity": "device", "value": "boiler"} per [tutto il fine settimana]{"entity":"constraint","value":"time"}
+    - fai in modo che l'[acqua calda]{"entity": "device", "value": "boiler"} sia disponibile per un'ora ogni mattina alle 7
+    - mi serve l'[acqua]{"entity": "device", "value": "boiler"} a 45° nel weekend
+    - tutti i giorni ho una [lavatrice]{"entity": "device", "value": "washing_machine"} da fare
+    - mi serve l'[acqua calda]{"entity": "device", "value": "boiler"} per tutto il fine settimana
 

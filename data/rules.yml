@@ -8,10 +8,21 @@ rules:
   - intent: start
   - action: utter_greet_telegram
 
-#- rule: Say goodbye anytime the user says goodbye
-#  steps:
-#  - intent: goodbye
-#  - action: utter_goodbye
+- rule: Greeting rule
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- rule: Goodbye rule
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye_pos
+
+- rule: Fallback handler - Ask the user to repeat or change in a covered topic
+  steps:
+  - intent: nlu_fallback
+  - action: utter_fallback
+  
 
 #- rule: Say 'I am a bot' anytime the user challenges
 #  steps:

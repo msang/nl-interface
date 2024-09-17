@@ -1,23 +1,54 @@
 version: ' 3.1'
 intents:
-- affirm
 - ask_optimization:
     use_entities: true
 - check_consumption
 - check_production
+- affirm
 - deny
 - goodbye
 - greet
 - start
+- nlu_fallback
 entities:
+- source
 - device
+#- costraint
+#duckling
+- temperature
+- time
+- numeral
 slots:
+  source_name:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: source
+
   device_name:
     type: text
     influence_conversation: true
     mappings:
     - type: from_entity
       entity: device
+  time:
+    type: any
+    mappings:
+    - type: from_entity
+      entity: time
+  temperature:
+    type: any
+    mappings:
+    - type: from_entity
+      entity: temperature
+  numeral:
+    type: any
+    mappings:
+    - type: from_entity
+      entity: numeral
+      
+  
 responses:
   utter_greet:
   - text: Ciao, in cosa posso esserti utile?
@@ -25,6 +56,8 @@ responses:
   - text: Va bene. Ciao, alla prossima
   utter_greet_telegram:
   - text: ciao, mi chiamo Energy Feedbot e posso aiutarti nella gestione dei tuoi consumi domestici
+  utter_fallback:
+  - text: Mi dispiace, non ho capito la tua richiesta. Puoi riformularla o chiedermi informazioni sui consumi, produzione o ottimizzazione energetica?
 actions:
 - answer_optimization_request
 - answer_consumption_request
