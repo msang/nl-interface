@@ -32,7 +32,7 @@ slots:
     mappings:
     - type: from_entity
       entity: device
-  time:
+  start_time:
     type: any
     mappings:
     - type: from_entity
