@@ -88,34 +88,36 @@ nlu:
     - [batteria]{"entity":"source","value":"bess"} disponibile
 - intent: check_consumption
   examples: |
-    - controlla l'utilizzo dell'[energia solare]{"entity":"source","value":"pv"}
-    - come stanno andando i consumi?
-    - mostra i consumi
-    - dammi i consumi
-    - quanto sto prendendo dai [pannelli]{"entity":"source","value":"pv"}?
-    - quanta energia sto prendendo dalla rete?
-    - quanti kW sto consumando?
-    - dammi i consumi dei [pannelli]{"entity":"source","value":"pv"}
-    - qual è la situazione attuale dei consumi?
-    - verifica quanto stiamo utilizzando a casa
-    - fammi un report dei consumi energetici
-    - ho bisogno delle informazioni sui consumi 
-    - puoi darmi uno sguardo agli attuali livelli di consumo?
-    - vorrei conoscere i dati relativi al consumo di energia.
-    - dimmi come si comportano i consumi in questo momento.
-    - aggiornami sui consumi energetici
-    - quanta energia sto usando
-    - posso ottenere informazioni sull'energia nella mia abitazione?
-    - voglio sapere tutto sull'andamento dei consumi di casa
-    - dammi un'idea di come stanno andando i consumi oggi.
-    - ho bisogno delle statistiche attuali sui consumi.
-    - mi serve un quadro completo dei consumi
-    - Puoi mostrarmi i dettagli sui consumi degli ultimi giorni?
-    - dammi un rapporto dettagliato sull'utilizzo dell'energia.
-    - fammi vedere i numeri relativi all'andamento dei consumi
-    - Hai informazioni sull'energia presa dai [pannelli solari]{"entity":"source","value":"pv"}?
-    - desidero sapere come stanno variando gli usi energetici in casa mia
-    - vorrei avere un aggiornamento sull'energia di casa
+   - come stanno andando i consumi?
+   - mostra i consumi
+   - dammi i consumi
+   - quanto sto prendendo dai [pannelli]{"entity":"source","value":"pv"}?
+   - quanta energia sto prendendo dalla rete?
+   - quanti kW sto consumando?
+   - dammi i consumi dei [pannelli]{"entity":"source","value":"pv"}
+   -  è la situazione attuale dei consumi?
+   - verifica quanto stiamo utilizzando a casa
+   - fammi un report dei consumi energetici
+   - ho bisogno delle informazioni sui consumi
+   - puoi darmi uno sguardo agli attuali livelli di consumo?
+   - vorrei conoscere i dati relativi al consumo di energia
+   - dimmi come si comportano i consumi in questo momento
+   - aggiornami sui consumi energetici
+   - quanta energia sto usando?
+   - posso ottenere informazioni sull'energia nella mia abitazione?
+   - voglio sapere tutto sull'andamento dei consumi di casa
+   - dammi un'idea di come stanno andando i consumi oggi
+   - ho bisogno delle statistiche attuali sui consumi 
+   - mi serve un quadro completo dei consumi 
+   - Puoi mostrarmi i dettagli sui consumi degli ultimi giorni?
+   - dammi un rapporto dettagliato sull'utilizzo dell'energia
+   - fammi vedere i numeri relativi all'andamento dei consumi
+   - Hai informazioni sull'energia presa dai [pannelli solari]{"entity":"source","value":"pv"}?
+   - Fammi sapere i dettagli sulla generazione attuale dei [pannelli]{"entity":"source","value":"pv"}
+   - Voglio avere un resoconto della produzione energetica dei [pannelli solari]{"entity":"source","value":"pv"}
+   - voglio vedere i consumi
+   - desidero sapere come stanno variando gli usi energetici in casa mia
+   - vorrei avere un aggiornamento sull'energia di casa
 - intent: ask_optimization
   examples: |
    - vorrei capire se conviene avviare la [lavatrice]{"entity":"appliance","value":"washing_machine"} adesso o più tardi

@@ -2,7 +2,6 @@ version: "3.1"
 nlu:
 - intent: check_consumption
   examples: |
-    - mostra l'energia della mia casa
     - vorrei sapere quanto stanno variando gli usi energetici
     - qual è la situazione ora che la lavatrice è in funzione?
     - quanto sto impiegando di [energia autoprodotta]{"entity":"source","value":"pv"}?
@@ -14,16 +13,17 @@ nlu:
     - dimmi se sto usando i [pannelli]{"entity":"source","value":"pv"} o la corrente
 - intent: check_production
   examples: |
-     - aggiornami sulla produzione attuale
-     - quanto sto producendo?
-     - quanto sto immettendo in rete?
-     - sta andando meglio il [solare]{"entity":"source","value":"pv"} o la [batteria]{"entity":"source","value":"bess"}?
-     - dimmi dei [pannelli]{"entity":"source","value":"pv"} e a quant'è la [batteria]{"entity":"source","value":"bess"}
-     - quanto sta caricando la [batteria]{"entity":"source","value":"bess"}?
-     - quanta [autonomia]{"entity":"source","value":"bess"} ho?
-     - dimmi che livello di [autonomia]{"entity":"source","value":"bess"} ho raggiunto al momento
-     - dimmi quanto ho ceduto oggi
-     - aggiornami sull'[impianto]{"entity":"source","value":"pv"}
+    - mostra l'energia della mia casa
+    - aggiornami sulla [produzione]{"entity":"source","value":"pv"} attuale
+    - quanto sto [producendo]{"entity":"source","value":"pv"}?
+    - quanto sto [immettendo]{"entity":"source","value":"pv"} in rete?
+    - sta andando meglio il [solare]{"entity":"source","value":"pv"} o la [batteria]{"entity":"source","value":"bess"}?
+    - dimmi dei [pannelli]{"entity":"source","value":"pv"}  e a quant'è la [batteria]{"entity":"source","value":"bess"}
+    - quanto sta caricando la [batteria]{"entity":"source","value":"bess"}?
+    - quanta [autonomia]{"entity":"source","value":"bess"} ho?
+    - dimmi che livello di [autonomia]{"entity":"source","value":"bess"} ho raggiunto al momento
+    - dimmi quanto ho [ceduto]{"entity":"source","value":"pv"} oggi
+    - aggiornami sull'[impianto]{"entity":"source","value":"pv"}
 - intent: ask_optimization
   examples: |
     - sai dirmi quando posso consumare meno?
