@@ -16,9 +16,11 @@ class EnergyMonitoring():
         self.grid = self.data["GRID"]["currentPower"]
         self.pv = self.data["PV"]["currentPower"]
         self.load = self.data["LOAD"]["currentPower"]
-        self.storage_status = self.data["STORAGE"]["status"]
-        self.storage_pow =  self.data["STORAGE"]["currentPower"]
-        self.storage_lev = self.data["STORAGE"]["chargeLevel"]
+        self.storage_status = self.data["STORAGE"]["status"] # Active, Idle o Disabled. 
+        self.storage_pow =  self.data["STORAGE"]["currentPower"] # corrente(positiva) in entrata o in uscita
+        self.storage_lev = self.data["STORAGE"]["chargeLevel"]# percentuale di carica
+
+        self.connections = self.data["connections"]#Da controllare la corretta acquisizione, in teoria serve per la direzione della batteria
         
      def get_consumption_data(self) -> Text:       
 
@@ -26,9 +28,12 @@ class EnergyMonitoring():
 
         return self.load, self.grid, from_pv, self.storage_pow
      
-     def get_renewable_data(self) -> Text:          
+     def get_renewable_data(self) -> Text: 
+                  
+         storage_on_charge = any(flow['from'] == "PV" and flow['to'] == "STORAGE" for flow in self.connections)
+         #surplus = any(flow['from'] == "PV" and flow['to'] == "GRID" for flow in self.connections) ##controlla se viene spedita alla rete dai fotovoltaici
 
-        return self.pv, self.storage_lev, self.storage_status
+         return self.pv, self.storage_lev, self.storage_status, self.storage_pow, storage_on_charge
      
 
 if __name__ == "__main__":

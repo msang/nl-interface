@@ -11,9 +11,73 @@ from rasa_sdk.events import SlotSet
 import json
 from actions.monitoring import EnergyMonitoring
 from actions.optimization import Appliance, Optimizer, PV
-from datetime import datetime
+from datetime import datetime, timedelta
 #
 #
+
+device_translation = {
+     "washing_machine": "la lavatrice",
+     "dryer": "l'asciugatrice",
+     "dishwasher": "la lavastoviglie",
+     "hvac":"il riscaldamento",
+     "water_heater": "l'acqua calda"
+}
+
+def dateToString(start_time: datetime, end_time: datetime = None) -> str:
+    today = datetime.now().date()
+    tomorrow = today + timedelta(days=1)
+
+    # Se viene passato solo start_time
+    if start_time == end_time:
+        if start_time.date() == today:
+            return f"alle {start_time.strftime('%H:%M')}"
+        elif start_time.date() == tomorrow:
+            return f"alle {start_time.strftime('%H:%M')} di domani"
+        else:
+            return f"alle {start_time.strftime('%H:%M')} del {start_time.strftime('%d-%m-%Y')}"
+    # Se viene passato un intervallo
+    else:
+        if start_time.date() == today and end_time.date() == today:
+            return f"dalle {start_time.strftime('%H:%M')} alle {end_time.strftime('%H:%M')}"
+        elif start_time.date() == tomorrow and end_time.date() == tomorrow:
+            return f"dalle {start_time.strftime('%H:%M')} alle {end_time.strftime('%H:%M')} di domani"
+        else:
+            start_text = f"del {start_time.strftime('%d-%m-%Y')}" if start_time.date() != today and start_time.date() != tomorrow else ""
+            end_text = f"del {end_time.strftime('%d-%m-%Y')}" if end_time.date() != today and end_time.date() != tomorrow else ""
+            
+            return f"dalle {start_time.strftime('%H:%M')} {start_text} alle {end_time.strftime('%H:%M')} {end_text}"
+
+def time_constraint(tracker: Tracker):
+     start_time = None
+     end_time = None
+
+     print(tracker.latest_message['entities'])
+     for entity in tracker.latest_message['entities']:
+          if entity['entity'] == 'time':
+               print(entity)
+               value = entity['value']
+               print(value)
+               # Se il valore è una stringa ISO 8601 singola
+               if isinstance(value, str):
+                    start_time = datetime.fromisoformat(value)
+                    end_time = start_time  # Per un singolo tempo, start_time ed end_time acquisiscono lo stesso valore
+
+               # Se il valore è un dizionario (intervallo di tempo)
+               elif isinstance(value, dict):
+                    if 'from' in value and 'to' in value:
+                         start_time_str = value['from']
+                         end_time_str = value['to']
+
+                         start_time = datetime.fromisoformat(start_time_str)
+                         end_time = datetime.fromisoformat(end_time_str)
+
+                    elif 'value' in value:
+                         start_time_str = value['value']
+                         start_time = datetime.fromisoformat(start_time_str)
+                         end_time = start_time  
+
+     return start_time, end_time
+
 
 class AnswerRequest(Action):
 #
@@ -55,10 +119,14 @@ class AnswerRenewableRequest(Action):
      def run(self, dispatcher: CollectingDispatcher,
              tracker: Tracker,
              domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-         
+          text = ""
           data = EnergyMonitoring()
-          pv, storage_lev, storage_status = data.get_renwable_data()
-          text = f"Al momento i pannelli solari stanno producendo {pv} kW"
+          pv, storage_lev, storage_status, storage_pow, storage_on_charge = data.get_renwable_data()
+          if storage_on_charge :
+               text = f"Al momento i pannelli solari stanno producendo {pv} kW, di cui {storage_pow} kW sono diretti alla batteria"
+          else:
+               text = f"Al momento i pannelli solari stanno producendo {pv} kW"
+          
 
           dispatcher.utter_message(text=text)
 
@@ -73,17 +141,11 @@ class AnswerOptimizationRequest(Action):
              tracker: Tracker,
              domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
          
-          device_translation = {
-               "washing_machine": "la lavatrice",
-               "dryer": "l'asciugatrice",
-               "dishwasher": "la lavastoviglie",
-          }
-          ##gli slot che deve prendere dall'utente sono relativi all'elettrodomestico e all'orario di avvio
+          text=""
+
           appliance = tracker.get_slot("device_name")
-          start_time = tracker.get_slot("start_time") 
-          if start_time:
-               # Converte il valore ISO 8601 in oggetto datetime
-               start_time = datetime.fromisoformat(start_time.replace("Z", "+00:00"))
+          start_time, end_time = time_constraint(tracker)
+
 
           print(appliance)
 
@@ -94,13 +156,17 @@ class AnswerOptimizationRequest(Action):
                #pv.set_pv_data(CONFIG_FILE)
                #forecast=pv.get_pv_forecast()
                #_, start_time, model_result = opt.grid_optimizer(start_time, forecast)
-               model_result = 13.122
-               dispatcher.utter_message(f"Se avvii {device_translation.get(appliance)} alle {start_time.strftime('%H:%M')} consumerai dalla rete {model_result:.2f} kWh. Vuoi saperne di più?")
+               model_result = 13.122#DA RIMUOVERE
+               text= f"Se avvii {device_translation.get(appliance)} {dateToString(start_time, end_time)} consumerai dalla rete {model_result:.2f} kWh. Vuoi saperne di più?"
+           
           else:
-               dispatcher.utter_message(text="Mi servirebbe sapere quale elettrodomestico ti interessa")
+               text = "Mi servirebbe sapere quale elettrodomestico ti interessa"
 
-
+          dispatcher.utter_message(text=text)
           return []
+     
+     
+
      
 
 class ActOnDevice(Action):

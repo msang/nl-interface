@@ -12,9 +12,10 @@ intents:
 - nlu_fallback
 entities:
 - source
-- device
+- appliance
 #- costraint
 #duckling
+- time_constraint
 - temperature
 - time
 - numeral
@@ -31,7 +32,7 @@ slots:
     influence_conversation: true
     mappings:
     - type: from_entity
-      entity: device
+      entity: appliance
   start_time:
     type: any
     mappings:
