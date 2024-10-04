@@ -1,3 +1,7 @@
-
 /.rasa
 /models
+/actions/__pycache__
+/jupyter_notebooks
+/story_graph.dot
+/humEval
+/nl2optim
