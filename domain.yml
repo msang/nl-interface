@@ -1,5 +1,10 @@
 version: ' 3.1'
 intents:
+- check_status
+- action_request
+# - action_request/activation
+# - action_request/pause
+# - action_request/shutdown
 - ask_optimization:
     use_entities: true
 - check_consumption
@@ -60,6 +65,8 @@ responses:
   utter_fallback:
   - text: Mi dispiace, non ho capito la tua richiesta. Puoi riformularla o chiedermi informazioni sui consumi, produzione o ottimizzazione energetica?
 actions:
+- answer_act_on_device
+- answer_status_request
 - answer_optimization_request
 - answer_consumption_request
 - answer_explanation_request
