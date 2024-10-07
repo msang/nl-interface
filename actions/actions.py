@@ -23,6 +23,10 @@ device_translation = {
      "water_heater": "l'acqua calda"
 }
 
+bess_status={"Idle": "inattiva", 
+             "Charging": "in carica",
+             "Discharging": "in scarica"}
+
 def dateToString(start_time: datetime, end_time: datetime = None) -> str:
     today = datetime.now().date()
     tomorrow = today + timedelta(days=1)
@@ -121,9 +125,13 @@ class AnswerRenewableRequest(Action):
              domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
           text = ""
           data = EnergyMonitoring()
-          pv, storage_lev, storage_status, storage_pow, storage_on_charge = data.get_renwable_data()
+          source = tracker.get_slot("source_name")
+          print(source)
+          pv, storage_lev, storage_status, storage_pow, storage_on_charge = data.get_renewable_data()
           if storage_on_charge :
                text = f"Al momento i pannelli solari stanno producendo {pv} kW, di cui {storage_pow} kW sono diretti alla batteria"
+          if source == "bess":
+               text = f"Al momento la batteria è al {storage_lev}% ed è {bess_status[storage_status]}"
           else:
                text = f"Al momento i pannelli solari stanno producendo {pv} kW"
           
@@ -149,38 +157,62 @@ class AnswerOptimizationRequest(Action):
 
           print(appliance)
 
-          if appliance is not None:
-               # Chiamare il modulo Optimizer con gli slot forniti
-               #opt = Optimizer(appliance)
-               #pv = PV()
-               #pv.set_pv_data(CONFIG_FILE)
-               #forecast=pv.get_pv_forecast()
-               #_, start_time, model_result = opt.grid_optimizer(start_time, forecast)
-               model_result = 13.122#DA RIMUOVERE
-               text= f"Se avvii {device_translation.get(appliance)} {dateToString(start_time, end_time)} consumerai dalla rete {model_result:.2f} kWh. Vuoi saperne di più?"
-           
-          else:
-               text = "Mi servirebbe sapere quale elettrodomestico ti interessa"
+          try:
+               if appliance is not None:
+                    # Chiamare il modulo Optimizer con gli slot forniti
+                    #opt = Optimizer(appliance)
+                    #pv = PV()
+                    #pv.set_pv_data(CONFIG_FILE)
+                    #forecast=pv.get_pv_forecast()
+                    #_, start_time, model_result = opt.grid_optimizer(start_time, forecast)
+                    model_result = 13.122#DA RIMUOVERE
+                    text= f"Se avvii {device_translation.get(appliance)} {dateToString(start_time, end_time)} consumerai dalla rete {model_result:.2f} kWh. Vuoi saperne di più?"
+               
+               else:
+                    text = "Mi servirebbe sapere quale elettrodomestico ti interessa"
+          except AttributeError:
+               text="Purtroppo c'è un problema al sistema e al momento non sono in grado di recuperare questa informazione. Puoi riprovare più tardi."
 
           dispatcher.utter_message(text=text)
           return []
-     
-     
+           
 
-     
-
-class ActOnDevice(Action):
+class AnswerActOnDevice(Action):
 #
      def name(self) -> Text:
-         return "act_on_device"
+         return "answer_act_on_device"
+
+     def run(self, dispatcher: CollectingDispatcher,
+             tracker: Tracker,
+             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+          text = ""
+          appliance = tracker.get_slot("device_name")
+          if appliance is not None:
+               text = f"Mi spiace, al momento non posso interagire con {device_translation[appliance]}."
+          else:
+               text = "Mi spiace, al momento non posso interagire con gli elettrodomestici."
+          dispatcher.utter_message(text=text)
+          return []
+     
+
+class AnswerStatusRequest(Action):
+#
+     def name(self) -> Text:
+         return "answer_status_request"
 #
      def run(self, dispatcher: CollectingDispatcher,
              tracker: Tracker,
              domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#
-         dispatcher.utter_message(text="Mi spiace, al momento non posso interagire con i dispositivi della casa.")
+          appliance = tracker.get_slot("device_name")
+          if appliance is not None:
+               text=f"Al momento {device_translation[appliance]} risulta in funzione."
+          else:
+               text=f"Al momento sono in funzione la lavatrice e lo scaldabagno."
 
-         return []
+          dispatcher.utter_message(text=text)
+
+
+          return []
      
 class AnswerExplanationRequest(Action):
 #

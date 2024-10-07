@@ -9,7 +9,7 @@ SE_APIKEY = os.environ.get("SOLAREDGE_KEY")
 class EnergyMonitoring():
     
      def __init__(self) -> None:
-        api = SolarEdgeAPI(api_key=SE_APIKEY, date6iuy7ttime_response=True, pandas_response=True)
+        api = SolarEdgeAPI(api_key=SE_APIKEY, datetime_response=True, pandas_response=True)
         SITEID = api.get_sites().pandas['sites.site.id'][0]
         data = api.get_site_current_power_flow(SITEID).data
         self.data = data["siteCurrentPowerFlow"]
