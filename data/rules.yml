@@ -23,6 +23,29 @@ rules:
   - intent: nlu_fallback
   - action: utter_fallback
   
+# - rule: Form to ask the device name for the optimization request
+#   steps:
+#     - intent: ask_optimization 
+#     - action: answer_optimization_request
+#     - action: validate_device_form
+#     - active_loop: validate_device_form
+
+# - rule: Validation of the slot on the device form
+#   condition:
+#     - active_loop: validate_device_form
+#   steps:
+#     - action: validate_device_form  
+#     - slot_was_set:
+#         - device_name: null  
+#     - action: validate_device_form 
+        
+# - rule: Resume the optimization action after receiving a valid device name
+#   condition:
+#     - active_loop: validate_device_form
+#   steps:
+#     - action: validate_device_form
+#     - active_loop: null 
+#     - action: answer_optimization_request
 
 #- rule: Say 'I am a bot' anytime the user challenges
 #  steps:

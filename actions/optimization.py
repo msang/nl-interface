@@ -43,6 +43,7 @@ class PV:
             json.dump(data, f, ensure_ascii=False, indent=4)
 
 
+
     def get_pv_forecast(self) -> List[float]:
 
         with open('data.json', 'r', encoding='utf-8') as f:
