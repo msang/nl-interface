@@ -1,5 +1,5 @@
 /.rasa
-/models
+#/models
 /actions/__pycache__
 /actions/.env
 /jupyter_notebooks
