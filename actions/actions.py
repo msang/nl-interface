@@ -265,7 +265,7 @@ class AnswerStatusRequest(Action):
           if appliance is not None:
                text=f"Al momento {device_translation[appliance]} risulta in funzione."
           else:
-               text=f"Al momento sono in funzione la lavatrice e lo scaldabagno."
+               text=f"Al momento non rilevo nessun elettrodomestico."
 
           dispatcher.utter_message(text=text)
 

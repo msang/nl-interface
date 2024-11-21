@@ -1,0 +1,22 @@
+#same python version as host
+FROM python:3.9
+
+# Install ngrok-Python dependencies + install ngrok
+RUN apt-get update && apt-get install -y \
+    curl gnupg apt-transport-https && \
+    curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
+    | tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && \
+    echo "deb https://ngrok-agent.s3.amazonaws.com buster main" \
+    | tee /etc/apt/sources.list.d/ngrok.list && \
+    apt-get update && apt-get install -y ngrok && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+
+COPY actions/requirements_ngrok.txt /app/requirements_ngrok.txt
+
+RUN pip install --no-cache-dir -r /app/requirements_ngrok.txt
+
+COPY actions/connect_to_telegram.py /app/actions/connect_to_telegram.py
+
+
+CMD ngrok config add-authtoken $NGROK_AUTH_TOKEN && python /app/actions/connect_to_telegram.py

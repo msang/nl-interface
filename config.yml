@@ -35,7 +35,8 @@ pipeline:
       threshold: 0.7
       ambiguity_threshold: 0.1
     - name: "DucklingEntityExtractor"
-      url: "http://localhost:8000"
+      #url: "http://localhost:8000"
+      url: "http://rasa-duckling:8000" # to use duckling in a docker container
       dimensions: ["numeral", "time", "temperature"]
       locale: "it_IT"
       timezone: "Europe/Rome"

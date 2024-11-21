@@ -1,24 +1,20 @@
 version: ' 3.1'
 intents:
-- check_status
 - action_request
-# - action_request/activation
-# - action_request/pause
-# - action_request/shutdown
+- affirm
 - ask_optimization:
     use_entities: true
 - check_consumption
 - check_production
-- affirm
+- check_status
 - deny
 - goodbye
 - greet
-- start
 - nlu_fallback
+- start
 entities:
-- source
 - appliance
-#duckling
+- source
 - time_constraint
 - temperature
 - time
@@ -30,7 +26,6 @@ slots:
     mappings:
     - type: from_entity
       entity: source
-
   device_name:
     type: text
     influence_conversation: true
@@ -55,8 +50,7 @@ slots:
 forms:
   device_form:
     required_slots:
-      - device_name
-
+    - device_name
 responses:
   utter_greet:
   - text: Ciao, in cosa posso esserti utile?
@@ -67,9 +61,9 @@ responses:
   utter_fallback:
   - text: Mi dispiace, non ho capito la tua richiesta. Puoi riformularla o chiedermi informazioni sui consumi, produzione o ottimizzazione energetica?
 actions:
+- answer_optimization_request
 - answer_act_on_device
 - answer_status_request
-- answer_optimization_request
 - answer_consumption_request
 - answer_explanation_request
 - answer_renewable_request

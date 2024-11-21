@@ -1,0 +1,61 @@
+#version: '3' #deprecated
+services: 
+  duckling:
+    container_name: rasa-duckling
+    image: rasa/duckling #image version from the docker hub
+    ports:
+      - "8000:8000" 
+
+  rasa:
+    container_name: rasa-server
+    image: rasa/rasa:3.6.15
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5005:5005"
+    volumes:  
+      - ./models:/app/models   
+      - ./data:/app/data    
+      - ./config.yml:/app/config.yml
+      - ./credentials.yml:/app/credentials.yml
+      - ./endpoints.yml:/app/endpoints.yml
+      - ./domain.yml:/app/domain.yml
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5005"]
+      interval: 60s
+      timeout: 90s
+      retries: 5
+      start_period: 90s
+    depends_on:
+      - action_server
+
+  action_server:
+    container_name: rasa-action-server
+    image: rasa/rasa-sdk:3.6.2
+    build:
+      context: ./actions
+      dockerfile: Dockerfile
+    ports:
+      - "5055:5055"
+    volumes:
+      - ./actions:/app/actions  
+    depends_on:
+      - duckling
+
+  ngrok:
+    container_name: rasa-ngrok
+    #image: ngrok/ngrok # this image doesn't support python
+    build:
+      context: .
+      dockerfile: actions/Dockerfile.ngrok
+    ports:
+      - "4040:4040" 
+    volumes:
+      - ./credentials.yml:/app/credentials.yml
+      - ./actions:/app/actions
+    environment:
+      NGROK_AUTH_TOKEN: ${NGROK_TOK}
+    depends_on:
+      rasa:
+        condition: service_healthy #ngrok container starts only if rasa server is up and running (otherwise tunneling won't work)

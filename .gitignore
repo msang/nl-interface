@@ -1,7 +1,14 @@
 /.rasa
 /models
 /actions/__pycache__
+/actions/.env
 /jupyter_notebooks
 /story_graph.dot
 /humEval
 /nl2optim
+.env
+ngrok.exe
+credentials.yml
+#endpoints.yml
+#docker-compose.yml
+requirements_all.txt
