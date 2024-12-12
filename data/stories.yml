@@ -36,6 +36,15 @@ stories:
     - intent: check_production
     - action: answer_renewable_request
 
+# - story: happy path on acting on a device request
+#   steps:
+#     - intent: action_request
+#     - action: answer_act_on_device
+
+- story: happy path on status request
+  steps:
+    - intent: check_status
+    - action: answer_status_request
 
 #- story: happy path
 #  steps:

@@ -7,11 +7,14 @@
 from typing import Any, Text, Dict, List, Tuple
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet, Form
+from rasa_sdk.events import SlotSet, Form, FollowupAction
+import matlab.engine
 import json
 from actions.monitoring import EnergyMonitoring
 from actions.optimization import Appliance, Optimizer, PV
 from datetime import datetime, timedelta
+from .constraints_extractor import acquire_constraints, date_to_string, time_constraint
+from .fake_optimizer import FakeOptimizer
 #
 #
 
@@ -26,94 +29,6 @@ device_translation = {
 bess_status={"Idle": "inattiva", 
              "Charging": "in carica",
              "Discharging": "in scarica"}
-
-def dateToString(start_time: datetime, end_time: datetime = None) -> str:
-     today = datetime.now().date()
-     tomorrow = today + timedelta(days=1)
-     text = ""
-
-    # Se viene passato solo start_time
-     if start_time == end_time:
-          if start_time.date() == today:
-               text = f"alle {start_time.strftime('%H:%M')}"
-          elif start_time.date() == tomorrow:
-               text = f"alle {start_time.strftime('%H:%M')} di domani"
-          else:
-               text = f"alle {start_time.strftime('%H:%M')} del {start_time.strftime('%d/%m/%Y')}"
-     # Se viene passato un intervallo illimitato inferiormente (stringhe temporanee)
-     elif start_time is None:
-        if end_time.date() == today:
-            text = f"prima delle {end_time.strftime('%H:%M')}"
-        elif end_time.date() == tomorrow:
-            text = f"prima delle {end_time.strftime('%H:%M')} di domani"
-        else:
-            text = f"prima delle {end_time.strftime('%H:%M')} del {end_time.strftime('%d/%m/%Y')}"
-     # Se viene passato un intervallo illimitato superiormente (stringhe temporanee)
-     elif end_time is None:
-        if start_time.date() == today:
-            text = f"dopo le {start_time.strftime('%H:%M')}"
-        elif start_time.date() == tomorrow:
-            text = f"dopo le {start_time.strftime('%H:%M')} di domani"
-        else:
-            text = f"dopo le {start_time.strftime('%H:%M')} del {start_time.strftime('%d/%m/%Y')}"
-     # Se viene passato un intervallo
-     else:
-          if start_time.date() == today and end_time.date() == today:
-               text = f"dalle {start_time.strftime('%H:%M')} alle {end_time.strftime('%H:%M')}"
-          elif start_time.date() == tomorrow and end_time.date() == tomorrow:
-               text = f"dalle {start_time.strftime('%H:%M')} alle {end_time.strftime('%H:%M')} di domani"
-          else:
-               start_text = f"del {start_time.strftime('%d/%m/%Y')}" if start_time.date() != today and start_time.date() != tomorrow else ""
-               end_text = f"del {end_time.strftime('%d/%m/%Y')}" if end_time.date() != today and end_time.date() != tomorrow else ""
-               
-               text = f"dalle {start_time.strftime('%H:%M')} {start_text} alle {end_time.strftime('%H:%M')} {end_text}"
-     return text
-
-def time_constraint(tracker: Tracker) -> List[Tuple[datetime, datetime]]:
-     start_time = None
-     end_time = None
-
-     time_intervals = []
-
-     for entity in tracker.latest_message['entities']:
-          if entity['entity'] == 'time':
-               print(f"\nENTITA: {entity}\n")
-               values = entity['additional_info']['values']
-               print(f"\values: {values}\n")
-               i=0
-               for value in values:
-                    print(f'Value {i}: {value}')
-                    if value['type'] == 'value':
-                         start_time = datetime.fromisoformat(value['value'])
-                         end_time = start_time  # Per un tempo singolo, start_time ed end_time acquisiscono lo stesso valore
-                    elif value['type'] == 'interval':
-                         if 'from' in value:
-                              start_time_str = value['from']['value']
-                              print(f"\nStart: {start_time_str}\n\n")
-                              start_time = datetime.fromisoformat(start_time_str)
-
-                         if 'to' in value:
-                              end_time_str = value['to']['value']
-                              print(f"\nEnd: {end_time_str}\n\n")
-                              grain = value['to']['grain']
-                              end_time = datetime.fromisoformat(end_time_str)   
-                              if start_time is not None:      
-                                   end_time = adjust_end_interval(end_time, grain) 
-
-                    time_intervals.append((start_time, end_time))
-                    
-                    i+=1
-     current_time = datetime.now()
-     return time_intervals or [(current_time, current_time)]
-
-def adjust_end_interval(end_time, grain):
-     if grain == "minute":
-          end_time -= timedelta(minutes=1)
-     elif grain == "hour":
-          end_time -= timedelta(hours=1)
-     elif grain == "day":
-          end_time -= timedelta(days=1)
-     return end_time
 
 class AnswerRequest(Action):
 #
@@ -182,13 +97,17 @@ class AnswerOptimizationRequest(Action):
              domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
          
           text=""
+          opt = FakeOptimizer()
 
           appliance = tracker.get_slot("device_name")
-          time_intervals = time_constraint(tracker)
-          print(time_intervals)
+          print(f"Appliance: {appliance}")
+     
+          time_intervals,temperature = acquire_constraints(tracker)
+
+          print(f"\n\nTIME INTERVALS: {time_intervals}\n\nTEMPERATURE: {temperature}\n\n")
+
           start_time, end_time = time_intervals[0]
 
-          print(appliance)
      
      
           if appliance is not None:
@@ -203,7 +122,12 @@ class AnswerOptimizationRequest(Action):
 
                appliance_string = device_translation.get(appliance)
                if(appliance_string is not None):
-                    text= f"Se avvii {appliance_string} {dateToString(start_time, end_time)} consumerai dalla rete {model_result:.2f} kWh. Vuoi saperne di più?"
+                    if temperature is not None:
+                         text= f"Se avvii {appliance_string} {date_to_string(start_time, end_time)} ad una temperatura di {temperature} gradi consumerai dalla rete {model_result:.2f} kWh. Vuoi saperne di più?"
+                         opt.save_constraint(start_time,end_time,temperature-1,temperature+1)
+                    else:
+                         text= f"Se avvii {appliance_string} {date_to_string(start_time, end_time)} consumerai dalla rete {model_result:.2f} kWh. Vuoi saperne di più?"
+  
                else:
                     dispatcher.utter_message(text="Non ho riconosciuto il dispositivo. Potresti riscriverlo?")
                     #return [Form("device_form")]
@@ -221,18 +145,18 @@ class ValidateDeviceForm(FormValidationAction):
 
     async def validate_device_name(
         self,
-        slot_value: Any, #Verificare se Any o text
+        slot_value: Any, 
         dispatcher: CollectingDispatcher,
-        tracker: "Tracker",
-        domain: "DomainDict"
+        tracker: Tracker,
+        domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
 
         # Controlla se l'entità è accettabile
         if slot_value not in device_translation:
             dispatcher.utter_message(text="Dispositivo non riconosciuto. Potresti riscriverlo?")
-            return {"device_name": None}  # Resetta lo slot per richiedere un nuovo input
+            return [SlotSet("device_name", None)]  # Resetta lo slot per richiedere un nuovo input
         else:
-            return {"device_name": slot_value}
+            return [SlotSet("device_name", slot_value)]
 
 
 class AnswerActOnDevice(Action):
@@ -285,7 +209,101 @@ class AnswerExplanationRequest(Action):
 
          return []
 
+class ValidateTemperatureScheduleForm(FormValidationAction):
+     def name(self) -> Text:
 
+          return "validate_temperature_schedule_form"
+     def validate_time(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+     ) -> Dict[Text, Any]:
+          try:
+               time_intervals = acquire_constraints(tracker)
+               start_time, end_time = time_intervals[0]
+               print("sono passato da time")
+               if not time_intervals or len(time_intervals) == 0:
+                   # dispatcher.utter_message(text="Non ho trovato intervalli di tempo validi.")
+                    return {"time": None}
+               return {"start_time": start_time.isoformat(),"end_time": end_time.isoformat()}
+          except Exception as e:
+               #dispatcher.utter_message(text="C'è stato un problema nell'estrazione degli orari.")
+               return {"time": None}
+          
+     def validate_temperature(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        try:
+            temperature = int(slot_value)
+            print("sono passato da temperature")
+            
+            # Controllo intervallo di temperatura consentito 
+          #   if 10 <= temperature <= 30:
+          #       return {"temperature": temperature}
+          #   else:
+          #       dispatcher.utter_message(text="La temperatura deve essere compresa tra 10°C e 30°C.")
+          #       return {"temperature": None}
+            return {"temperature": temperature}
+        
+        except ValueError:
+            dispatcher.utter_message(text="Non ho riconosciuto una temperatura valida. Inserisci un valore numerico.")
+            return {"temperature": None}
+     def validate_device_name(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+          print("sono passato da device")
+          
+
+          if slot_value in device_translation:
+               return {"device_name": slot_value}
+          else:
+               #dispatcher.utter_message(text="Non ho riconosciuto il dispositivo. Potresti riscriverlo?")
+               return {"device_name": None}
+
+
+     
+
+class AnswerSetConstraint(Action):
+    def name(self) -> Text:
+        return "answer_set_constraint"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+          text=""
+          opt = FakeOptimizer()
+         
+          appliance = tracker.get_slot("device_name")
+          print(f"Appliance: {appliance}")
+          temperature = tracker.get_slot("temperature")
+      
+          start_time = datetime.fromisoformat(tracker.get_slot("start_time"))
+          end_time = datetime.fromisoformat(tracker.get_slot("end_time"))
+
+          print(start_time)
+
+          print(end_time)
+      
+          text= f"Avrai {device_translation[appliance]} ad una temperatura di {temperature} {date_to_string(start_time, end_time)}. Va bene?"
+          opt.save_constraint(appliance, start_time,end_time,temperature-1,temperature+1)
+         
+          
+          dispatcher.utter_message(text=text)
+          
+          return [SlotSet("device_name", None),
+            SlotSet("temperature", None),
+            SlotSet("time", None),
+            SlotSet("start_time", None),
+            SlotSet("end_time", None),]
+    
 if __name__ == "__main__":
      monit = AnswerConsumptionRequest()
      monit.run()

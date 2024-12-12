@@ -1,10 +1,8 @@
 version: ' 3.1'
 intents:
 - check_status
-- action_request
-# - action_request/activation
-# - action_request/pause
-# - action_request/shutdown
+#- action_request
+- set_constraint_request
 - ask_optimization:
     use_entities: true
 - check_consumption
@@ -23,6 +21,7 @@ entities:
 - temperature
 - time
 - numeral
+
 slots:
   source_name:
     type: text
@@ -37,11 +36,19 @@ slots:
     mappings:
     - type: from_entity
       entity: appliance
-  start_time:
+  time:
     type: any
     mappings:
     - type: from_entity
       entity: time
+  start_time:
+    type: any
+    mappings:
+    - type: custom
+  end_time:
+    type: any
+    mappings:
+    - type: custom
   temperature:
     type: any
     mappings:
@@ -53,6 +60,11 @@ slots:
     - type: from_entity
       entity: numeral
 forms:
+  temperature_schedule_form:
+    required_slots:
+      - device_name
+      - temperature
+      - time
   device_form:
     required_slots:
       - device_name
@@ -66,7 +78,14 @@ responses:
   - text: ciao, mi chiamo Energy Feedbot e posso aiutarti nella gestione dei tuoi consumi domestici
   utter_fallback:
   - text: Mi dispiace, non ho capito la tua richiesta. Puoi riformularla o chiedermi informazioni sui consumi, produzione o ottimizzazione energetica?
+  utter_ask_device_name:
+    - text: "Potresti fornirmi il dispositivo?"
+  utter_ask_temperature:
+    - text: "A quale temperatura desideri impostare l'elettrodomestico?"
+  utter_ask_time:
+    - text: "Per quale orario devo impostare l'azione?"
 actions:
+- answer_set_constraint
 - answer_act_on_device
 - answer_status_request
 - answer_optimization_request
@@ -78,6 +97,7 @@ actions:
 - utter_greet_telegram
 - answer_request
 - validate_device_form
+- validate_temperature_schedule_form
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

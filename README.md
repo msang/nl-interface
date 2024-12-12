@@ -50,12 +50,13 @@ To begin using the agent, follow these steps:
     ```bash
     rasa train
     ```
+
 6.  Install DucklingEntityExtractor directly on your machine and start the server or install docker and run it:
 
     ```bash
     docker run -p 8000:8000 rasa/duckling
     ```
-
+    
 7. Start the RASA server and the SDK server (in a separate terminal) to interact with the agent:
 
     ```bash

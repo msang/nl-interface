@@ -1,6 +1,5 @@
 version: "3.1"
 
-
 rules:
 
 - rule: start telegram chat
@@ -22,7 +21,21 @@ rules:
   steps:
   - intent: nlu_fallback
   - action: utter_fallback
-  
+
+- rule: Attivazione del form per temperatura e orario
+  steps:
+    - intent: set_constraint_request
+    - action: temperature_schedule_form
+    - active_loop: temperature_schedule_form
+
+- rule: Completamento del form per temperatura e orario
+  condition:
+    - active_loop: temperature_schedule_form
+  steps:
+    - action: temperature_schedule_form
+    - active_loop: null
+    - action: answer_set_constraint
+
 # - rule: Form to ask the device name for the optimization request
 #   steps:
 #     - intent: ask_optimization 
