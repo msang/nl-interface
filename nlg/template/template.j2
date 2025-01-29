@@ -1,0 +1,15 @@
+{% if intent=="check_consumption" %}
+Considera le seguenti informazioni relative all'andamento dei consumi elettrici domestici: 
+{{ energy_data }}
+{% elif intent=="check_production" %}
+Considera le seguenti informazioni relative all'andamento di un impianto fotovoltaico:
+{{ energy_data }}
+{% elif intent=="ask_optimization" %}
+Considera i seguenti dati restituiti da un ottimizzatore:
+{{ energy_data }}
+{% endif %}
+
+Utilizzando non più di 30 parole, usa le informazioni che ti ho appena fornito per rispondere alla seguente domanda: {{utterance}}
+
+
+
