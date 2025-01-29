@@ -13,7 +13,9 @@
 action_endpoint:
   url: "http://localhost:5055/webhook"
 
-#nlg:
+nlg:
+  url: http://10.25.0.23:5056/nlg
+  timeout: 60
 #  url: http://localhost:5055/nlg
   # 
   # You can also specify additional parameters, if you need them:
