@@ -21,13 +21,14 @@ class LLM:
 
 
         def create_prompt(self, intent, utterance, energy_data):
-            system = "Sei un assistente AI per la lingua italiana. Rispondi nella lingua usata per la domanda in modo chiaro, diretto e completo. Attieniti strettamente alle istruzioni fornite e riporta la tua risposta in modo conciso, senza aggiungere ulteriori commenti o spiegazioni."
-            env = Environment(loader=FileSystemLoader("templates"))
+            #system = "Sei un assistente AI per la lingua italiana. Rispondi nella lingua usata per la domanda in modo chiaro, diretto e completo. Attieniti strettamente alle istruzioni fornite e riporta la tua risposta in modo conciso, senza aggiungere ulteriori commenti o spiegazioni."
+            system = " Sei un assistente esperto di ottimizzazione energetica. Fornisci risposte brevi ma precise. Non superare i 150 token."
+            env = Environment(loader=FileSystemLoader('templates'))
             template = env.get_template("template.j2")
-            context = {"intent":intent, "utterance": utterance, "energy_data": energy_data}
-            user = template.render(**context)
+            user = template.render(intent=intent, utterance=utterance, data=energy_data)
             complete = [{"role": "system", "content":f"{system}"},{"role": "user", "content":f"{user}"}]
             formatted = self.tokenizer.apply_chat_template(complete, tokenize=False, add_generation_prompt=True)
+            print(formatted)
 
             return formatted
 
@@ -55,9 +56,27 @@ class LLM:
 
 if __name__ == "__main__":
     llm = LLM()
-    intent_ex= "check_consumption"
-    utterance_ex="voglio vedere i consumi"
-    data_ex= "- energia totale utilizzata dalla casa: 11.11 kWh \n - energia totale acquistata dalla rete: 4.47 kWh \n - potenza istantanea fornita dall'impianto solare: 0.00 kW \n - potenza istantanea fornita dalla batteria: 0.29 kW \n - potenza istantanea fornita dalla rete: 0.11 kW \n - potenza totale: 0.40 kW"
+    #intent_ex= "check_consumption"
+    #utterance_ex="voglio vedere i consumi"
+    #data_ex= "- energia totale utilizzata dalla casa: 11.11 kWh \n - energia totale acquistata dalla rete: 4.47 kWh \n - potenza istantanea fornita dall'impianto solare: 0.00 kW \n - potenza istantanea fornita dalla batteria: 0.29 kW \n - potenza istantanea fornita dalla rete: 0.11 kW \n - potenza totale: 0.40 kW"
+    intent_ex = "ask_optimization"
+    utterance_ex = "quando usare le pompe di calore"
+    data_ex = """
+Ora        ProduzioneSolare(kW)      ConsumiTotali(kW)          StatoBatteria(%)     EnergiaAcquistata(kW)        AccensioneTLC
+2025-03-27 15:00:00      6.28   0.10   100  0.0  NO
+2025-03-27 16:00:00      3.1   4.10   90   0.0   Sì
+2025-03-27 17:00:00      1.21   0.10   100  0.0   NO
+2025-03-27 18:00:00      0.0   0.10   99   0.0   NO
+2025-03-27 19:00:00      0.0   0.10   98   0.0   NO
+2025-03-27 20:00:00      0.0   4.10   73   1.6   Sì
+2025-03-27 21:00:00      0.0   4.10   48   1.6   Sì
+2025-03-27 22:00:00      0.0   4.10   23   1.6   Sì
+2025-03-27 23:00:00      0.0   4.10   10   2.8   Sì
+2025-03-28 00:00:00      0.0   0.10   10   0.1   NO
+2025-03-28 01:00:00      0.0   0.10   10   0.1   NO
+2025-03-28 02:00:00      0.0   0.10   10   0.1   NO
+2025-03-28 03:00:00      0.0   0.10   10   0.1   NO
+"""
     prompt = llm.create_prompt(intent_ex, utterance_ex, data_ex)
     print(prompt)
     response = llm.inference(prompt)
