@@ -8,26 +8,40 @@ from typing import Any, Text, Dict, List, Tuple
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet, Form, FollowupAction
-import json, requests
+import json, logging, requests
 from .monitoring import EnergyMonitoring
-from .optimization import Appliance, Optimizer, PV
+from .optimization import Optimizer
+from .appliance import Appliance
 from datetime import datetime, timedelta
-from .constraints_extractor import acquire_time_intervals, date_to_string, time_constraint
+#from .constraints_extractor import acquire_time_intervals, date_to_string, time_constraint
 from .utils import date_to_string
 
 
-device_translation = {
-     "washing_machine": "la lavatrice",
-     "dryer": "l'asciugatrice",
-     "dishwasher": "la lavastoviglie",
-     "hvac":"il riscaldamento",
-     "water_heater": "l'acqua calda",
-     "oven":"il forno"
-}
+logger = logging.getLogger(__name__)
 
-bess_status={"Idle": "inattiva", 
-             "Charging": "in carica",
-             "Discharging": "in scarica"}
+
+def send_to_nlg(intent: str, utterance: str, energy_data: str) -> str:
+    """
+    Invia una richiesta al server NLG e restituisce il testo generato o fallback.
+    """
+    try:
+        nlg_server_url = "http://localhost:5056/nlg"
+        payload = {
+            "intent": intent,
+            "utterance": utterance,
+            "energy_data": energy_data
+        }
+
+        headers = {"Content-Type": "application/json"}
+        response = requests.post(nlg_server_url, json=payload, headers=headers, timeout=90)
+        response.raise_for_status()
+
+        return response.json().get("text", "")
+
+    except Exception as e:
+        logger.error(f"Errore nella comunicazione con il server NLG: {e}")
+        return f"Di seguito le informazioni richieste:\n{energy_data}"
+
 
 
 class AnswerMonitoringRequest(Action):
@@ -39,82 +53,61 @@ class AnswerMonitoringRequest(Action):
         intent = tracker.latest_message['intent'].get('name')
         utterance = tracker.latest_message.get("text")
         em = EnergyMonitoring()
-        energy_data=""
+        energy_data = ""
+
+        if em.api is None:
+            dispatcher.utter_message(text="Mi dispiace, non ho modo di recuperare i dati in questo momento. Richiedimelo più tardi.")
+            return []
 
         try:
-
-          if intent == "check_consumption":
-               energy_data = em.get_consumption_info()   
-          elif intent== "check_production":
-               energy_data = em.get_production_info()
-
+            em.update_all_data()
+            if intent == "check_consumption":
+                energy_data = em.get_consumption_info()   
+            elif intent == "check_production":
+                energy_data = em.get_production_info()
         except Exception as e:
-             dispatcher.utter_message(text="Mi dispiace, non ho modo di recuperare i dati in questo momento. Richiedimelo più tardi.")
-             
-        try:               
-               nlg_server_url = "http://10.25.0.23:5056/nlg"
-               response = requests.post(nlg_server_url, json={"intent": intent,"utterance": utterance,"energy_data": energy_data})
-               generated_text = response.json().get("text", "Mi dispiace, non ho modo di recuperare i dati in questo momento. Richiedimelo più tardi.")
-               followup= "Vorresti chiedermi altro?"
-               dispatcher.utter_message(text=f"{generated_text}\n{followup}")
+            dispatcher.utter_message(text="Mi dispiace, non ho modo di recuperare i dati in questo momento. Richiedimelo più tardi.")
+            return []
 
-        except Exception as e:
-               text = f"Di seguito le informazioni richieste:\n{energy_data}\n{followup}"
-               dispatcher.utter_message(text=text)
-               print(f"Errore nel server NLG: {e}")
-        
-        
+        generated_text = send_to_nlg(intent, utterance, energy_data)
+        dispatcher.utter_message(text=generated_text)
+        return []
+
+
+
 class AnswerOptimizationRequest(Action):
 
-     def name(self) -> Text:
-         return "answer_optimization_request"
-     
-     def run(self, dispatcher: CollectingDispatcher,
-             tracker: Tracker,
-             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-         
-          text=""
-          time_intervals=[]
-          opt = Optimizer()
-          try:
-               app = tracker.get_slot("device_name")
-               app_obj = Appliance(app)
-               opt.set_appliance(app_obj)
-               print(opt.appliance)
-          except:
-               opt.appliance=None
-          #"""
-          time_entities = [entity for entity in tracker.latest_message['entities'] if entity.get("entity") == "time"]
-          #print(time_entities)
+    def name(self) -> Text:
+        return "answer_optimization_request"
 
-          if time_entities != []:
-               time_intervals = time_constraint(time_entities[0])
-               start_time, end_time = time_intervals[0]  
-               print(f"\n\nSTART - END: {start_time} - {end_time}") 
-          else:
-               start_time = datetime.now() 
-               print(f"\n\nSTART: {start_time}")
-          #print(f"\n\nTIME INTERVALS: {time_intervals}")    
-          #"""
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-          if opt.appliance is not None:
-               if opt.appliance.is_tcl:
-                    text="Modifico le impostazioni dell'ottimizzatore in base alla tua richiesta."
-                    ## TODO:  richiama qui le azioni per il settaggio dei vincoli
-               else:
-                    ## richiama l'ottimizzatore base
-                    pv = PV()
-                    forecast=pv.get_pv_forecast()
-                    #opt_start_time = start_time.hour+1
-                    _, _, response = opt.grid_optimizer(start_time, forecast)
-                    appliance_string = device_translation.get(opt.appliance.app_name)
-                    text=f"Il momento migliore per avviare {appliance_string} potrebbe essere {response}."
-          else:
-               text="Non ho riconosciuto il dispositivo. Potresti riscriverlo?"
-     
-          dispatcher.utter_message(text=text)
-          return []
-            
+        opt = Optimizer()
+        user_start = user_end = None
+        opt_start = datetime.now()
+        intent = tracker.latest_message['intent'].get('name')
+        utterance = tracker.latest_message.get("text")
+
+        try:
+            app = tracker.get_slot("device_name") or "hvac"
+            opt.appliance = Appliance(app)
+        except Exception:
+            opt.appliance = Appliance("hvac")
+
+        try:
+            energy_data = opt.grid_optimizer(opt_start, user_start, user_end)
+        except Exception as e:
+            logger.error(f"Errore durante l'ottimizzazione: {e}")
+            dispatcher.utter_message(text="Mi dispiace, non ho modo di recuperare i dati dell'ottimizzatore in questo momento. Richiedimelo più tardi.")
+            return []
+
+        generated_text = send_to_nlg(intent, utterance, energy_data)
+        dispatcher.utter_message(text=generated_text)
+        return []
+
+
 
 class ValidateDeviceForm(FormValidationAction):
     def name(self) -> Text:
@@ -268,8 +261,9 @@ class AnswerSetConstraint(Action):
     
 
 if __name__ == "__main__":
-     slots = {"source_name": "bess","device_name":"oven", "time": "2025-01-14T16:30:12.000+01:00", "temperature": 55}
-     intent = {"name": "check_production","text": "l'azione mi serve adesso"}
+     slots = {"device_name":"hvac", "time": "2025-01-14T16:30:12.000+01:00", "temperature": 55}
+     #intent = {"name": "check_production","text": "l'azione mi serve adesso"}
+     intent = {"name": "ask_optimization","text": "quando usare le pompe"}
      entities = [{
             "start": 18,
             "end": 24,
@@ -296,3 +290,4 @@ if __name__ == "__main__":
      domain={}
      monit = AnswerOptimizationRequest()
      monit.run(dispatcher, tracker, domain)
+     #opt = 

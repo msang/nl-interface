@@ -1,25 +1,28 @@
-import os
+from os.path import join, dirname
 from solaredge_interface.api.SolarEdgeAPI import SolarEdgeAPI
 from time import localtime, strftime
 from typing import Text
-from dotenv import find_dotenv, load_dotenv
+from dotenv import load_dotenv
+import os
 
-load_dotenv(find_dotenv())
-SE_APIKEY = os.environ.get("SOLAREDGE_KEY")  
-SITE_ID= os.environ.get("SOLAREDGE_SITE_ID") 
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+APIKEY = os.environ.get("SOLAREDGE_KEY")
+SITEID = os.environ.get("SOLAREDGE_SITE_ID")
 
 
 class EnergyMonitoring():
     
+    """
     def __init__(self) -> None:
-        api = SolarEdgeAPI(api_key=SE_APIKEY, datetime_response=True, pandas_response=True)
+        api = SolarEdgeAPI(api_key=APIKEY, datetime_response=True, pandas_response=True)
         #print(api)
         #print(api.get_site_overview(str(SITE_ID)))
-        data = api.get_site_current_power_flow(SITE_ID).data
+        data = api.get_site_current_power_flow(SITEID).data
         today = f"{strftime('%Y-%m-%d', localtime())} 00:00:00"
         now=strftime("%Y-%m-%d %H:%M:%S", localtime())
         #print(SITE_ID, data)
-        energy = api.get_site_energy_details(SITE_ID, today, now).pandas 
+        energy = api.get_site_energy_details(SITEID, today, now).pandas 
         meter = energy['energyDetails.meters.type']
         self.daily_production = energy.loc[meter == 'Production', 'energyDetails.meters.values.value'].values[0]* 0.001
         self.daily_purchased = energy.loc[meter == 'Purchased', 'energyDetails.meters.values.value'].values[0]* 0.001
@@ -33,6 +36,64 @@ class EnergyMonitoring():
         
         bess_statuses = {"Charging": "in carica", "Discharging":"in scarica", "Idle": "inattiva"}
         self.storage_status = bess_statuses.get(self.current["STORAGE"]["status"]) 
+    """
+
+    bess_statuses = {"Charging": "in carica", "Discharging": "in scarica", "Idle": "inattiva"}
+
+    def __init__(self, api_key: str = APIKEY, site_id: str = SITEID) -> None:
+        """Inizializza la classe con i parametri di accesso all'API e prepara gli attributi della classe."""
+        self.api_key = api_key
+        self.site_id = site_id
+        try:
+            self.api = SolarEdgeAPI(api_key=self.api_key, datetime_response=True, pandas_response=True)
+            print(self.api)
+        except:
+            self.api = None
+
+        # Attributi inizializzati a None, verranno impostati dai metodi setter
+        self.daily_production = None
+        self.daily_purchased = None
+        self.daily_feed_in = None
+        self.daily_consumption = None
+        self.daily_self_consumption = None
+        self.current = None
+        self.power_flows = None
+        self.pv_power = None
+        self.storage_level = None
+        self.storage_status = None
+
+    def fetch_data(self) -> None:
+        """Recupera i dati attuali dal sito SolarEdge e imposta gli attributi della classe."""
+        self.current = self.api.get_site_current_power_flow(self.site_id).data["siteCurrentPowerFlow"]
+        self.power_flows = self.current["connections"]
+        self.pv_power = self.current["PV"]["currentPower"]
+        self.storage_level = self.current["STORAGE"]["chargeLevel"]
+        self.storage_status = self.bess_statuses.get(self.current["STORAGE"]["status"], "Stato sconosciuto")
+
+    def fetch_energy_details(self) -> None:
+        """Recupera i dettagli energetici giornalieri e imposta gli attributi corrispondenti."""
+        today = f"{strftime('%Y-%m-%d', localtime())} 00:00:00"
+        now = strftime("%Y-%m-%d %H:%M:%S", localtime())
+
+        energy = self.api.get_site_energy_details(self.site_id, today, now).pandas
+        meter = energy['energyDetails.meters.type']
+
+        self.daily_production = self._get_energy_value(energy, meter, 'Production')
+        self.daily_purchased = self._get_energy_value(energy, meter, 'Purchased')
+        self.daily_feed_in = self._get_energy_value(energy, meter, 'FeedIn')
+        self.daily_consumption = self._get_energy_value(energy, meter, 'Consumption')
+        self.daily_self_consumption = self._get_energy_value(energy, meter, 'SelfConsumption')
+
+    @staticmethod
+    def _get_energy_value(energy, meter, key: str) -> float:
+        """Metodo di utilità per estrarre il valore energetico corrispondente a una chiave specifica."""
+        value = energy.loc[meter == key, 'energyDetails.meters.values.value'].values
+        return value[0] * 0.001 if len(value) > 0 else 0.0
+
+    def update_all_data(self) -> None:
+        """Aggiorna tutti i dati chiamando i metodi appropriati."""
+        self.fetch_data()
+        self.fetch_energy_details()
         
 
     def get_consumption_info(self):
@@ -83,6 +144,8 @@ class EnergyMonitoring():
 
 if __name__ == "__main__":
     em = EnergyMonitoring()
+    print(em.__dict__)
+    em.update_all_data()
     print(em.__dict__)
     #print(em.get_consumption_info())
     #print(em.get_production_info())
