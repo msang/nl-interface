@@ -74,3 +74,26 @@ To begin using the agent, follow these steps:
     ngrok http 5005
     ```
    
+## ProsunAI
+
+Within the dev-gui branch, in this github repository, one can find the code for the Android mobile application named ProsunAi: it is designed to provide users with an intuitive conversational interface. 
+
+Thanks to an advanced conversational agent, users can interact naturally and receive immediate answers to their questions.
+
++ Key features
+
+    - Chat interaction: Users can communicate with the conversational agent through a simple and direct chat.
+
+    - Real-time answers: The app is able to provide quick and relevant answers based on the text entered by the user.
+
+    - User-friendly interface: The app is designed to be easy to use, making the user experience smooth and pleasant.
+
++ How it works
+
+    - Downloading, editing and using the ProsunAI code: Users can download the ProsunAI project directly from this github repository. Then, by opening it with Android Studio, they can edit the ngrok link (with the one they will create themselves). Finally, they can test the code either by using a virtual device or by downloading the apk file for debugging.
+
+    - Starting the conversation: Once the testing of the mobile application is run, the user can start chatting with the conversational agent.
+ 
+    - Connection to the Rasa server: ProsunAI uses ngrok to establish a secure connection with the Rasa server, which processes requests and outputs replies based on the text entered by the user.
+ 
+ProsunAI represents a step forward in human-computer interaction, offering a simple and direct way to get information and answers through a chat. With its intuitive interface, it is the ideal mobile application for those looking for an easy way to communicate with the conversational agent hosted on a Rasa server.
