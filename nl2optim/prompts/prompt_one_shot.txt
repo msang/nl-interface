@@ -1,3 +1,0 @@
-Considera il seguente esempio:
-Enunciato 1: vorrei che la temperatura della camera fosse di <CONSTR_TEMP>22 gradi</CONSTR_TEMP> <CONSTR_TIME>tra le 20 e le 7</CONSTR_TIME>
-Rappresentazione formale: h_t=22 for 20<=t<=7 ; s_t=1 for 20<=t<=7
