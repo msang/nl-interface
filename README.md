@@ -90,11 +90,11 @@ Thanks to an advanced conversational agent, users can interact naturally and rec
 
 + How it works
 
-    - Downloading, editing and using the ProsunAI code: Users can download the ProsunAI project directly from this github repository. Then, opening it with Android Studio, they can modify the ngrok link, with the one they will create themselves, found in the following location 
+    - Downloading, editing and using the ProsunAI code: Users can download the ProsunAI project directly from this github repository. Then, opening it with Android Studio, they can modify the ngrok link, with the one they will create themselves, found in the following location: 
 
             "ProsunAI/app/src/main/java/com/example/ProsunAI"
 
-            Finally, they can test the code using a virtual device or by downloading the apk file for debugging.
+      Finally, they can test the code using a virtual device or by downloading the apk file for debugging.
 
     - Starting the conversation: Once the testing of the mobile application is run, the user can start chatting with the conversational agent.
  
