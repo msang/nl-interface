@@ -99,10 +99,45 @@ def generate_synth_data(data, prosumers):
  
     return final
 
+############################################
+# trattamento dati shelly
+
+
+# per convertire stringhe tipo dizionario in oggetto json
+import ast
+
+def parse_json_like(v):
+    try:
+        # Solo se è stringa e inizia con {
+        if isinstance(v, str) and v.strip().startswith('{'):
+            return ast.literal_eval(v)
+        return v
+    except (ValueError, SyntaxError):
+        return v  # Se fallisce, lascia il valore così com'è
+
+
+def import_shelly():
+    # dati azzedine:
+    df = pd.read_csv('../shelly_simulated.csv', converters={'Value': parse_json_like})  
+    
+    # se timestamp != datetime
+    df['Timestamp'] = pd.to_datetime(df['Timestamp'])
+    
+    pivot_df = df.pivot_table(index='Timestamp', columns='Key', values='Value', aggfunc='first')  
+    pivot_df.drop(['raw','voltage','current', 'output'], axis=1, inplace=True)
+    pivot_df.rename(columns={'Timestamp': 'orario', 'aenergy': 'energia consumata (kWh)', 'apower':'potenza attuale (kW)', 'temperature':'temperatura'}, inplace=True)
+    pivot_df['temperatura'] = pivot_df['temperatura'].apply(lambda x: x["tC"])
+    pivot_df['energia consumata (kWh)'] = pivot_df['energia consumata (kWh)'].apply(lambda x: x["total"])
+    results =  pivot_df.reset_index().to_string(index=False)
+
+    return results
+        
 
 
 if __name__ == "__main__":
 
+    print(import_shelly())
+    """
     #coordinate di cagliari (https://dateandtime.info/it/citycoordinates.php?id=2525473):
     LAT = 39.2305400
     LONG =  9.1191700
@@ -118,13 +153,15 @@ if __name__ == "__main__":
     #forecast = get_pv_forecast("data.json")
     #pv = forecast["pv_estimate"].to_list()
     #print(get_pv_forecast("data.json"))
-    pv = PV()
+    #pv = PV()
     #pv_fc = pv.get_pv_forecast()
-    H = 12
-    end = datetime.now()
-    start = end-timedelta(hours=H+1)
-    end = end.strftime("%Y-%m-%d %H:%M:%S")
-    start = start.strftime("%Y-%m-%d %H:%M:%S")
-    print(start, end)
-    cons, prod, _, _ = solaredge_api(start, end)
+    #H = 12
+    #end = datetime.now()
+    #start = end-timedelta(hours=H+1)
+    #end = end.strftime("%Y-%m-%d %H:%M:%S")
+    #start = start.strftime("%Y-%m-%d %H:%M:%S")
+    #print(start, end)
+    #cons, prod, _, _ = solaredge_api(start, end)
     #print(generate_synth_data(cons, 3))
+    """
+    

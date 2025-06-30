@@ -1,0 +1,18 @@
+{% if intent=="check_consumption" %}
+Considera le seguenti informazioni relative all'andamento dei consumi elettrici domestici: 
+{{ data }}
+{% elif intent=="check_production" %}
+Considera le seguenti informazioni relative all'andamento di un impianto fotovoltaico:
+{{ data }}
+{% elif intent=="ask_optimization" %}
+Considera i seguenti dati restituiti da un ottimizzatore che minimizza l'uso di energia dalla rete elettrica:
+{{ data }}
+{% elif intent=="ask_netload_forecast" %}
+Considera le seguenti informazioni relative alle previsioni di consumi (intesi come la sola energia presa dalla rete) nelle prossime ore:
+{{ data }}
+{% endif %}
+
+Usa le informazioni che ti ho appena fornito per rispondere alla seguente domanda: {{utterance}}
+
+
+

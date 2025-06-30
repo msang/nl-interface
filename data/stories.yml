@@ -16,6 +16,11 @@ stories:
   #- intent: affirm
   #- action: answer_explanation_request
 
+- story: happy path on optimization feedback w/ user preferences
+  steps:
+  - intent: set_constraints
+  - action: answer_optimization_request
+
 - story: happy path on consumption monitoring
   steps:
     - intent: check_consumption
@@ -26,15 +31,11 @@ stories:
     - intent: check_production
     - action: answer_monitoring_request
 
-# - story: happy path on acting on a device request
-#   steps:
-#     - intent: action_request
-#     - action: answer_act_on_device
 
-- story: happy path on status request
+- story: happy path on netload forecast
   steps:
-    - intent: check_status
-    - action: answer_status_request
+    - intent: ask_netload_forecast
+    - action: answer_netload_forecast_request
 
 
 - story: interactive_story_1
@@ -52,3 +53,13 @@ stories:
   - intent: ask_optimization
   - action: answer_optimization_request
 
+
+- story: interactive_story_1
+  steps:
+  - intent: set_constraints
+    entities:
+    - appliance: water_heater
+    - constr_time: dalle 7
+  - slot_was_set:
+    - device_name: water_heater
+  - action: answer_optimization_request

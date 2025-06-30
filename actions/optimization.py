@@ -155,16 +155,19 @@ class Optimizer:
         grid_import_values = [round(model.grid_imp[t].value, 2) for t in model.time_steps]
         time_steps = [t for t in pv_time_intervals]
         pv_data = [round(model.pv[t], 2) for t in model.time_steps]
-        bess = [round(model.bess_soc[t].value, 2) for t in model.time_steps]
-        state = [model.state[t].value for t in model.time_steps]
-        final = {"state":state, "grid":grid_import_values,"PV forecast":pv_data,"BESS SoC":bess}
+        bess = [round(model.bess_soc[t].value, 2)*10 for t in model.time_steps]
+        #state = [model.state[t].value for t in model.time_steps]
+        state = ["Sì" if model.state[t].value > 0 else "No" for t in model.time_steps]
+        #final = {"state":state, "grid":grid_import_values,"PV forecast":pv_data,"BESS SoC":bess}
+        final = {'orario':time_steps, 'Accensione consigliata':state, 'Potenza presa dalla rete (kW)':grid_import_values,'Produzione solare prevista (kW)':pv_data,'Stato batteria (%)':bess}
 
-        df = pd.DataFrame(final, index=time_steps)
+        #df = pd.DataFrame(final, index=time_steps)
+        df = pd.DataFrame(final)
         #print(df)
 
         #text = verbalize_result(T, time_resolution, grid_import_values, self.appliance.cycle_duration)
         #print(df.head(12).to_string())
-        return df.head(12).to_string() #mantengo solo i risultati delle prime 12 ore, per limitare il contesto
+        return df.head(12).to_string(index=False) #mantengo solo i risultati delle prime 12 ore, per limitare il contesto
 
 
 if __name__ == "__main__":

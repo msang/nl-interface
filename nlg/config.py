@@ -23,7 +23,9 @@ class LLM:
         def create_prompt(self, intent, utterance, energy_data):
             #system = "Sei un assistente AI per la lingua italiana. Rispondi nella lingua usata per la domanda in modo chiaro, diretto e completo. Attieniti strettamente alle istruzioni fornite e riporta la tua risposta in modo conciso, senza aggiungere ulteriori commenti o spiegazioni."
             system = " Sei un assistente esperto di ottimizzazione energetica. Fornisci risposte brevi ma precise. Non superare i 150 token."
-            env = Environment(loader=FileSystemLoader('templates'))
+            template_dir = os.path.join(os.path.dirname(__file__), "templates")
+            env = Environment(loader=FileSystemLoader(template_dir))
+            #env = Environment(loader=FileSystemLoader('templates'))
             template = env.get_template("template.j2")
             user = template.render(intent=intent, utterance=utterance, data=energy_data)
             complete = [{"role": "system", "content":f"{system}"},{"role": "user", "content":f"{user}"}]
