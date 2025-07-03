@@ -177,7 +177,7 @@ class MLPModel:
         #uso il modello per le predizioni:
         X_test = self.preprocess_test_data(df_weather, pv_data)
         results, time = self.test_model(X_test)
-        self.plot_predictions(time, results)
+        #self.plot_predictions(time, results)
 
         final = {'Ora':time, 'Previsione consumi (kW)': results}
         df = pd.DataFrame(final)
@@ -191,7 +191,7 @@ if __name__ == "__main__":
     longitude = 9.1191700
     #start_date = datetime.now() + timedelta(hours=2) #aggiungo manualmente, ma va sistemato!!!
     now = datetime.now()
-    local_timezone = pytz.timezone("Europe/Berlin")
+    local_timezone = pytz.timezone("Europe/Rome")
     start_date = now.astimezone(local_timezone).replace(second=0, microsecond=0).replace(tzinfo=None)
     end_date = start_date + timedelta(hours=24) 
     #mlp.fetch_weather_data(latitude, longitude, start_date, end_date)
