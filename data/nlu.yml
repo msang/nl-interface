@@ -86,6 +86,7 @@ nlu:
     - sta caricando la [batteria]{"entity": "source", "value": "bess"}?
     - c'è un surplus di energia?
     - [batteria]{"entity": "source", "value": "bess"} disponibile
+    - quanto surplus ho generato oggi
 - intent: check_consumption
   examples: |
     - come stanno andando i consumi?
@@ -127,7 +128,10 @@ nlu:
     - è vero che ieri ho avuto il maggior consumo della settimana?
     - Puoi dirmi il consumo energetico totale del 10 ottobre?
     - Qual è stato il consumo energetico complessivo durante il fine settimana?
-    - Mostra il consumo energetico di tutte le apparecchiature nell'ultima settimana.
+    - Mostra il consumo energetico di tutte le apparecchiature nell'ultima settimana
+    - non avevo chiesto la previsione dei consumi, ma quanta energia ho già consumato oggi
+    - oggi ho consumato tanto?
+    
 - intent: set_constraints
   examples: |
     - devo fare la [doccia]{"entity": "appliance", "value": "water_heater"} [stasera](constr_time)
