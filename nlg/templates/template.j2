@@ -1,0 +1,41 @@
+{% if intent=="check_consumption" %}
+Considera le seguenti informazioni relative all'andamento dei consumi elettrici domestici: 
+{{ data }}
+{% elif intent=="check_production" %}
+Considera le seguenti informazioni relative all'andamento di un impianto fotovoltaico:
+{{ data }}
+{% elif intent=="ask_optimization" %}
+Considera i seguenti dati restituiti da un ottimizzatore che minimizza l'uso di energia dalla rete elettrica:
+{{ data }}
+{% elif intent=="ask_netload_forecast" %}
+Considera le seguenti informazioni relative alle previsioni di consumi (intesi come la sola energia presa dalla rete) nelle prossime ore:
+{{ data }}
+{{% elif intent=="ask_selling_advice" %}}
+Considera le seguenti informazioni relative a una comunità energetica che scambia energia tramite blockchain:
+
+- Ogni kWh è rappresentato da un NFT (ERC721).
+- Ogni centesimo di euro è rappresentato da un token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
+  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+
+1. Ordine di priorità: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. Ogni transazione è espressa in NFT (1 kWh) + corrispondente quantità di token (in cent).
+3. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo. Il prezzo suggerito deve indicare un valore preciso, non un range generico.
+
+Dati giornalieri dei membri della comunità (in kWh):
+{% for member in members %}
+- {{ member.name }}{% if member.is_user %} (utente){% endif %}{% if member.role == "prosumer" %}: produzione = {{ member.production }}, consumo = {{ member.consumption }}{% else %}: consumo = {{ member.consumption }}{% endif %}
+{% endfor %}
+{% endif %}
+
+{{% if intent=="ask_selling_advice" %}}
+Usa le informazioni che ti ho appena fornito per rispondere direttamente a {{prosumer_user}} che ti pone la seguente domanda: {{ utterance }}
+{% else %}
+Usa le informazioni che ti ho appena fornito per rispondere alla seguente domanda: {{utterance}}
+{% endif %}
+
+
+
