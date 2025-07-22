@@ -1,7 +1,7 @@
 
 ## Description
 
-This repository contains the source code and resources required to run your own conversational agent for energy feedback using Telegram as messaging channel.
+This repository contains the source code and resources required to run your own conversational agent for energy feedback from the command line.
 
 
 ## Repository Structure
@@ -11,6 +11,7 @@ The repository is organized as follows:
 - `data/`: Contains training and evaluation files for the RASA model.
 - `models/`: Holds the latest pre-trained models of the conversational agent.
 - `actions/`: Includes custom actions with calls to external modules .
+- `nlg/`: Includes the code to run the external NLG server
 - `config.yml`: Defines the training configuration for RASA NLU and RASA Core.
 - `domain.yml`: Defines the domain of the conversational agent, including intents, actions, entities, and slots.
 - `credentials.yml`: Contains credentials for integration with external interfaces via REST and Socket.IO channels
@@ -47,9 +48,28 @@ To begin using the agent, follow these steps:
 
 3. Create and activate a virtual environment 
 
+    ```bash
+    python -m venv rasa
+    source rasa/bin/activate   
+    ```
+
+4. Install the necessary dependencies:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+5. Train the RASA model with the training data already available in data/nlu.yml:
+
+    ```bash
+    rasa train
+    ```
+
 4. Chat with the agent via command line using the following script:
   
   ```bash
 
   python  chat.py
   ```
+  
+   The script automatically starts the RASA server, the SDK server and the NLG server.
