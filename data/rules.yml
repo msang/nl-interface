@@ -1,6 +1,5 @@
 version: "3.1"
 
-
 rules:
 
 - rule: start telegram chat
@@ -21,19 +20,4 @@ rules:
 - rule: Fallback handler - Ask the user to repeat or change in a covered topic
   steps:
   - intent: nlu_fallback
-  - action: utter_fallback
-  
-- rule: Validation of the slot on the device form
-  condition:
-    - active_loop: device_form  # rules apply only when the form is active
-  steps:
-    - action: validate_device_form  # action that validates the slot
-
-      
-#- rule: Resume the optimization action after receiving a valid device name
-#  condition:
-#    - active_loop: validate_device_form
-#  steps:
-#    - action: validate_device_form
-#    - active_loop: null 
-#    - action: answer_optimization_request
+  - action: utter_nlu_fallback

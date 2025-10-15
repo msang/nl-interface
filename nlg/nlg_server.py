@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
-from config import LLM
-from typing import Optional
+from .config import LLM
+from typing import Any, Dict, Optional, Union
 import traceback
 
 app = FastAPI()
@@ -11,6 +11,7 @@ class NLGRequest(BaseModel):
     intent: Optional[str] = None
     utterance: Optional[str] = None
     energy_data: Optional[str] = None
+    #energy_data: Optional[Union[str, Dict[str, Any]]] = None ##accetta un diz, una stringa opp. none
 
 class NLGResponse(BaseModel):
     text: str
@@ -27,6 +28,12 @@ STATIC_RESPONSES = {
 def root():
     return {"message": "NLG server is up and running"}
 
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+    
+
 @app.post("/nlg", response_model=NLGResponse)
 async def generate_response(payload: NLGRequest):
     print("Ricevuto il payload:", payload)
@@ -39,7 +46,9 @@ async def generate_response(payload: NLGRequest):
             return NLGResponse(text=STATIC_RESPONSES[intent])
 
         prompt = model.create_prompt(intent, utterance, data)
-        response_text = model.inference(prompt)
+        print(prompt)
+        response_text = model.inference(prompt, intent)
+        print(response_text)
 
         return NLGResponse(text=response_text)
 

@@ -10,10 +10,9 @@ nlu:
     - salve
     - buonasera
     - buondì
-    - oè
-    - uè
     - ehi
     - hei
+    - giorno
 - intent: goodbye
   examples: |
     - a presto
@@ -27,22 +26,22 @@ nlu:
     - arrivederci
     - buona giornata
     - alla prossima
-- intent: affirm
-  examples: |
-    - sì
-    - ok
-    - infatti
-    - esatto
-    - va bene
-    - certamente
-    - sì, grazie
-    - sì grazie
-    - va bene, ciao
+    - ok ciao
     - ok grazie
+#- intent: affirm
+#  examples: |
+#    - sì
+#    - ok
+#    - infatti
+#    - esatto
+#    - va bene
+#    - certamente
+#    - sì grazie
+#    - va bene, ciao
+#    - ok grazie
 - intent: deny
   examples: |
     - no
-    - no, grazie
     - assolutamente no
     - non proprio
     - non esattamente
@@ -86,6 +85,15 @@ nlu:
     - sta caricando la [batteria]{"entity": "source", "value": "bess"}?
     - c'è un surplus di energia?
     - [batteria]{"entity": "source", "value": "bess"} disponibile
+    - quanto surplus ho generato oggi
+    - che mi dici della produzione? ho generato molto surplus?
+    - quanto ho fatto oggi?
+    - quanto ho di [accumulo]{"entity": "source", "value": "bess"}
+    - grazie. Ho prodotto molto o poco?
+    - in che senso ho prodotto relativamente molto? relativamente rispetto a cosa?
+    - quanto hanno fatto oggi i pannelli
+    - com'è andata oggi con i pannelli
+    - quant'è ora il mio surplus
 - intent: check_consumption
   examples: |
     - come stanno andando i consumi?
@@ -127,9 +135,38 @@ nlu:
     - è vero che ieri ho avuto il maggior consumo della settimana?
     - Puoi dirmi il consumo energetico totale del 10 ottobre?
     - Qual è stato il consumo energetico complessivo durante il fine settimana?
-    - Mostra il consumo energetico di tutte le apparecchiature nell'ultima settimana.
+    - Mostra il consumo energetico di tutte le apparecchiature nell'ultima settimana
+    - non avevo chiesto la previsione dei consumi, ma quanta energia ho già consumato oggi
+    - oggi ho consumato tanto?
+    - non voglio le previsioni future, voglio sapere quanto ho consumato oggi
+    - ora puoi dirmi se ho consumato molto oggi?   
+    - buongiorno mi dica dei miei consumi
+    - quanto ho consumato
+- intent: set_constraints
+  examples: |
+    - devo fare la [doccia]{"entity": "appliance", "value": "water_heater"} [stasera](constr_time)
+    - mi serve l'[acqua calda]{"entity": "appliance", "value": "water_heater"} a 60 gradi [tra le 10 e le 12](constr_time)
+    - ho bisogno che l'[acqua]{"entity": "appliance", "value": "water_heater"} sia a 50 gradi [dalle 2 alle 6](constr_time)
+    - vorrei impostare l'[aria condizionata]{"entity": "appliance", "value": "hvac"} a 27°
+    - desidero mantenere la [temperatura della casa]{"entity": "appliance", "value": "hvac"} costante di 22 gradi [per tutto il giorno](constr_time)
+    - Ho bisogno dell'[acqua calda]{"entity": "appliance", "value": "water_heater"} almeno a 50 gradi [alle 19](constr_time)
+    - Attivami le [pompe di calore]{"entity": "appliance", "value": "hvac"} per avere la casa a 25 gradi [entro un'ora](constr_time)
+    - Mi serve che accenda lo [scaldabagno]{"entity": "appliance", "value": "water_heater"} in modo tale da farmi avere l'[acqua]{"entity": "appliance", "value": "water_heater"} a 60 gradi [tra quattro ore circa](constr_time)
+    - Imposta la [temperatura]{"entity": "appliance", "value": "hvac"} a 23 gradi [dalle 10 di mattina fino alle 15](constr_time).
+    - Domani alle 8 fammi trovare una [temperatura]{"entity": "appliance", "value": "hvac"} di 26 gradi
+    - Assicurati che l'[aria condizionata]{"entity": "appliance", "value": "hvac"} mantenga 20 gradi [durante la notte](constr_time).
+    - desidero avere la [casa riscaldata]{"entity": "appliance", "value": "hvac"} tutte le sere [dopo le 18](constr_time)
+    - necessito dell'[acqua calda]{"entity": "appliance", "value": "water_heater"} tutte le mattine [alle 8](constr_time)
+    - [casa rinfrescata]{"entity": "appliance", "value": "hvac"} [per stasera](constr_time)
+    - Ho bisogno dell'[acqua calda]{"entity": "appliance", "value": "water_heater"} [alle 19](constr_time)
+    - Attivami le [pompe di calore]{"entity": "appliance", "value": "hvac"} per avere la casa calda [tra qualche ora]
+    - Mi serve che accenda lo [scaldabagno]{"entity": "appliance", "value": "water_heater"} in modo tale da farmi avere l'[acqua calda]{"entity": "appliance", "value": "water_heater"} [tra un'oretta circa](constr_time)
+    - [Domani alle 8](constr_time) fammi trovare una [temperatura]{"entity": "appliance", "value": "hvac"} di 26 gradi
+    - [acqua calda]{"entity": "appliance", "value": "water_heater"} [dalle 7](constr_time)
 - intent: ask_optimization
   examples: |
+    - desidero avere la [casa riscaldata]{"entity": "appliance", "value": "hvac"}
+    - necessito dell'[acqua calda]{"entity": "appliance", "value": "water_heater"}
     - vorrei capire se conviene avviare la [lavatrice]{"entity": "appliance", "value": "washing_machine"} adesso o più tardi
     - qual è il momento migliore per avviare la [lavatrice]{"entity": "appliance", "value": "washing_machine"} considerando l'energia solare disponibile?
     - ho intenzione di avviare la [lavatrice]{"entity": "appliance", "value": "washing_machine"} più tardi
@@ -147,14 +184,8 @@ nlu:
     - mi serve l'[acqua calda]{"entity": "appliance", "value": "water_heater"}, quando farla partire?
     - voglio ottimizzare l'uso dell'[asciugatrice]{"entity": "appliance", "value": "dryer"}, cosa suggerisci?
     - quando posso sfruttare il [sole]{"entity": "source", "value": "pv"}?
-    - necessito dell'[acqua calda]{"entity": "appliance", "value": "water_heater"} tutte le mattine alle 8
     - dimmi quali elettrodomestici posso utilizzare per massimizzare l'uso dell'energia dai [pannelli solari]{"entity": "source", "value": "pv"}
-    - desidero mantenere una temperatura costante di 22 gradi per tutto il giorno
     - necessito delle [pompe di calore]{"entity": "appliance", "value": "hvac"} solo di mattina
-    - mi serve l'[acqua calda]{"entity": "appliance", "value": "water_heater"} tra le 10 e le 12
-    - vorrei impostare l'[aria condizionata]{"entity": "appliance", "value": "hvac"} a 27°
-    - ho bisogno che l'[acqua sia calda]{"entity": "appliance", "value": "water_heater"} dalle 2 alle 6
-    - desidero avere la [casa riscaldata]{"entity": "appliance", "value": "hvac"} tutte le sere dopo le 18
     - Quando mi consigli di far partire la [lavatrice]{"entity": "appliance", "value": "washing_machine"} per risparmiare energia?
     - Quando sarebbe il momento migliore per usare la [lavatrice]{"entity": "appliance", "value": "washing_machine"} oggi?
     - A che ora dovrei usare lo [scaldabagno]{"entity": "appliance", "value": "water_heater"} per ridurre i consumi?
@@ -171,50 +202,57 @@ nlu:
     - Quali accorgimenti posso adottare per risparmiare energia con il mio [scaldabagno]{"entity": "appliance", "value": "water_heater"}?
     - Come posso programmare le [pompe di calore]{"entity": "appliance", "value": "hvac"} per un uso più efficiente?
     - Ci sono orari specifici in cui è meglio usare la [lavatrice]{"entity": "appliance", "value": "washing_machine"} per risparmiare energia?
-    - Ho bisogno dell'[acqua calda]{"entity": "appliance", "value": "water_heater"} alle 19
-    - voglio sapere se domani mi conviene mettere l'[acqua]{"entity": "appliance", "value": "water_heater"} al massimo
-- intent: action_request
+    - mi conviene usare le [pompe]{"entity": "appliance", "value": "water_heater"} stanotte?
+    - domani devo fare tre [lavatrici]{"entity": "appliance", "value": "washing_machine"}
+    - devo migliorare l'autoconsumo
+- intent: ask_netload_forecast
   examples: |
-    - Attivami le [pompe di calore]{"entity": "appliance", "value": "hvac"} per avere la casa a 25 gradi entro un'ora
-    - Puoi far finire la [lavatrice]{"entity": "appliance", "value": "washing_machine"} alle 6?
-    - Tra 5 ore sono a casa, fammi trovare una temperatura di 24 gradi
-    - Accendi la [lavatrice]{"entity": "appliance", "value": "washing_machine"} e metti la modalità eco tra 4 ore
-    - Mi serve che accenda lo [scaldabagno]{"entity": "appliance", "value": "water_heater"} in modo tale da farmi avere l'[acqua calda]{"entity": "appliance", "value": "water_heater"} tra un'oretta circa
-    - Programma il ciclo della [lavatrice]{"entity": "appliance", "value": "washing_machine"} per domani mattina.
-    - Attiva le [pompe di calore]{"entity": "appliance", "value": "hvac"} solo quando c'è energia solare disponibile.
-    - Puoi avviare le [pompe di calore]{"entity": "appliance", "value": "hvac"} ora?
-    - Puoi mettere in pausa la [lavatrice]{"entity": "appliance", "value": "washing_machine"}?
-    - Metti in pausa lo [scaldabagno]{"entity": "appliance", "value": "water_heater"}, per favore
-    - Fai fare una pausa alle [pompe di calore]{"entity": "appliance", "value": "hvac"}
-    - Sospendi la [lavatrice]{"entity": "appliance", "value": "washing_machine"}
-    - Ferma temporaneamente lo [scaldabagno]{"entity": "appliance", "value": "water_heater"}
-    - Se possibile vorrei sospendere momentaneamente la [lavatrice]{"entity": "appliance", "value": "washing_machine"}.
-    - Interrompi un attimo le [pompe di calore]{"entity": "appliance", "value": "hvac"}
-    - È possibile fermare la [lavatrice]{"entity": "appliance", "value": "washing_machine"} un momento?
-    - Spegni la [lavatrice]{"entity": "appliance", "value": "washing_machine"}
-    - disattiva le [pompe di calore]{"entity": "appliance", "value": "hvac"} per risparmiare energia
-    - Ferma completamente la [lavatrice]{"entity": "appliance", "value": "washing_machine"}
-    - Non mi serve più l'[acqua calda]{"entity": "appliance", "value": "water_heater"}
-    - Stacca le [pompe di calore]{"entity": "appliance", "value": "hvac"} se puoi
-    - Per favore, arresta il ciclo di lavaggio della [lavatrice]{"entity": "appliance", "value": "washing_machine"}
-    - è possibile spegnere lo [scaldabagno]{"entity": "appliance", "value": "water_heater"} adesso?
-    - Assicurati che le [pompe di calore]{"entity": "appliance", "value": "hvac"} siano spente
-- intent: check_status
+    - quanto prenderò dalla rete oggi
+    - Qual è la previsione dei miei consumi?
+    - Puoi dirmi quanto consumerò domani?
+    - Mi dai la previsione del net load per i prossimi giorni?
+    - Come si prevede il mio consumo energetico?
+    - Sai quanta energia userò nelle prossime ore?
+    - Fammi una previsione dei miei consumi elettrici
+    - Vorrei sapere quanto consumerò la settimana prossima
+    - Hai delle previsioni sul mio profilo di consumo?
+    - Dimmi il forecast del mio net load
+    - Come sarà il mio carico netto domani?
+    - Previsioni consumi energetici per oggi?
+    - Cosa prevede il sistema per i miei consumi?
+    - Forecast energia prossimi giorni
+    - Voglio la stima dei miei consumi futuri
+    - Come cambierà il mio consumo?
+    - Hai una previsione per la mia domanda energetica?
+    - Prevedi il mio consumo energetico
+    - Consumi previsti prossima settimana
+    - Sai dirmi il mio carico energetico stimato?
+    - stasera consumerò tanto?
+- intent: ask_selling_advice
   examples: |
-    - Quali elettrodomestici sono attivi al momento?
-    - Per caso le [pompe di calore]{"entity": "appliance", "value": "hvac"} sono accese?
-    - Fai vedere i dispositivi attivi.
-    - Puoi dirmi se la [lavatrice]{"entity": "appliance", "value": "washing_machine"} ha già finito il lavaggio?
-    - Il ciclo di lavaggio della [lavatrice]{"entity": "appliance", "value": "washing_machine"} è ancora in corso?
-    - Ci sono dispositivi in funzione in questo momento?
-    - Le [pompe di calore]{"entity": "appliance", "value": "hvac"} sono ancora in funzione?
-    - C'è qualcosa di acceso?
-    - Mi ricordi se le [pompe di calore]{"entity": "appliance", "value": "hvac"} sarà ancora attiva alle 18?
-    - Lo [scaldabagno]{"entity": "appliance", "value": "water_heater"} è spento?
-    - Ci sono dispositivi che stanno usando corrente in questo momento?
-    - La [lavatrice]{"entity": "appliance", "value": "washing_machine"} sta ancora lavando?
-    - Per caso le [pompe di calore]{"entity": "appliance", "value": "hvac"} si sono fermate?
-    - Quanto manca allo spegnimento dello [scaldabagno]{"entity": "appliance", "value": "water_heater"}?
+    - suggerisci a chi vendere e a quanto
+    - Mi consigli a chi vendere oggi e a quale prezzo?
+    - Chi mi conviene scegliere come acquirente e a che tariffa vendere?
+    - Hai un suggerimento su chi possa comprare la mia energia e quanto dovrei chiedere?
+    - dimmi l'acquirente ideale per oggi e un prezzo di vendita competitivo
+    - Secondo te, chi è disposto a pagare meglio oggi per il mio surplus?
+    - A chi potrei vendere l’energia in eccesso, e a che prezzo mi conviene metterla?
+    - C'è qualche utente in rete interessato? Quanto potrei chiedere?
+    - consiglio rapido su a chi vendere e che prezzo impostare
+    - Fammi un suggerimento personalizzato: a chi dovrei vendere e per quanto
+    - Hai dati su chi paga meglio ora e qual è una soglia di prezzo accettabile?
+    - Vorrei vendere ora: chi me la comprerebbe e a quale prezzo?
+    - Chi è disponibile all'acquisto ora e quanto potrei ottenere per kWh?
+    - consigli a chi vendere e quale prezzo impostare
+    - dimmi un compratore e una fascia di prezzo per vendere in sicurezza
+    - Chi paga di più per l’energia adesso? E quanto dovrei chiedere per non svenderla?
+    - l'energia che non ho consumato voglio venderla
+    - a quanto vendo l'eccedenza
+    - a quanto vendo?
+    - ho prodotto un sacco e non voglio regalarla alla rete, dammi suggerimenti
+    - devo vendere
+    - ciao, voglio vendere i kWh che ho in più
+    - mi conviene vendere?
 - synonym: pv
   examples: |
     - pannelli
@@ -227,6 +265,7 @@ nlu:
 - synonym: bess
   examples: |
     - batteria
+    - accumulo
 - synonym: washing_machine
   examples: |
     - lavatrice
@@ -237,6 +276,8 @@ nlu:
   examples: |
     - pompe di calore
     - aria condizionata
+    - temperatura della casa
+    - temperatura
     - casa riscaldata
     - riscaldamento
     - termostato
@@ -244,10 +285,10 @@ nlu:
     - climatizzatore
 - synonym: water_heater
   examples: |
-    - acqua
     - acqua calda
-    - acqua sia calda
+    - acqua
     - scaldabagno
+    - pompe
     - ACS
     - antilegionella
 - synonym: dishwasher

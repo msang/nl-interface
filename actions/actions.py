@@ -2,22 +2,20 @@ from typing import Any, Text, Dict, List, Tuple
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet, Form, FollowupAction
-import json, logging, pytz, requests
+from datetime import datetime, timedelta
+import json, logging, pytz, random, requests
 from .monitoring import EnergyMonitoring
 from .optimization import Optimizer
 from .appliance import Appliance
 from .forecasting import MLPModel
-from datetime import datetime, timedelta
 from .utils import date_to_string
-from .data import parse_energy_excel#parse_energy_data
-
 
 logger = logging.getLogger(__name__)
 
 
 def send_to_nlg(intent: str, utterance: str, energy_data: str) -> str:
     """
-    Invia una richiesta al server NLG e restituisce il testo generato o fallback.
+    Invia una richiesta al server NLG e restituisce o il testo generato o un fallback.
     """
     try:
         nlg_server_url = "http://localhost:5056/nlg"
@@ -28,7 +26,7 @@ def send_to_nlg(intent: str, utterance: str, energy_data: str) -> str:
         }
 
         headers = {"Content-Type": "application/json"}
-        response = requests.post(nlg_server_url, json=payload, headers=headers, timeout=90)
+        response = requests.post(nlg_server_url, json=payload, headers=headers, timeout=120)
         response.raise_for_status()
 
         return response.json().get("text", "")
@@ -37,10 +35,8 @@ def send_to_nlg(intent: str, utterance: str, energy_data: str) -> str:
             requests.exceptions.HTTPError, 
             requests.exceptions.RequestException, 
             ValueError) as e:
-        #Exception as e:
         logger.error(f"Errore nella comunicazione con il server NLG: {e}")
         return f"Di seguito le informazioni richieste:\n{energy_data}"
-
 
 
 class AnswerMonitoringRequest(Action):
@@ -49,6 +45,7 @@ class AnswerMonitoringRequest(Action):
         return "answer_monitoring_request"
 
     def run(self, dispatcher, tracker, domain):
+        print(self.name)
         intent = tracker.latest_message['intent'].get('name')
         utterance = tracker.latest_message.get("text")
         em = EnergyMonitoring()
@@ -82,7 +79,8 @@ class AnswerOptimizationRequest(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
+        
+        print(self.name)
         opt = Optimizer()
         user_start = user_end = None #TODO: aggiornare qui
         opt_start = datetime.now()
@@ -119,6 +117,7 @@ class AnswerNetLoadForecastRequest(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
+        print(self.name)
         intent = tracker.latest_message['intent'].get('name')
         utterance = tracker.latest_message.get("text")
 
@@ -145,60 +144,67 @@ class AnswerNetLoadForecastRequest(Action):
 class AnswerSellingAdviceRequest(Action):
 
     def name(self) -> Text:
-        return "answer_netload_forecast_request"
+        return "answer_selling_advice_request"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
+        print(self.name)
         intent = tracker.latest_message['intent'].get('name')
         utterance = tracker.latest_message.get("text")
 
         try:
-            members, user = parse_energy_excel()
-            energy_data = (members, user)
+            energy_data = _create_rec_profiles()
         except Exception as e:
             logger.error(f"Errore durante l'elaborazione dei dati: {e}")
             dispatcher.utter_message(text="Mi dispiace, non ho modo di recuperare i dati relativi alla comunità in questo momento. Richiedimelo più tardi.")
             return []
 
         generated_text = send_to_nlg(intent, utterance, energy_data)
+        #print(generated_text)
         dispatcher.utter_message(text=generated_text)
         return []
 
-        
-            
+def _create_rec_profiles():
+    em = EnergyMonitoring()
+    em.fetch_energy_details()
+    user_p = em.daily_production
+    user_c = em.daily_consumption
+    ###genero profili random di produzione e consumo
+    SYNTH_PROSUMERS = 2
+    SYNTH_CONSUMERS = 4
+    random_production = [round(user_p * random.random(), 2) for i in range(SYNTH_PROSUMERS)] 
+    random_consumption = [round(user_c * random.random(), 2) for i in range(SYNTH_CONSUMERS)]
 
+    energy_data = f"""- Peer1 (Utente): produzione: {user_p} - consumo: {user_c}
+    - Peer2: produzione: {random_production[0]} - consumo: {random_consumption[0]}
+    - Peer3: produzione: {random_production[1]} - consumo: {random_consumption[1]}
+    - Peer4: consumo: {random_consumption[2]}
+    - Peer5: consumo: {random_consumption[3]}
+    """
+    
+    return energy_data
     
 
 if __name__ == "__main__":
-     slots = {"device_name":"hvac", "time": "2025-01-14T16:30:12.000+01:00", "temperature": 55}
-     #intent = {"name": "check_production","text": "l'azione mi serve adesso"}
-     intent = {"name": "ask_optimization","text": "quando usare le pompe"}
-     entities = [{
-            "start": 18,
-            "end": 24,
-            "text": "adesso",
-            "value": "2025-01-14T16:30:12.000+01:00",
-            "confidence": 1,
-            "additional_info": {
-              "values": [
-                {
-                  "value": "2025-01-14T16:30:12.000+01:00",
-                  "grain": "second",
-                  "type": "value"
-                }
-              ],
-              "value": "2025-01-14T16:30:12.000+01:00",
-              "grain": "second",
-              "type": "value"
-            },
-            "entity": "time",
-            "extractor": "DucklingEntityExtractor"
-          }]
-     tracker = Tracker(sender_id="x", slots=slots, latest_message={"intent": intent, "entities": entities}, events=[], paused=False, followup_action=None, active_loop=None, latest_action_name=None)
-     dispatcher = CollectingDispatcher()
-     domain={}
-     monit = AnswerOptimizationRequest()
-     monit.run(dispatcher, tracker, domain)
-     #opt = 
+    intent = {"name": "ask_selling_advice"}
+    latest_message = {
+                "intent": intent,
+                "text": "ho prodotto un sacco e non voglio regalarla alla rete, dimmi a chi e a quanto vendere",  # <-- Spostato fuori da 'intent'
+                "entities": []
+            }
+    tracker = Tracker(
+        sender_id="x",
+        slots=[],
+        latest_message=latest_message,
+        events=[],
+        paused=False,
+        followup_action=None,
+        active_loop=None,
+        latest_action_name=None
+    )
+    dispatcher = CollectingDispatcher()
+    domain={}
+    monit = AnswerSellingAdviceRequest()
+    monit.run(dispatcher, tracker, domain)

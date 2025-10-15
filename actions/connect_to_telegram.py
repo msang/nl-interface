@@ -6,8 +6,8 @@ from pathlib import Path
 
 def start_ngrok():
 
-    #ngrok = subprocess.Popen(['ngrok', 'http', '5005']) # <- uncomment this if you're running the script locally, instead of docker
-    ngrok = subprocess.Popen(['ngrok', 'http', 'rasa-server:5005']) 
+    ngrok = subprocess.Popen(['ngrok', 'http', '5005']) # <- uncomment this if you're running the script locally, instead of docker
+    #ngrok = subprocess.Popen(['ngrok', 'http', 'rasa-server:5005']) 
     time.sleep(5)
 
     return ngrok

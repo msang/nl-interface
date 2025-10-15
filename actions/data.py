@@ -134,7 +134,8 @@ def import_shelly():
         
 
 ##############################################################
-### trattamento dati blockchain
+### trattamento dati per scambi su blockchain
+
 def parse_float(value):
     try:
         return round(float(str(value).replace(",", ".")), 2)
@@ -208,6 +209,8 @@ def parse_energy_excel(file_path="energy_details.xlsx"):
     prosumer_user = next((m["name"] for m in members if m["is_user"] and m["role"] == "prosumer"), None)
 
     return members, prosumer_user
+
+
 
 if __name__ == "__main__":
     #path = "test2_scenarios.csv"

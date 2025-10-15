@@ -11,11 +11,12 @@
 # https://rasa.com/docs/rasa/custom-actions
 
 action_endpoint:
-  url: "http://action_server:5055/webhook" ##modified for docker container
-  #url: "http://localhost:5055/webhook" 
+  #url: "http://action_server:5055/webhook" ##modified for docker container
+  url: "http://localhost:5055/webhook" 
 
 #nlg:
-#  url: http://localhost:5055/nlg
+#  url: "http://localhost:5056/nlg"
+#  timeout: 90
   # 
   # You can also specify additional parameters, if you need them:
   # headers:

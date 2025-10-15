@@ -1,0 +1,692 @@
+timestamp,modello,prompt,risposta,tempi esecuzione,bertscore_f1
+2025-07-08T07:58:58.399321,mistral:7b,"Stai supportando un prosumer appartenente a una comunità energetica composta da membri che possono essere o prosumer (con produzione e consumo giornalieri di energia) o consumer (solo consumo, nessuna produzione).
+
+La comunità scambia energia utilizzando una blockchain:
+- Ogni kWh è rappresentato da un NFT ERC721.
+- Ogni centesimo di euro è rappresentato da 1 token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
+  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+
+Applica le seguenti regole per stabilire a chi può essere venduto il surplus:
+
+1. Ordine di priorità: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. Ogni transazione è espressa in NFT (1 kWh) + corrispondente quantità di token (in cent).
+3. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo.
+
+Di seguito trovi i dati giornalieri dei membri della comunità (in kWh):
+
+
+- Peer1 (utente): produzione = 20.73, consumo = 10.03
+
+- Peer2: produzione = 20.04, consumo = 11.04
+
+- Peer3: produzione = 9.63, consumo = 3.28
+
+- Peer4: consumo = 0.45
+
+- Peer5: consumo = 5.59
+
+
+Sulla base dei dati sopra, fornisci un suggerimento **per il prosumer utente** indicando:
+1. A chi può vendere il surplus, in quale ordine e in che misura.
+2. A quale prezzo (in centesimi di euro) vendere ciascun blocco di kWh, tenendo conto delle regole.
+
+Riassumi il suggerimento in modo chiaro ed efficace (es. tabella o elenco).","1. Il prosumer utente può vendere il suo surplus a Peer1 e Peer2, poiché sono i membri che hanno consumato più di quanto prodotto. La quantità da vendere è 10.70 kWh (20.73 - 10.03).
+
+2. Per stabilire il prezzo a cui vendere ciascun blocco di kWh, si calcola il prezzo minimo e massimo consentito:
+   - Prezzo minimo: 0.04 € (prezzo di vendita alla rete)
+   - Prezzo massimo: 0.16 € (prezzo di acquisto dalla rete)
+   - Per ottimizzare il prezzo, si cerca il valore che sia al limite inferiore del range consentito ma superiore al pre",99.7412247657776,0.7185472846031189
+2025-07-08T07:59:51.974488,gemma3:4b-it-qat,"Stai supportando un prosumer appartenente a una comunità energetica composta da membri che possono essere o prosumer (con produzione e consumo giornalieri di energia) o consumer (solo consumo, nessuna produzione).
+
+La comunità scambia energia utilizzando una blockchain:
+- Ogni kWh è rappresentato da un NFT ERC721.
+- Ogni centesimo di euro è rappresentato da 1 token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
+  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+
+Applica le seguenti regole per stabilire a chi può essere venduto il surplus:
+
+1. Ordine di priorità: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. Ogni transazione è espressa in NFT (1 kWh) + corrispondente quantità di token (in cent).
+3. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo.
+
+Di seguito trovi i dati giornalieri dei membri della comunità (in kWh):
+
+
+- Peer1 (utente): produzione = 20.73, consumo = 10.03
+
+- Peer2: produzione = 20.04, consumo = 11.04
+
+- Peer3: produzione = 9.63, consumo = 3.28
+
+- Peer4: consumo = 0.45
+
+- Peer5: consumo = 5.59
+
+
+Sulla base dei dati sopra, fornisci un suggerimento **per il prosumer utente** indicando:
+1. A chi può vendere il surplus, in quale ordine e in che misura.
+2. A quale prezzo (in centesimi di euro) vendere ciascun blocco di kWh, tenendo conto delle regole.
+
+Riassumi il suggerimento in modo chiaro ed efficace (es. tabella o elenco).","**Suggerimento Prosumer (Peer1):**
+
+1.  **Destinatari Surplus:**
+    *   Peer4 (consumo = 0.45): Priorità massima (deficit).
+    *   Peer5 (consumo = 5.59): Priorità secondaria.
+    *   Peer2 (produzione = 20.04, consumo = 11.04):  Solo surplus residuo.
+
+2.  **Prezzo di Vendita:**
+    *   Peer4: Vendere 0.45 kWh a 0.08 €/kWh (prezzo massimo consentito).
+    *   Peer5: Vendere 5.59 kWh a 0.08 €/kWh (prezzo massimo consentito).
+    *   Peer2: Vendere il surplus residuo (20.04 - 11.04 = 9.",53.57492160797119,0.7014214992523193
+2025-07-08T08:02:27.911402,jobautomation/OpenEuroLLM-Italian,"Stai supportando un prosumer appartenente a una comunità energetica composta da membri che possono essere o prosumer (con produzione e consumo giornalieri di energia) o consumer (solo consumo, nessuna produzione).
+
+La comunità scambia energia utilizzando una blockchain:
+- Ogni kWh è rappresentato da un NFT ERC721.
+- Ogni centesimo di euro è rappresentato da 1 token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
+  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+
+Applica le seguenti regole per stabilire a chi può essere venduto il surplus:
+
+1. Ordine di priorità: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. Ogni transazione è espressa in NFT (1 kWh) + corrispondente quantità di token (in cent).
+3. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo.
+
+Di seguito trovi i dati giornalieri dei membri della comunità (in kWh):
+
+
+- Peer1 (utente): produzione = 20.73, consumo = 10.03
+
+- Peer2: produzione = 20.04, consumo = 11.04
+
+- Peer3: produzione = 9.63, consumo = 3.28
+
+- Peer4: consumo = 0.45
+
+- Peer5: consumo = 5.59
+
+
+Sulla base dei dati sopra, fornisci un suggerimento **per il prosumer utente** indicando:
+1. A chi può vendere il surplus, in quale ordine e in che misura.
+2. A quale prezzo (in centesimi di euro) vendere ciascun blocco di kWh, tenendo conto delle regole.
+
+Riassumi il suggerimento in modo chiaro ed efficace (es. tabella o elenco).","Peer1, con surplus di 10.70 kWh, dovrebbe seguire questo schema:
+
+1.  **Peer2 (deficit 1.00 kWh):** Vendere 1.00 kWh a 0,06 €/kWh.
+2.  **Peer3 (deficit 6.35 kWh):** Vendere 6.35 kWh a 0,06 €/kWh.
+3.  **Peer4 (consumo 0.45 kWh):** Vendere 0.45 kWh a 0,08 €/kWh.
+4.  **Peer5 (consumo 5.59 kWh):** Vendere 2.89 kWh a 0,08 €/kWh.
+
+Rimangono 0.01 kWh, vendibili a prezzo di mercato (0,04-0,16 €/kWh) per massimizzare il ricavo.",155.93648290634155,0.7484322786331177
+2025-07-08T08:04:15.525046,mii-llm/maestrale-v0.4beta.q4_k_m,"Stai supportando un prosumer appartenente a una comunità energetica composta da membri che possono essere o prosumer (con produzione e consumo giornalieri di energia) o consumer (solo consumo, nessuna produzione).
+
+La comunità scambia energia utilizzando una blockchain:
+- Ogni kWh è rappresentato da un NFT ERC721.
+- Ogni centesimo di euro è rappresentato da 1 token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
+  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+
+Applica le seguenti regole per stabilire a chi può essere venduto il surplus:
+
+1. Ordine di priorità: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. Ogni transazione è espressa in NFT (1 kWh) + corrispondente quantità di token (in cent).
+3. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo.
+
+Di seguito trovi i dati giornalieri dei membri della comunità (in kWh):
+
+
+- Peer1 (utente): produzione = 20.73, consumo = 10.03
+
+- Peer2: produzione = 20.04, consumo = 11.04
+
+- Peer3: produzione = 9.63, consumo = 3.28
+
+- Peer4: consumo = 0.45
+
+- Peer5: consumo = 5.59
+
+
+Sulla base dei dati sopra, fornisci un suggerimento **per il prosumer utente** indicando:
+1. A chi può vendere il surplus, in quale ordine e in che misura.
+2. A quale prezzo (in centesimi di euro) vendere ciascun blocco di kWh, tenendo conto delle regole.
+
+Riassumi il suggerimento in modo chiaro ed efficace (es. tabella o elenco).","Ecco il mio suggerimento per l'utente Peer1:
+
+1. Ordine di vendita del surplus:
+- Prima ai prosumer in deficit (Peer2 e Peer3)
+- Poi ai consumer (Peer4, Peer5) 
+
+2. Quantità da vendere per blocco:
+- A Peer2: 9.63 kWh (surplus totale)
+- A Peer3: 10.78 kWh (surplus + deficit)
+- A Peer4: 0.45 kWh
+- A Peer5: 5.59 kWh
+
+3. Prezzo di vendita per blocco (in cent):
+- A Peer2: 160 cent/kWh (prezzo min consentito)
+- A Peer3: 14",107.6132869720459,0.7310563921928406
+2025-07-08T08:05:55.359208,VitoF/llama-3.1-8b-italian,"Stai supportando un prosumer appartenente a una comunità energetica composta da membri che possono essere o prosumer (con produzione e consumo giornalieri di energia) o consumer (solo consumo, nessuna produzione).
+
+La comunità scambia energia utilizzando una blockchain:
+- Ogni kWh è rappresentato da un NFT ERC721.
+- Ogni centesimo di euro è rappresentato da 1 token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
+  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+
+Applica le seguenti regole per stabilire a chi può essere venduto il surplus:
+
+1. Ordine di priorità: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. Ogni transazione è espressa in NFT (1 kWh) + corrispondente quantità di token (in cent).
+3. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo.
+
+Di seguito trovi i dati giornalieri dei membri della comunità (in kWh):
+
+
+- Peer1 (utente): produzione = 20.73, consumo = 10.03
+
+- Peer2: produzione = 20.04, consumo = 11.04
+
+- Peer3: produzione = 9.63, consumo = 3.28
+
+- Peer4: consumo = 0.45
+
+- Peer5: consumo = 5.59
+
+
+Sulla base dei dati sopra, fornisci un suggerimento **per il prosumer utente** indicando:
+1. A chi può vendere il surplus, in quale ordine e in che misura.
+2. A quale prezzo (in centesimi di euro) vendere ciascun blocco di kWh, tenendo conto delle regole.
+
+Riassumi il suggerimento in modo chiaro ed efficace (es. tabella o elenco).","**Suggerimento per il prosumer utente**
+
+1. **Priorità:**
+   - Peer3 (in deficit di 6,35 kWh)
+   - Peer2 (in deficit di 0,36 kWh)
+   - Peer5 (in deficit di 0,41 kWh)
+   - Peer1 (con surplus di 10,70 kWh)
+
+2. **Ordine e quantità:**
+   - Vendere a Peer3 per prima cosa il proprio surplus fino a coprire il suo deficit (6,35 kWh).
+   - Il prosumer utente ha ancora un surplus di 4,35 kWh.
+   - Poi vendere al Peer5 fino a coprirne il deficit (0,41 kWh), lasciando un surplus residuo di 3,94 kWh.
+   - Infine, vendere ai consumer (Peer2 e Peer4).
+
+3. **Prezzo:**
+   - Peer3 è disposto a pagare ",99.8339695930481,0.7125474810600281
+2025-07-08T08:49:46.603748,LLaMAntino-3-ANITA-8B-Inst-DPO-ITA,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Sei un assistente esperto in comunità energetiche e gestione peer-to-peer dell’energia su blockchain. Rispondi con linguaggio tecnico ma comprensibile, senza ridondanze, e mantieni la risposta sotto i 250 token.<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Stai supportando un prosumer appartenente a una comunità energetica composta da membri che possono essere o prosumer (con produzione e consumo giornalieri di energia) o consumer (solo consumo, nessuna produzione).
+
+La comunità scambia energia utilizzando una blockchain:
+- Ogni kWh è rappresentato da un NFT ERC721.
+- Ogni centesimo di euro è rappresentato da 1 token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
+  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+
+Applica le seguenti regole per stabilire a chi può essere venduto il surplus:
+
+1. Ordine di priorità: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. Ogni transazione è espressa in NFT (1 kWh) + corrispondente quantità di token (in cent).
+3. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo.
+
+Di seguito trovi i dati giornalieri dei membri della comunità (in kWh):
+
+
+- Peer1 (utente): produzione = 20.73, consumo = 10.03
+
+- Peer2: produzione = 20.04, consumo = 11.04
+
+- Peer3: produzione = 9.63, consumo = 3.28
+
+- Peer4: consumo = 0.45
+
+- Peer5: consumo = 5.59
+
+
+Sulla base dei dati sopra, fornisci un suggerimento **per il prosumer utente (che in questo caso è Peer1)** indicando:
+1. A chi può vendere il surplus, in quale ordine e in che misura.
+2. A quale prezzo (in centesimi di euro) vendere ciascun blocco di kWh, tenendo conto delle regole.
+
+Riassumi il suggerimento in modo chiaro ed efficace (es. tabella o elenco).<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Per il prosumer Peer1, suggerimento:
+
+* Vendere 0,73 kWh (20,73 - 10,03) al prosumer in deficit con maggiore deficit, Peer2, al prezzo di 0,14 € (0,16 - 0,02, lasciando spazio per un eventuale miglior offerta).
+* Vendere il surplus residuo, 0,73 kWh, al prosumer in deficit con secondo maggiore deficit, Peer2 (se Peer2 non accetta, Peer1 può vendere a Peer3), al prezzo di 0,14 €.
+* Se non ci sono acquirenti tra i prosumer in deficit, Peer1 può vendere il surplus residuo, 0,73 kWh, a Peer2 (o Peer3) al prezzo di 0,14 €, o a Peer4 e Peer5 (se accettano) al prezzo più alto possibile (0,16 €, se non accettano non viene venduto).",310.6003243923187,0.6972667574882507
+2025-07-08T09:03:29.483607,MistralRAG_estrattivo,"
+Stai supportando un prosumer appartenente a una comunità energetica composta da membri che possono essere o prosumer (con produzione e consumo giornalieri di energia) o consumer (solo consumo, nessuna produzione).
+
+La comunità scambia energia utilizzando una blockchain:
+- Ogni kWh è rappresentato da un NFT ERC721.
+- Ogni centesimo di euro è rappresentato da 1 token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
+  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+
+Applica le seguenti regole per stabilire a chi può essere venduto il surplus:
+
+1. Ordine di priorità: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. Ogni transazione è espressa in NFT (1 kWh) + corrispondente quantità di token (in cent).
+3. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo.
+
+Di seguito trovi i dati giornalieri dei membri della comunità (in kWh):
+
+
+- Peer1 (utente): produzione = 20.73, consumo = 10.03
+
+- Peer2: produzione = 20.04, consumo = 11.04
+
+- Peer3: produzione = 9.63, consumo = 3.28
+
+- Peer4: consumo = 0.45
+
+- Peer5: consumo = 5.59
+
+
+Sulla base dei dati sopra, fornisci un suggerimento **per il prosumer utente (che in questo caso è Peer1)** indicando:
+1. A chi può vendere il surplus, in quale ordine e in che misura.
+2. A quale prezzo (in centesimi di euro) vendere ciascun blocco di kWh, tenendo conto delle regole.
+
+Riassumi il suggerimento in modo chiaro ed efficace (es. tabella o elenco).
+","Risposta: 1. Peer1 può vendere il surplus a Peer2 e Peer3, in ordine di priorità.
+2. Per vendere il surplus, Peer1 può considerare un prezzo compreso tra 0,04 € e 0,16 €, ma per ottimizzare la vendita, potrebbe iniziare con un prezzo più alto e ridurlo gradualmente fino a trovare un accordo con Peer2 e Peer3.",205.5429000854492,0.7128006219863892
+2025-07-08T09:03:37.537296,MistralRAG_estrattivo,"
+Stai supportando un prosumer appartenente a una comunità energetica composta da membri che possono essere o prosumer (con produzione e consumo giornalieri di energia) o consumer (solo consumo, nessuna produzione).
+
+La comunità scambia energia utilizzando una blockchain:
+- Ogni kWh è rappresentato da un NFT ERC721.
+- Ogni centesimo di euro è rappresentato da 1 token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
+  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+
+Applica le seguenti regole per stabilire a chi può essere venduto il surplus:
+
+1. Ordine di priorità: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. Ogni transazione è espressa in NFT (1 kWh) + corrispondente quantità di token (in cent).
+3. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo.
+
+Di seguito trovi i dati giornalieri dei membri della comunità (in kWh):
+
+
+- Peer1 (utente): produzione = 20.73, consumo = 10.03
+
+- Peer2: produzione = 20.04, consumo = 11.04
+
+- Peer3: produzione = 9.63, consumo = 3.28
+
+- Peer4: consumo = 0.45
+
+- Peer5: consumo = 5.59
+
+
+Sulla base dei dati sopra, fornisci un suggerimento **per il prosumer utente (che in questo caso è Peer1)** indicando:
+1. A chi può vendere il surplus, in quale ordine e in che misura.
+2. A quale prezzo (in centesimi di euro) vendere ciascun blocco di kWh, tenendo conto delle regole.
+
+Riassumi il suggerimento in modo chiaro ed efficace (es. tabella o elenco).
+","Risposta: 1. Peer1 può vendere il surplus a Peer2 e Peer3, in ordine di priorità.
+2. Per vendere il surplus, Peer1 può considerare un prezzo compreso tra 0,04 € e 0,16 €, ma per ottimizzare la vendita, potrebbe iniziare con un prezzo più alto e ridurlo gradualmente fino a trovare un accordo con Peer2 e Peer3.",205.5429000854492,0.7128006219863892
+2025-07-08T09:10:18.078778,MistralRAG_generativo,"
+Stai supportando un prosumer appartenente a una comunità energetica composta da membri che possono essere o prosumer (con produzione e consumo giornalieri di energia) o consumer (solo consumo, nessuna produzione).
+
+La comunità scambia energia utilizzando una blockchain:
+- Ogni kWh è rappresentato da un NFT ERC721.
+- Ogni centesimo di euro è rappresentato da 1 token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
+  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+
+Applica le seguenti regole per stabilire a chi può essere venduto il surplus:
+
+1. Ordine di priorità: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. Ogni transazione è espressa in NFT (1 kWh) + corrispondente quantità di token (in cent).
+3. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo.
+
+Di seguito trovi i dati giornalieri dei membri della comunità (in kWh):
+
+
+- Peer1 (utente): produzione = 20.73, consumo = 10.03
+
+- Peer2: produzione = 20.04, consumo = 11.04
+
+- Peer3: produzione = 9.63, consumo = 3.28
+
+- Peer4: consumo = 0.45
+
+- Peer5: consumo = 5.59
+
+
+Sulla base dei dati sopra, fornisci un suggerimento **per il prosumer utente (che in questo caso è Peer1)** indicando:
+1. A chi può vendere il surplus, in quale ordine e in che misura.
+2. A quale prezzo (in centesimi di euro) vendere ciascun blocco di kWh, tenendo conto delle regole.
+
+Riassumi il suggerimento in modo chiaro ed efficace (es. tabella o elenco).
+","Risposta: Per il prosumer utente Peer1, che ha una produzione di 20.73 kWh e un consumo di 10.03 kWh, può vendere il surplus di 10.7 kWh (20.73 - 10.03) seguendo le regole:
+
+1. Ordine di priorità:
+   - Prima vendere al Peer2, che ha un consumo in eccesso di 1.8 kWh (20.04 - 11.04).
+   - Se il surplus non è sufficiente per soddisfare il deficit di Peer2, vendere al Peer3, che ha un consumo in eccesso di 6.35 kWh (9.63 - 3.28).
+   - Se il surplus non è sufficiente per soddisfare il deficit di Peer3, vendere al Peer5, che ha un consumo di 5.59 kWh.
+
+2. Prezzo di vendita:
+   - Per ottimizz",354.421249628067,0.7153153419494629
+2025-07-08T09:16:06.025548,mistral:7b,"Stai supportando un prosumer appartenente a una comunità energetica composta da membri che possono essere o prosumer (con produzione e consumo giornalieri di energia) o consumer (solo consumo, nessuna produzione).
+
+La comunità scambia energia utilizzando una blockchain:
+- Ogni kWh è rappresentato da un NFT ERC721.
+- Ogni centesimo di euro è rappresentato da 1 token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
+  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+
+Applica le seguenti regole per stabilire a chi può essere venduto il surplus:
+
+1. Ordine di priorità: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. Ogni transazione è espressa in NFT (1 kWh) + corrispondente quantità di token (in cent).
+3. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo.
+
+Di seguito trovi i dati giornalieri dei membri della comunità (in kWh):
+
+
+- Peer1 (utente): produzione = 20.73, consumo = 10.03
+
+- Peer2: produzione = 20.04, consumo = 11.04
+
+- Peer3: produzione = 9.63, consumo = 3.28
+
+- Peer4: consumo = 0.45
+
+- Peer5: consumo = 5.59
+
+
+Sulla base dei dati sopra, fornisci un suggerimento **per il prosumer utente (che in questo caso è {'name': 'Peer1', 'is_user': True, 'role': 'prosumer', 'production': 20.73, 'consumption': 10.03})** indicando:
+1. A chi può vendere il surplus, in quale ordine e in che misura.
+2. A quale prezzo (in centesimi di euro) vendere ciascun blocco di kWh, tenendo conto delle regole.
+
+Riassumi il suggerimento in modo chiaro ed efficace (es. tabella o elenco).","1. A chi può vendere il surplus:
+   - Priorità 1: Peer1 (deficit: 10.73 kWh)
+   - Seconda possibilità: Peer2 (deficit: 0.04 kWh)
+   - Ultima possibilità: Peer5 (consumo: 5.59 kWh)
+
+   Nota: Il surplus residuo non può essere venduto ai consumer poiché non ci sono prosumer in deficit sufficienti per assorbire tutto il surplus.
+
+2. Prezzo a cui vendere ciascun blocco di kWh:
+
+   - Per Peer1 (deficit: 10.73 kWh):
+     - Primo blocco: 0,16 € (prezzo di acquisto dalla rete)
+     - Secondo blocco: 0,12 €
+     - Terzo blocco: 0,08 €
+     - ...
+     - Ultimo blocco: 0,04 €
+
+   - Prezzo",115.5510458946228,0.712713360786438
+2025-07-08T09:17:02.713896,gemma3:4b-it-qat,"Stai supportando un prosumer appartenente a una comunità energetica composta da membri che possono essere o prosumer (con produzione e consumo giornalieri di energia) o consumer (solo consumo, nessuna produzione).
+
+La comunità scambia energia utilizzando una blockchain:
+- Ogni kWh è rappresentato da un NFT ERC721.
+- Ogni centesimo di euro è rappresentato da 1 token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
+  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+
+Applica le seguenti regole per stabilire a chi può essere venduto il surplus:
+
+1. Ordine di priorità: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. Ogni transazione è espressa in NFT (1 kWh) + corrispondente quantità di token (in cent).
+3. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo.
+
+Di seguito trovi i dati giornalieri dei membri della comunità (in kWh):
+
+
+- Peer1 (utente): produzione = 20.73, consumo = 10.03
+
+- Peer2: produzione = 20.04, consumo = 11.04
+
+- Peer3: produzione = 9.63, consumo = 3.28
+
+- Peer4: consumo = 0.45
+
+- Peer5: consumo = 5.59
+
+
+Sulla base dei dati sopra, fornisci un suggerimento **per il prosumer utente (che in questo caso è {'name': 'Peer1', 'is_user': True, 'role': 'prosumer', 'production': 20.73, 'consumption': 10.03})** indicando:
+1. A chi può vendere il surplus, in quale ordine e in che misura.
+2. A quale prezzo (in centesimi di euro) vendere ciascun blocco di kWh, tenendo conto delle regole.
+
+Riassumi il suggerimento in modo chiaro ed efficace (es. tabella o elenco).","**Suggerimento per Peer1 (Prosumer):**
+
+Data la situazione, Peer1 può vendere il surplus a:
+
+1.  **Peer4 (Consumer):** 10.03 kWh (surplus residuo dopo aver soddisfatto il proprio consumo).
+2.  **Peer5 (Consumer):** 5.59 kWh (surplus residuo).
+
+**Prezzo di vendita consigliato:**
+
+*   **Peer4:** 0.08 €/kWh (tra 0.04 € e 0.16 €).
+*   **Peer5:** 0.07 €/kWh (tra 0.04 € e 0.16 €).
+
+**Motivazione:**  Peer1 ha un surplus significativo. Priorità è data ai consumer in deficit.  La vendita a Peer4 e Peer5 massimizza il ricavo, rispettando i vincoli di prezzo e garantendo la distribuzione del surplus.
+",56.68810105323792,0.7414111495018005
+2025-07-08T09:19:49.310053,jobautomation/OpenEuroLLM-Italian,"Stai supportando un prosumer appartenente a una comunità energetica composta da membri che possono essere o prosumer (con produzione e consumo giornalieri di energia) o consumer (solo consumo, nessuna produzione).
+
+La comunità scambia energia utilizzando una blockchain:
+- Ogni kWh è rappresentato da un NFT ERC721.
+- Ogni centesimo di euro è rappresentato da 1 token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
+  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+
+Applica le seguenti regole per stabilire a chi può essere venduto il surplus:
+
+1. Ordine di priorità: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. Ogni transazione è espressa in NFT (1 kWh) + corrispondente quantità di token (in cent).
+3. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo.
+
+Di seguito trovi i dati giornalieri dei membri della comunità (in kWh):
+
+
+- Peer1 (utente): produzione = 20.73, consumo = 10.03
+
+- Peer2: produzione = 20.04, consumo = 11.04
+
+- Peer3: produzione = 9.63, consumo = 3.28
+
+- Peer4: consumo = 0.45
+
+- Peer5: consumo = 5.59
+
+
+Sulla base dei dati sopra, fornisci un suggerimento **per il prosumer utente (che in questo caso è {'name': 'Peer1', 'is_user': True, 'role': 'prosumer', 'production': 20.73, 'consumption': 10.03})** indicando:
+1. A chi può vendere il surplus, in quale ordine e in che misura.
+2. A quale prezzo (in centesimi di euro) vendere ciascun blocco di kWh, tenendo conto delle regole.
+
+Riassumi il suggerimento in modo chiaro ed efficace (es. tabella o elenco).","Peer1, con un surplus di 10.7 kWh, dovrebbe seguire questo schema:
+
+1.  **Peer2 (deficit di 1.01 kWh):** Vendere 1.01 kWh a 0.05 €/kWh (5 cent/kWh).
+2.  **Peer3 (deficit di 6.35 kWh):** Vendere 6.35 kWh a 0.05 €/kWh.
+3.  **Peer4 (consumo 0.45 kWh):** Vendere 0.45 kWh a 0.05 €/kWh.
+4.  **Peer5 (consumo 5.59 kWh):** Vendere 3.88 kWh a 0.06 €/kWh (massimo consentito).
+
+Questo approccio massimizza la vendita del surplus, soddisfacendo i deficit degli altri prosumer e ottimizzando il prezzo entro i limiti stabiliti.
+",166.5956871509552,0.74903404712677
+2025-07-08T09:21:52.719509,mii-llm/maestrale-v0.4beta.q4_k_m,"Stai supportando un prosumer appartenente a una comunità energetica composta da membri che possono essere o prosumer (con produzione e consumo giornalieri di energia) o consumer (solo consumo, nessuna produzione).
+
+La comunità scambia energia utilizzando una blockchain:
+- Ogni kWh è rappresentato da un NFT ERC721.
+- Ogni centesimo di euro è rappresentato da 1 token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
+  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+
+Applica le seguenti regole per stabilire a chi può essere venduto il surplus:
+
+1. Ordine di priorità: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. Ogni transazione è espressa in NFT (1 kWh) + corrispondente quantità di token (in cent).
+3. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo.
+
+Di seguito trovi i dati giornalieri dei membri della comunità (in kWh):
+
+
+- Peer1 (utente): produzione = 20.73, consumo = 10.03
+
+- Peer2: produzione = 20.04, consumo = 11.04
+
+- Peer3: produzione = 9.63, consumo = 3.28
+
+- Peer4: consumo = 0.45
+
+- Peer5: consumo = 5.59
+
+
+Sulla base dei dati sopra, fornisci un suggerimento **per il prosumer utente (che in questo caso è {'name': 'Peer1', 'is_user': True, 'role': 'prosumer', 'production': 20.73, 'consumption': 10.03})** indicando:
+1. A chi può vendere il surplus, in quale ordine e in che misura.
+2. A quale prezzo (in centesimi di euro) vendere ciascun blocco di kWh, tenendo conto delle regole.
+
+Riassumi il suggerimento in modo chiaro ed efficace (es. tabella o elenco).","Ecco il mio suggerimento per Peer1 come prosumer:
+
+1. Ordine di priorità e quantità da vendere:
+- Vendi prima i 10.73 kWh in surplus a Peer2 (20.04 - 9.31)
+- Poi vende i restanti 10.03 kWh al prezzo più alto possibile ai consumer
+
+2. Prezzi di vendita consigliati:
+- A Peer2: 0,08 €/kWh (prezzo minimo consentito)
+- Al mercato: 0,16 €/kWh (prezzo massimo consentito)
+
+Ragionamento:
+- Dà priorità a Peer2 che ha il maggior deficit, massimizzando la vendita del surplus
+- Vendendo prima a Peer2 si ottiene un prezzo minimo di 0,08 €/kWh
+- I restanti 10.03 kWh vanno al mercato generale a 0,1",123.40909934043884,0.711717426776886
+2025-07-08T09:23:47.940521,VitoF/llama-3.1-8b-italian,"Stai supportando un prosumer appartenente a una comunità energetica composta da membri che possono essere o prosumer (con produzione e consumo giornalieri di energia) o consumer (solo consumo, nessuna produzione).
+
+La comunità scambia energia utilizzando una blockchain:
+- Ogni kWh è rappresentato da un NFT ERC721.
+- Ogni centesimo di euro è rappresentato da 1 token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
+  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+
+Applica le seguenti regole per stabilire a chi può essere venduto il surplus:
+
+1. Ordine di priorità: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. Ogni transazione è espressa in NFT (1 kWh) + corrispondente quantità di token (in cent).
+3. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo.
+
+Di seguito trovi i dati giornalieri dei membri della comunità (in kWh):
+
+
+- Peer1 (utente): produzione = 20.73, consumo = 10.03
+
+- Peer2: produzione = 20.04, consumo = 11.04
+
+- Peer3: produzione = 9.63, consumo = 3.28
+
+- Peer4: consumo = 0.45
+
+- Peer5: consumo = 5.59
+
+
+Sulla base dei dati sopra, fornisci un suggerimento **per il prosumer utente (che in questo caso è {'name': 'Peer1', 'is_user': True, 'role': 'prosumer', 'production': 20.73, 'consumption': 10.03})** indicando:
+1. A chi può vendere il surplus, in quale ordine e in che misura.
+2. A quale prezzo (in centesimi di euro) vendere ciascun blocco di kWh, tenendo conto delle regole.
+
+Riassumi il suggerimento in modo chiaro ed efficace (es. tabella o elenco).","**Suggerimento per Peer1**
+
+1. **Ordine e quantità da vendere:**
+   - Prima ai prosumer in deficit:
+     - Peer2 ha un deficit di 11.04 - 20.04 = -8.99 kWh (non può acquistare energia)
+     - Peer3 ha un deficit di 3.28 - 9.63 = -6.35 kWh
+   - Il surplus residuo può essere venduto ai consumer:
+     - Peer4: consumo = 0,45 kWh
+     - Peer5: consumo = 5,59 kWh
+
+2. **Prezzo da applicare per la vendita:**
+   - Peer1 ha un surplus di 20.73 - 10.03 = 10.7 kWh.
+   - Per vendere al prosumer in deficit più grande (Peer3), il prezzo deve essere minore del prezzo di acquisto dalla rete, ma maggiore del prezzo di vendita alla rete:
+     - Prezzo massimo per Peer3: 0,16 €/kWh
+   - Per vendere al prosumer in deficit più piccolo (Peer2), il prezzo",115.22082662582396,0.7279750108718872
+2025-07-08T10:44:43.539550,LLaMAntino-3-ANITA-8B-Inst-DPO-ITA,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Sei un assistente esperto in comunità energetiche e gestione peer-to-peer dell’energia su blockchain. Rispondi con linguaggio tecnico ma comprensibile, senza ridondanze, e mantieni la risposta sotto i 250 token.<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Stai supportando un prosumer appartenente a una comunità energetica composta da membri che possono essere o prosumer (con produzione e consumo giornalieri di energia) o consumer (solo consumo, nessuna produzione).
+
+La comunità scambia energia utilizzando una blockchain:
+- Ogni kWh è rappresentato da un NFT ERC721.
+- Ogni centesimo di euro è rappresentato da 1 token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
+  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+
+Applica le seguenti regole per stabilire a chi può essere venduto il surplus:
+
+1. Ordine di priorità: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. Ogni transazione è espressa in NFT (1 kWh) + corrispondente quantità di token (in cent).
+3. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo.
+
+Di seguito trovi i dati giornalieri dei membri della comunità (in kWh):
+
+
+- Peer1 (utente): produzione = 20.73, consumo = 10.03
+
+- Peer2: produzione = 20.04, consumo = 11.04
+
+- Peer3: produzione = 9.63, consumo = 3.28
+
+- Peer4: consumo = 0.45
+
+- Peer5: consumo = 5.59
+
+
+Sulla base dei dati sopra, fornisci un suggerimento **per il prosumer utente (che in questo caso è Peer1)** indicando:
+1. A chi può vendere il surplus, in quale ordine e in che misura.
+2. A quale prezzo (in centesimi di euro) vendere ciascun blocco di kWh, tenendo conto delle regole.
+
+Riassumi il suggerimento in modo chiaro ed efficace (es. tabella o elenco).<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Per il prosumer Peer1, suggerimento:
+
+* Vendere 0,73 kWh (20,73 - 10,03) al prosumer in deficit con più alto deficit, ovvero Peer2, al prezzo di 0,14 € (0,16 - 0,02, lasciando spazio per un eventuale aumento del prezzo).
+* Vendere il residuo del surplus, 0,70 kWh, al prosumer in deficit con il secondo più alto deficit, ovvero Peer1 stesso (in questo caso, se stesso), al prezzo di 0,14 €.
+* Il residuo del surplus, 0,00 kWh (tutto venduto), non viene venduto ai consumer.",240.3619220256805,0.7134759426116943

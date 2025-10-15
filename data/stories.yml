@@ -2,41 +2,52 @@ version: "3.1"
 
 stories:
 
-#- story: happy path on optimization feedback w/o explanation
-#  steps:
-#  - intent: ask_optimization
-#  - action: answer_optimization_request
-#  - intent: deny
-#  - action: utter_goodbye_pos
-
-#- story: happy path on optimization feedback w/ explanation
-#  steps:
-#  - intent: ask_optimization
-#  - action: answer_optimization_request
-#  - intent: affirm
-#  - action: answer_explanation_request
-
-- story: Form to ask the device name for the optimization request
+- story: happy path on optimization feedback w/o explanation
   steps:
-    - intent: ask_optimization 
-    - action: answer_optimization_request
-    - active_loop: validate_device_form
+  - intent: ask_optimization
+  - action: answer_optimization_request
+  - intent: deny
+  - action: utter_goodbye_pos
 
-- story: consumption monitoring
+- story: happy path on optimization feedback w/ explanation
+  steps:
+  - intent: ask_optimization
+  - action: answer_optimization_request
+  #- intent: affirm
+  #- action: answer_explanation_request
+
+- story: happy path on optimization feedback w/ user preferences
+  steps:
+  - intent: set_constraints
+  - action: answer_optimization_request
+
+- story: happy path on consumption monitoring
   steps:
     - intent: check_consumption
-    - action: answer_consumption_request
+    - action: answer_monitoring_request
 
-- story: renewable monitoring
+- story: happy path on renewable monitoring
   steps:
     - intent: check_production
-    - action: answer_renewable_request
+    - action: answer_monitoring_request
+
+
+- story: happy path on netload forecast
+  steps:
+    - intent: ask_netload_forecast
+    - action: answer_netload_forecast_request
+
+
+- story: happy path on selling advice request
+  steps:
+    - intent: ask_selling_advice
+    - action: answer_selling_advice_request
 
 
 - story: interactive_story_1
   steps:
   - intent: check_consumption
-  - action: answer_consumption_request
+  - action: answer_monitoring_request
   - intent: ask_optimization
     entities:
     - device: washing_machine
@@ -47,28 +58,14 @@ stories:
   - action: utter_goodbye_pos
   - intent: ask_optimization
   - action: answer_optimization_request
-  - intent: affirm
-  - action: answer_explanation_request
-  - intent: goodbye
-  - action: utter_goodbye_pos
 
-- story: device status monitoring
-  steps:
-    - intent: check_status
-    - action: device_form
-    - active_loop: device_form
-    - active_loop: null #once the form is complete:
-    - action: answer_status_request
 
-- story: request to act on device
-  steps:
-    - intent: action_request
-    - action: answer_act_on_device
 - story: interactive_story_1
   steps:
-  - intent: ask_optimization
+  - intent: set_constraints
     entities:
     - appliance: water_heater
+    - constr_time: dalle 7
   - slot_was_set:
     - device_name: water_heater
   - action: answer_optimization_request
