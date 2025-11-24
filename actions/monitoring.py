@@ -1,9 +1,12 @@
+from collections import defaultdict
+from datetime import datetime, timedelta
 from os.path import join, dirname
 from solaredge_interface.api.SolarEdgeAPI import SolarEdgeAPI
 from time import localtime, strftime
 from typing import Text
 from dotenv import load_dotenv
 import os
+import pandas as pd
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -46,7 +49,7 @@ class EnergyMonitoring():
         self.site_id = site_id
         try:
             self.api = SolarEdgeAPI(api_key=self.api_key, datetime_response=True, pandas_response=True)
-            print(self.api)
+            #print(self.api)
         except:
             self.api = None
 
@@ -140,7 +143,68 @@ class EnergyMonitoring():
         current = f"- potenza prodotta ora dall'impianto fotovoltaico: {self.pv_power:.2f}kW\n- stato di carica attuale della batteria: {self.storage_level}%\n- status della batteria: {self.storage_status}\n- potenza immessa dal fotovolatico alla batteria: {pv_to_bess:.2f} kW\n- potenza immessa dal fotovoltaico alla rete: {pv_to_grid:.2f}\n"
 
         return daily + current
-     
+
+    #----------------------------------------
+    # recupero dati storici (in W) di batteria, produzione e consumi
+    #----------------------------------------
+
+    def get_historic_bess_data(self, end_time):
+        """ 
+        Fa una chiamata all'api per il periodo richiesto e salva in un dataframe. 
+        Interpola i dati alla risoluzione di 1 minuto. 
+        Comportamento simile anche per metodi di recupero dati di produzione e consumi.
+        """
+        start_time = end_time - timedelta(minutes=35)#vado a ritroso per recuperare i dati dell'ultima mezz'ora partendo da ora (aumento il delta per assicuarrmi che ci siano poi 30 valori finali effettivi
+        bess_ch_dis = defaultdict(list)
+ 
+        response = self.api.get_site_storage_data(SITEID,start_time,end_time) ##non creo loop perché fino a una settimana posso recuperare dati
+        bess = response.data['storageData']['batteries'][0]['telemetries']
+        #print(bess)
+        #"""
+        for t in bess:
+            #print(t['timeStamp'], t['power'])
+            charge = t['power'] if t['power'] is not None and t['power'] >0  else 0
+            discharge = abs(t['power']) if t['power'] is not None and t['power'] <0  else 0
+            soc = round(t['batteryPercentageState'], 2) if t['batteryPercentageState'] is not None else 0
+            bess_ch_dis['timestamp'].append(t['timeStamp'])
+            bess_ch_dis['Charge(W)'].append(charge)
+            bess_ch_dis['Discharge(W)'].append(discharge)
+            bess_ch_dis['State of Charge(%)'].append(soc)
+            #"""
+    
+        df_bess = pd.DataFrame(bess_ch_dis)
+        #print(df_bess)
+        df_bess['timestamp'] = pd.to_datetime(df_bess['timestamp'])
+        df_bess.set_index('timestamp',inplace=True)
+        df_bess.index = df_bess.index.round('min') #round seconds to the closer minute... ###risostituisci in T se dà problemi
+        df_bess = df_bess[~df_bess.index.duplicated(keep='last')] #...and then remove duplicated indexes
+        df_bess_resampled = df_bess.resample('1min').interpolate() ###risostituisci in 1T se dà problemi
+        
+        return df_bess_resampled
+
+
+    def get_historic_production_and_consumption_data(self, end_time, forecast_row):
+        """ 
+            Prende come parametro aggiuntivo la dimensione di predizione da restituire
+            forecast_row='Consumption' | 'Production' 
+        """
+        start_time = end_time - timedelta(minutes=35)
+        power = self.api.get_site_power_details(SITEID,start_time, end_time).pandas
+        #print(power.head(5))
+        meter = power['powerDetails.meters.type']
+        filtered_cols = ['powerDetails.meters.values.date', 'powerDetails.meters.values.value']
+        df_power = power.loc[meter == forecast_row, filtered_cols].copy() ##filtro le righe del df in cui compare la dimensione da predire
+        
+        df_power.rename(columns={'powerDetails.meters.values.date':'timestamp', 'powerDetails.meters.values.value':f"{forecast_row}(W)"}, inplace=True)
+        df_power['timestamp'] = pd.to_datetime(df_power['timestamp'])
+        df_power.set_index('timestamp',inplace=True)
+        df_power.index = df_power.index.round('min') 
+        df_power = df_power[~df_power.index.duplicated(keep='last')] 
+        df_power_resampled = df_power.resample('1min').interpolate() 
+
+        #print(df_power_resampled.head(5))
+        return df_power_resampled
+        
 
 if __name__ == "__main__":
     em = EnergyMonitoring()

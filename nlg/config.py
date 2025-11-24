@@ -4,6 +4,31 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 from ollama import Client as OllamaClient
 from jinja2 import Environment, FileSystemLoader
 
+
+# ==== SYS. PROMPT =====
+BASE_ENERGY_PROMPT = (
+    "Sei un assistente esperto in comunità energetiche e ottimizzazione dell’energia. "
+    "Rispondi in modo tecnico ma comprensibile, senza ridondanze. "
+)
+BASE_FEEDBACK_PROMPT = (
+    "Sei un assistente virtuale che fornisce un feedback energetico in italiano. "
+    "Rispondi in modo chiaro, diretto e completo, attenendoti ai dati forniti. "
+)
+
+SYSTEM_PROMPTS = {
+    "ask_optimization": BASE_ENERGY_PROMPT + "Mantieni la risposta sotto i 150 token.",
+    "set_constraints": BASE_ENERGY_PROMPT + "Mantieni la risposta sotto i 150 token.",
+    "ask_selling_advice": (
+        "Sei un assistente esperto in comunità energetiche e gestione peer-to-peer "
+        "dell’energia su blockchain. Rispondi con linguaggio tecnico ma comprensibile, "
+        "senza ridondanze. Mantieni la risposta sotto i 200 token."
+    ),
+    "ask_netload_forecast": BASE_FEEDBACK_PROMPT + "Mantieni la risposta sotto i 150 token.",
+    "check_consumption": BASE_FEEDBACK_PROMPT + "Mantieni la risposta sotto i 150 token.",
+    "check_production": BASE_FEEDBACK_PROMPT + "Mantieni la risposta sotto i 150 token."
+}
+
+
 # ------------------------------
 # wrapper generico - classe di base da cui ereditano le altre
 # ------------------------------
@@ -11,7 +36,7 @@ class BaseLLM:
     def create_prompt(self, intent: str, utterance: str, energy_data: str) -> str:
         raise NotImplementedError
 
-    def inference(self, prompt: str) -> str:
+    def inference(self, prompt: str, intent:str) -> str:
         raise NotImplementedError
 
 
@@ -31,11 +56,13 @@ class HFLLM(BaseLLM):
 
     
     def create_prompt(self, intent, utterance, energy_data):
+        system = SYSTEM_PROMPTS[intent]
+        """
         if intent == "ask_selling_advice":
             system = "Sei un assistente esperto in comunità energetiche e gestione peer-to-peer dell’energia su blockchain. Rispondi con un linguaggio tecnico ma comprensibile, senza ridondanze.  Mantieni la risposta sotto i 250 token."
         else:
             system = "Sei un assistente esperto di ottimizzazione energetica. Fornisci risposte brevi ma precise. Non superare i 150 token."
-
+        """
         template_dir = os.path.join(os.path.dirname(__file__), "templates")
         env = Environment(loader=FileSystemLoader(template_dir))
         #env = Environment(loader=FileSystemLoader('../templates'))
@@ -50,7 +77,7 @@ class HFLLM(BaseLLM):
         return prompt
 
     
-    def inference(self, prompt: str) -> str:
+    def inference(self, prompt: str, intent:str) -> str:
         gen = pipeline(
             model=self.model,
             tokenizer=self.tokenizer,
@@ -60,6 +87,7 @@ class HFLLM(BaseLLM):
             top_k=40,
             top_p=0.9,
             temperature=0.6,
+            #temperature=0.1, ###abbasso per il testing
             max_new_tokens=150,
         )
         return gen(prompt)[0]["generated_text"]
@@ -84,17 +112,19 @@ class OllamaLLM(BaseLLM):
         #return f"<|system|>\n{system}\n<|user|>\n{user}"
 
     
-    def inference(self, prompt: str) -> str:
+    def inference(self, prompt: str, intent:str) -> str:
 
-        SYSTEM_PROMPT = "Sei un assistente esperto in comunità energetiche e gestione peer-to-peer dell’energia su blockchain. Rispondi con un linguaggio tecnico ma comprensibile, senza ridondanze.  Mantieni la risposta sotto i 250 token."
+        system = SYSTEM_PROMPTS[intent]
+       
         response = self.client.chat(
                         model=self.model_name,
                         messages=[
-                            {"role": "system", "content": SYSTEM_PROMPT},
+                            #{"role": "system", "content": SYSTEM_PROMPT},
+                            {"role": "system", "content": system},
                             {"role": "user", "content": prompt}
                         ],
-                        options={"temperature": 0.6}
-                        #options={"temperature": 0.0}
+                        #options={"temperature": 0.6}
+                        options={"temperature": 0.0} ##abbasso per il testing
         )
         """
         response = self.client.chat(
@@ -118,11 +148,12 @@ class LLM:
         model = self._select_model(intent)
         return model.create_prompt(intent, utterance, energy_data)
 
-    def inference(self, prompt, intent=None):
+    def inference(self, prompt, intent):
         model = self._select_model(intent)
-        return model.inference(prompt)
+        return model.inference(prompt, intent)
 
     def _select_model(self, intent: Optional[str]):
-        if intent == "ask_selling_advice":
+        ollama_intents = ("ask_selling_advice", "ask_optimization")
+        if intent in ollama_intents:
             return self.ollama_model
         return self.hf_model

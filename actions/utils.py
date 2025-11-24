@@ -1,6 +1,40 @@
 from datetime import timedelta, datetime
 from typing import List, Tuple
 import numpy as np
+import duckling, pytz
+
+
+def parse_time_with_duckling(text: str):
+    """ Usa il parser locale di Duckling per estrarre e convertire un'espressione temporale in datetime """
+    try:
+        parser = duckling.Duckling()
+        parser.load(locale="it_IT")  
+        result = parser.parse_time(text)
+
+        if not result:
+            return None, None
+
+        time_data = result[0]["value"]
+
+        # Duckling può restituire un singolo valore o un intervallo
+        if "from" in time_data and "to" in time_data:
+            start = datetime.fromisoformat(time_data["from"]["value"].replace("Z", "+00:00"))
+            end = datetime.fromisoformat(time_data["to"]["value"].replace("Z", "+00:00"))
+        else:
+            start = datetime.fromisoformat(time_data["value"].replace("Z", "+00:00"))
+            end = None
+
+    except Exception as e:
+        print(f"Errore Duckling: {e}")
+        return None, None
+
+    # Converte in timezone locale
+    rome = pytz.timezone("Europe/Rome")
+    start = start.astimezone(rome)
+    if end:
+        end = end.astimezone(rome)
+
+    return start, end
 
 
 def create_time_intervals(T:int, delta:int) -> List:
@@ -139,10 +173,11 @@ if __name__ == "__main__":
     import random
     T = 10
     delta = 30
-    intervals = create_time_intervals(T,delta)
-    text0 = date_to_string(None, intervals[0])
-    text = date_to_string(intervals[0])
-    text1 = date_to_string(intervals[0], intervals[1])
+    parse_time_with_duckling('stasera')
+    #intervals = create_time_intervals(T,delta)
+    #text0 = date_to_string(None, intervals[0])
+    #text = date_to_string(intervals[0])
+    #text1 = date_to_string(intervals[0], intervals[1])
     #print(text0)
     #print(text)
     #print(text1)
@@ -156,5 +191,5 @@ if __name__ == "__main__":
     #print(text4)
     #print(intervals)
     #print(datetime.now())
-    print(get_idx(intervals, datetime.now()))
+    #print(get_idx(intervals, datetime.now()))
 

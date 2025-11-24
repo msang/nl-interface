@@ -210,6 +210,80 @@ def parse_energy_excel(file_path="energy_details.xlsx"):
 
     return members, prosumer_user
 
+## =======================================================================
+# Metodi statici richiamati dall'ottimizzatore per il post-processing
+## ========================================================================
+
+def summarize_data(df_optim):
+    """
+    Riassume una giornata (df_final dell'ottimizzatore) individuando le fasce orarie
+    di picco per consumo, produzione, stato di carica ed energia condivisa.
+    Restituisce una stringa con dati sintentici in forma semi-strutturata.
+    """
+
+    # Identifica fasce di interesse
+    peak_consumption = find_peak_range(df_optim["Potenza acquistata"])
+    peak_production = find_peak_range(df_optim["Potenza immessa in rete"])
+    high_soc = find_peak_range(df_optim["% Carica batteria"])
+    peak_shared = find_peak_range(df_optim["Energia condivisa"])
+    #min_soc = find_min_range(df_optim["% Carica batteria"])
+
+    # Dati di sintesi
+    if peak_production[1] == 0.0:      
+        summary = (
+                    f"- Consumo maggiore: {peak_consumption[0]} ({peak_consumption[1]:.2f} kWh)\n"
+                    f"- Stato di carica massimo della batteria:  {high_soc[0]} ({high_soc[1]:.2f}%)\n"
+                    #f"- Livello minimo di carica della batteria: {min_soc[0]} ({min_soc[1]:.2f}%)\n"
+                    f"- Valori massimi di energia condivisa: {peak_shared[0]} ({peak_shared[1]:.2f} kWh)\n"
+    )
+
+    else:
+        summary = (
+                    f"- Consumo maggiore: {peak_consumption[0]} ({peak_consumption[1]:.2f} kWh)\n"
+                    f"- Surplus maggiore: {peak_production[0]} ({peak_production[1]:.2f} kWh)\n"
+                    f"- Stato di carica massimo della batteria:  {high_soc[0]} ({(high_soc[1]):.2f}%)\n"
+                    #f"- Livello minimo di carica della batteria: {min_soc[0]} ({(min_soc[1]):.2f}%)\n"
+                    f"- Valori massimi di energia condivisa: {peak_shared[0]} ({peak_shared[1]:.2f} kWh)\n"
+    )
+
+    return summary
+
+def find_peak_range(series, top_n=3):
+    """Restituisce le fasce orarie con i valori più alti (top_n medie consecutive)."""
+    """
+    rolling = series.rolling(2, min_periods=1).mean()
+    top_idx = rolling.nlargest(top_n).index
+    times = [i.strftime("%H:%M") for i in sorted(top_idx)]
+    return f"{times[0]}–{times[-1]}" if len(times) > 1 else times[0]
+    """
+    if series.dropna().eq(0).all():
+        return "-", 0.0
+
+    rolling = series.rolling(2, min_periods=1).max()
+    top_idx = rolling.nlargest(top_n).index
+
+    if top_idx.empty:
+        return "-", 0.0
+
+    times = [i.strftime("%H:%M") for i in sorted(top_idx)]
+    overall_value = rolling[top_idx].mean()
+    time_range = f"{times[0]}–{times[-1]}" if len(times) > 1 else times[0]
+    
+    return time_range, overall_value
+    
+
+def find_min_range(series, bottom_n=3):
+    """Fasce con valori più bassi."""
+    #"""
+    rolling = series.rolling(2, min_periods=1).min()
+    bottom_idx = rolling.nsmallest(bottom_n).index
+    final_value = rolling[bottom_idx].min()
+    times = [i.strftime("%H:%M") for i in sorted(bottom_idx)]
+    time_range = f"{times[0]}–{times[-1]}" if len(times) > 1 else times[0]
+
+    return time_range, final_value
+    #return f"{times[0]}–{times[-1]}" if len(times) > 1 else times[0]
+    #"""
 
 
 if __name__ == "__main__":

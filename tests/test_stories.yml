@@ -1,0 +1,343 @@
+version: "3.1"
+
+stories:
+
+############################################################
+# 1. MONITORAGGIO
+############################################################
+
+- story: test monitoraggio consumo
+  steps:
+  - intent: check_consumption
+  - action: answer_monitoring_request
+
+- story: test monitoraggio produzione
+  steps:
+  - intent: check_production
+  - action: answer_monitoring_request
+
+
+############################################################
+# 2. PREVISIONE NETLOAD
+############################################################
+
+- story: test previsione netload dopo monitoraggio
+  steps:
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+
+
+############################################################
+# 3. OTTIMIZZAZIONE
+############################################################
+
+- story: test ottimizzazione diretta
+  steps:
+  - intent: ask_optimization
+  - action: answer_optimization_request
+
+- story: test ottimizzazione dopo monitoraggio
+  steps:
+  - intent: check_production
+  - action: answer_monitoring_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+
+- story: test ottimizzazione dopo previsione
+  steps:
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+
+
+############################################################
+# 4. FLUSSI COMPLETI (senza selling advice)
+############################################################
+
+- story: test flusso previsionale completo
+  steps:
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+
+- story: test flusso completo da consumo a produzione
+  steps:
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: check_production
+  - action: answer_monitoring_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+
+
+############################################################
+# 5. OTTIMIZZAZIONE CON DEVICE
+############################################################
+
+- story: test ottimizzazione con dispositivo specifico
+  steps:
+  - intent: ask_optimization
+    entities:
+    - appliance: washing_machine
+  - slot_was_set:
+    - device_name: washing_machine
+  - action: answer_optimization_request
+
+
+############################################################
+# 6. PERCORSI MISTI
+############################################################
+
+- story: test consumo ottimizza produzione ottimizza
+  steps:
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+  - intent: check_production
+  - action: answer_monitoring_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+
+- story: test produzione netload ottimizza
+  steps:
+  - intent: check_production
+  - action: answer_monitoring_request
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+
+- story: test netload consumo ottimizza
+  steps:
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+
+- story: test consumo netload produzione
+  steps:
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+  - intent: check_production
+  - action: answer_monitoring_request
+
+- story: test produzione netload consumo ottimizza
+  steps:
+  - intent: check_production
+  - action: answer_monitoring_request
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+
+- story: test consumo produzione netload ottimizza
+  steps:
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: check_production
+  - action: answer_monitoring_request
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+
+- story: test netload ottimizza consumo
+  steps:
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+  - intent: check_consumption
+  - action: answer_monitoring_request
+
+- story: test ottimizza consumo netload
+  steps:
+  - intent: ask_optimization
+  - action: answer_optimization_request
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+
+- story: test path lungo 1
+  steps:
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+  - intent: check_production
+  - action: answer_monitoring_request
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+
+- story: test path lungo 2
+  steps:
+  - intent: check_production
+  - action: answer_monitoring_request
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+  - intent: check_production
+  - action: answer_monitoring_request
+
+
+- story: test con appl 1
+  steps:
+  - intent: ask_optimization
+    entities:
+    - appliance: washing_machine
+  - slot_was_set:
+    - device_name: washing_machine
+  - action: answer_optimization_request
+  - intent: check_production
+  - action: answer_monitoring_request
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+
+- story: test con appl 2
+  steps:
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: ask_optimization
+    entities:
+    - appliance: dishwasher
+  - slot_was_set:
+    - device_name: dishwasher
+  - action: answer_optimization_request
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+
+
+############################################################
+# 7. FALLBACK 
+############################################################
+
+- story: test fallback dopo monitoraggio
+  steps:
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: nlu_fallback
+  - action: utter_nlu_fallback
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+
+- story: test fallback dispositivo sconosciuto
+  steps:
+  - intent: ask_optimization
+    entities:
+    - appliance: unknown_device
+  - action: answer_optimization_request
+
+############################################################
+# 8. STORIE SFIDANTI (per ridurre accuracy e testare generalizzazione)
+############################################################
+
+# 8.1 reorder non presente nel training
+- story: test ottimizza prima ancora di monitorare o prevedere
+  steps:
+  - intent: ask_optimization
+  - action: answer_optimization_request
+  - intent: check_production
+  - action: answer_monitoring_request
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+
+# 8.2 doppia ottimizzazione consecutiva (non vista nel training)
+- story: test doppia ottimizzazione
+  steps:
+  - intent: ask_optimization
+  - action: answer_optimization_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+
+# 8.3 consumo ripetuto + previsione
+- story: test consumo ripetuto
+  steps:
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+
+# 8.4 netload → device optimization (path mai visto)
+- story: test netload poi ottimizzazione con device
+  steps:
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+  - intent: ask_optimization
+    entities:
+    - appliance: dryer
+  - slot_was_set:
+    - device_name: dryer
+  - action: answer_optimization_request
+
+# 8.5 conversazione rumorosa con intent chitchat nel mezzo
+- story: test percorso con rumore
+  steps:
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: nlu_fallback
+  - action: utter_nlu_fallback
+  - intent: ask_optimization
+  - action: answer_optimization_request
+
+# 8.6 fallback forte → recupero previsto
+- story: test fallback forte poi recupero
+  steps:
+  - intent: nlu_fallback
+  - action: utter_nlu_fallback
+  - intent: check_production
+  - action: answer_monitoring_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+
+# 8.7 switch continuo produzione ↔ consumo ↔ netload
+- story: test rapid switching
+  steps:
+  - intent: check_production
+  - action: answer_monitoring_request
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: check_production
+  - action: answer_monitoring_request
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+
+# 8.8 device sconosciuto MA poi recupero (più realistico)
+- story: test device sconosciuto poi valid device
+  steps:
+  - intent: ask_optimization
+    entities:
+    - appliance: unknown_device
+  - action: answer_optimization_request
+  - intent: ask_optimization
+    entities:
+    - appliance: washing_machine
+  - slot_was_set:
+    - device_name: washing_machine
+  - action: answer_optimization_request
+
+# 8.9 flusso con interruzione improvvisa (troncato)
+- story: test flusso troncato
+  steps:
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+  # qui Rasa deve inferire la prossima action corretta per chiusura
+
