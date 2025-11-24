@@ -3,12 +3,22 @@ from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet, Form, FollowupAction
 from datetime import datetime, timedelta
-import json, logging, pytz, random, requests
+import json, logging, pytz, random, requests, sys
 from .monitoring import EnergyMonitoring
 from .optimization import Optimizer
 from .appliance import Appliance
-from .forecasting import MLPModel
+from .forecasting.MLPRegressor import SolarMLPModel
+from .forecasting.NetLoadRegressor import NetLoadMLPModel
+from .forecasting.LSTMRegressor import SolarLSTMModel
 from .utils import date_to_string
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s [%(levelname)s] %(name)s - %(message)s",
+    handlers=[
+        logging.StreamHandler(sys.stdout)  #-->manda tutti i log sulla console standard, e di rimando, nel file actions.log
+    ]
+)
 
 logger = logging.getLogger(__name__)
 
@@ -36,6 +46,7 @@ def send_to_nlg(intent: str, utterance: str, energy_data: str) -> str:
             requests.exceptions.RequestException, 
             ValueError) as e:
         logger.error(f"Errore nella comunicazione con il server NLG: {e}")
+        print(energy_data)
         return f"Di seguito le informazioni richieste:\n{energy_data}"
 
 
@@ -45,23 +56,26 @@ class AnswerMonitoringRequest(Action):
         return "answer_monitoring_request"
 
     def run(self, dispatcher, tracker, domain):
-        print(self.name)
+        print(self.name,flush=True)
         intent = tracker.latest_message['intent'].get('name')
         utterance = tracker.latest_message.get("text")
         em = EnergyMonitoring()
         energy_data = ""
 
         if em.api is None:
+            logger.warning("API non disponibile")
             dispatcher.utter_message(text="Mi dispiace, non ho modo di recuperare i dati in questo momento. Richiedimelo più tardi.")
             return []
 
         try:
+            print(intent, flush=True)
             em.update_all_data()
             if intent == "check_consumption":
                 energy_data = em.get_consumption_info()   
             elif intent == "check_production":
                 energy_data = em.get_production_info()
         except Exception as e:
+            logger.error(f"Errore nel recupero dei dati: {e}", exc_info=True) #exc_info stampa il traceback completo
             dispatcher.utter_message(text="Mi dispiace, non ho modo di recuperare i dati in questo momento. Richiedimelo più tardi.")
             return []
 
@@ -80,11 +94,12 @@ class AnswerOptimizationRequest(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        print(self.name)
+        print(self.name,flush=True) #flush consente la stampa nel file di log
         opt = Optimizer()
         user_start = user_end = None #TODO: aggiornare qui
         opt_start = datetime.now()
         intent = tracker.latest_message['intent'].get('name')
+        print(intent, flush=True)
         utterance = tracker.latest_message.get("text")
 
         try:
@@ -94,12 +109,13 @@ class AnswerOptimizationRequest(Action):
             opt.appliance = Appliance("hvac")
 
         try:
-            print(intent)
             if intent == "set_constraints":
-                user_start, user_end = ("","")  #TODO: aggiornare qui
-            energy_data = opt.grid_optimizer(opt_start, user_start, user_end)
+                user_start, user_end = ("","")  #TODO: parte su revisione degli orari al momento resta  non-implementata
+            opt.data_folder='forecasting'
+            opt.start = datetime.now().astimezone(pytz.timezone("Europe/Rome")).replace(second=0, microsecond=0).replace(tzinfo=None)
+            energy_data = opt.ec_optimizer()
         except Exception as e:
-            logger.error(f"Errore durante l'ottimizzazione: {e}")
+            logger.error(f"Errore durante l'ottimizzazione: {e}", exc_info=True)
             dispatcher.utter_message(text="Mi dispiace, non ho modo di recuperare i dati dell'ottimizzatore in questo momento. Richiedimelo più tardi.")
             return []
 
@@ -117,12 +133,13 @@ class AnswerNetLoadForecastRequest(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        print(self.name)
+        print(self.name, flush=True)
         intent = tracker.latest_message['intent'].get('name')
+        print(intent, flush=True)
         utterance = tracker.latest_message.get("text")
 
         try:
-            mlp=MLPModel()
+            mlp=NetLoadMLPModel()
             latitude = 39.2305400
             longitude = 9.1191700
             now = datetime.now()
@@ -132,7 +149,7 @@ class AnswerNetLoadForecastRequest(Action):
             energy_data =  mlp.run_pipeline(latitude, longitude, start_date, end_date)
 
         except Exception as e:
-            logger.error(f"Errore durante l'elaborazione delle predizioni: {e}")
+            logger.error(f"Errore durante l'elaborazione delle predizioni: {e}", exc_info=True)
             dispatcher.utter_message(text="Mi dispiace, non ho modo di recuperare i dati in questo momento. Richiedimelo più tardi.")
             return []
 
@@ -150,14 +167,15 @@ class AnswerSellingAdviceRequest(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        print(self.name)
+        print(self.name, flush=True)
         intent = tracker.latest_message['intent'].get('name')
+        print(intent, flush=True)
         utterance = tracker.latest_message.get("text")
 
         try:
             energy_data = _create_rec_profiles()
         except Exception as e:
-            logger.error(f"Errore durante l'elaborazione dei dati: {e}")
+            logger.error(f"Errore durante l'elaborazione dei dati: {e}", exc_info=True)
             dispatcher.utter_message(text="Mi dispiace, non ho modo di recuperare i dati relativi alla comunità in questo momento. Richiedimelo più tardi.")
             return []
 
@@ -177,7 +195,7 @@ def _create_rec_profiles():
     random_production = [round(user_p * random.random(), 2) for i in range(SYNTH_PROSUMERS)] 
     random_consumption = [round(user_c * random.random(), 2) for i in range(SYNTH_CONSUMERS)]
 
-    energy_data = f"""- Peer1 (Utente): produzione: {user_p} - consumo: {user_c}
+    energy_data = f"""- Utente: produzione: {user_p} - consumo: {user_c}
     - Peer2: produzione: {random_production[0]} - consumo: {random_consumption[0]}
     - Peer3: produzione: {random_production[1]} - consumo: {random_consumption[1]}
     - Peer4: consumo: {random_consumption[2]}
@@ -188,10 +206,10 @@ def _create_rec_profiles():
     
 
 if __name__ == "__main__":
-    intent = {"name": "ask_selling_advice"}
+    intent = {"name": "ask_optimization"}
     latest_message = {
                 "intent": intent,
-                "text": "ho prodotto un sacco e non voglio regalarla alla rete, dimmi a chi e a quanto vendere",  # <-- Spostato fuori da 'intent'
+                "text": "quale orario è più efficiente per lo scaldabagno?",  
                 "entities": []
             }
     tracker = Tracker(
@@ -206,5 +224,5 @@ if __name__ == "__main__":
     )
     dispatcher = CollectingDispatcher()
     domain={}
-    monit = AnswerSellingAdviceRequest()
+    monit = AnswerOptimizationRequest()
     monit.run(dispatcher, tracker, domain)

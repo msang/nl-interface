@@ -1,181 +1,203 @@
-import json, os, requests
+import datetime, os, pytz
+import numpy as np
 import pandas as pd
-import pyomo.environ as po
 import matplotlib.pyplot as plt
-from collections import defaultdict as ddict
-from datetime import datetime, timedelta
-from dotenv import load_dotenv, find_dotenv
-from os.path import join, dirname
-from typing import List, Optional, Text, Dict, Tuple
-from .utils import *
-from .data import PV, get_bess_soc
-from .appliance import Appliance
 
 
+from .data import summarize_data
+from .solve_opt_prob import solve_opt_prob
+from .forecasting.create_data import run_model
+from .forecasting.LSTMRegressor import SolarLSTMModel
+from .forecasting.MLPRegressor import SolarMLPModel
+
+pd.options.mode.chained_assignment = None
+BASE_DIR = os.path.dirname(__file__)
+
+
+## ====== OPTIMIZER CLASS =======
 class Optimizer:
-    def __init__(self, app_name: Optional[str] = "") -> None:
-        self.appliance = Appliance(app_name) if app_name != "" else None
-        self.pv_forecast = {}
+    def __init__(self, n=1, Delta=5, Ups=3, h=96, hh=96, prosumer_no=1, start=datetime.datetime(2020, 6, 20, 1, 0, 0), data_folder = 'data_fix_withprice', forecast_model='MLP'):
+        self.n = n                  # Numero di prosumer
+        self.Delta = Delta          # Tempo di campionamento [min]
+        self.Ups = Ups              # Numero di campioni per finestra di prezzo
+        self.h = h                  # Numero finestre nell'orizzonte di ottimizzazione
+        self.hh = hh                # Numero finestre nell'orizzonte di simulazione
+        self.prosumer = prosumer_no
+        self.start = start          # t0 -->NB: il valore di default poi andrà cambiato!!!
+        self.data_folder = data_folder
+        self.model=forecast_model
 
-    def set_appliance(self, appliance: Appliance) -> None:
-        self.appliance = appliance
+    @property
+    def data_path(self):
+        return os.path.join(BASE_DIR, self.data_folder)
 
-    def set_pv_data(self):
-        pv = PV()
-        self.pv_forecast = pv.get_pv_forecast()
+    @property
+    def mode(self):
+        return 'static' if self.data_folder == 'data_fix_withprice' else 'autoregressive' # modalità di ottimizzazione: static - su dati statici (dataset REC irlandese); autoregressive - su dati predetti dinamicamente da LSTM/MLP
 
-    def grid_optimizer(self, start_time: datetime, preferred_start: datetime, preferred_end: datetime, time_resolution: Optional[int] = 30) -> Tuple[float, float, str]:
+
+    def __repr__(self):
+        return f"""
+        Initialized Optimizer object based on solar and consumption data available at '{self.data_path}'.
+        OPTIMIZATION PARAMETERS:
+        - Number of prosumers: {self.n}
+        - Output prosumer: no. {self.prosumer}
+        - Optimization start time: {self.start}
+        - Sampling time (Delta): {self.Delta} min.
+        - Optimization mode: {self.mode}
+        """
+
         
-        self.set_pv_data()
-        
-        pv_time_intervals = self.pv_forecast["intervals"]
-        pv_values = self.pv_forecast["values"]   
-        #print(pv_time_intervals, pv_values)
+    def ec_optimizer(self, output_csv="optim_results.csv"):
+        n, Delta, Ups, h, hh, t0 = self.n, self.Delta, self.Ups, self.h, self.hh, self.start
+        #print(n, self.prosumer)
 
-        if self.appliance is not None:
-            self.appliance.start_time = start_time
-            start_idx = get_idx(pv_time_intervals, start_time)
-            self.appliance.set_parameters(start_idx, time_resolution)
+        # Derivati temporali
+        T = h * Ups
+        Y = hh * Ups
+        S = Y * Delta
 
-        if time_resolution != 30:
-            pv_values = redefine_values(pv_values, time_resolution)
-            pv_time_intervals = redefine_intervals(pv_time_intervals, time_resolution)
+        # Vincoli fisici
+        emax = 10 * np.ones((n, 1))
+        rmax, dmax = (3.5 * 1.05) * np.ones((n, 1)), (3.5 * 1.05) * np.ones((n, 1))
+        pmax, smax = (6 * 1.05) * np.ones((n, 1)), (6 * 1.05) * np.ones((n, 1))
+        vemax, vemin = np.ones((T, 1)), np.zeros((T, 1)) #se modifico il valore minimo di SoC a 0.1, l'ottimzzatore va in crash
+        eta_da = 0.98 * np.ones((n, 1))
+        eta_r = 0.90 * np.ones((n, 1))
+        eta_d = 0.95 * np.ones((n, 1))
 
-        max_len = min(len(pv_values), len(pv_time_intervals))
-        pv_values, pv_time_intervals = pv_values[:max_len], pv_time_intervals[:max_len] #ridefinisco gli intervalli per fare in modo che abbiano lunghezza uguale
-        #print(len(pv_values), len(pv_time_intervals))
+        # serve per il salvataggio su csv
+        output_records = []
 
-        model = po.ConcreteModel()
+        tf = t0 + datetime.timedelta(minutes=S)
+        c_fut, g_fut = np.zeros((Y, n)), np.zeros((Y, n))
 
-        T = len(pv_values)
-        time_steps = range(T)
-        model.time_steps = po.Set(initialize=time_steps)
-        #print(time_steps)
+        # Matrice di media
+        Mtemp = np.kron(np.eye(Y), np.ones((1, Delta)))
+        Mwsum = np.where(Mtemp.sum(axis=1) == 0, 1, Mtemp.sum(axis=1))
+        Mw = Mtemp / Mwsum[:, np.newaxis]
 
-        preferred_start_idx = preferred_end_idx = -1
-
-        # Converto anche i tempi dell'utente in indici
-        if preferred_start is not None:
-            preferred_start_idx = get_idx(pv_time_intervals, preferred_start)
-        if preferred_end is not None:
-            preferred_end_idx = get_idx(pv_time_intervals, preferred_end)
-        #print(preferred_start_idx, preferred_end_idx)
-
-        # Variabile binaria per decidere se l'elettrodomestico è acceso
-        model.state = po.Var(model.time_steps, domain=po.Binary, initialize=0)
-
-        # Definizione del consumo dell'elettrodomestico in base a "state"
-        def appliance_demand_rule(m, t):
-            return self.appliance.avg_demand * m.state[t]
-        
-        model.appliance_consumption = po.Expression(model.time_steps, rule=appliance_demand_rule)
-
-        FIXED_LOAD = [0.1] * T
-        model.load_demand = po.Expression(model.time_steps, rule=lambda m, t: model.appliance_consumption[t] + FIXED_LOAD[t])
-
-        model.pv = po.Param(model.time_steps, initialize={t: pv_values[t] for t in time_steps})
-
-        # Parametri batteria
-        b_0 = get_bess_soc()
-        bess_capacity = 10.0
-        ch_dis_rate = bess_capacity / 4  
-        bess_min = bess_capacity * 0.1
-        grid_capacity = 6.0
-
-        # Variabili decisionali
-        model.grid_imp = po.Var(model.time_steps, bounds=(0.0, grid_capacity))
-        model.grid_exp = po.Var(model.time_steps, bounds=(0.0, None))
-        model.bess_soc = po.Var(model.time_steps, bounds=(bess_min, bess_capacity))
-        model.bess_cd = po.Var(model.time_steps, bounds=(-ch_dis_rate, ch_dis_rate))
-
-        # Vincolo per rispettare l'orario scelto dall'utente
-        def user_preference_constraint_rule(m, t):
-            if preferred_start_idx != -1 and preferred_end_idx != -1:
-                if t >= preferred_start_idx and t <= preferred_end_idx:
-                    return m.state[t] == 1
-            return po.Constraint.Skip
-
-        model.user_preference_constraint = po.Constraint(model.time_steps, rule=user_preference_constraint_rule)
-
-        # Vincolo per garantire che il ciclo venga rispettato
-        cycle_duration = self.appliance.cycle_duration
-
-        def cycle_constraint_rule(m, t):
-            if t <= T - cycle_duration:
-                return sum(m.state[t + j] for j in range(cycle_duration)) >= cycle_duration * m.state[t]
-            return po.Constraint.Skip
-
-        model.cycle_constraints = po.Constraint(model.time_steps, rule=cycle_constraint_rule)
-
-        # Funzione obiettivo: minimizzare l'energia prelevata dalla rete
-        def minimize_import(m):
-            return sum(m.grid_imp[t] for t in m.time_steps)
-
-        model.minimize_grid = po.Objective(rule=minimize_import, sense=po.minimize)
-
-        # Vincoli di bilanciamento energetico
-        model.grid_at_t = po.ConstraintList()
-        model.bess_charge_level_at_t = po.ConstraintList()
-
-        for t in time_steps:
-            model.grid_at_t.add(model.pv[t] + model.grid_imp[t] + model.bess_cd[t] == model.grid_exp[t] + model.load_demand[t])
-            if t == 0:
-                model.bess_charge_level_at_t.add(model.bess_soc[t] == b_0 - model.bess_cd[t])
+        # Caricamento dati per ogni prosumer
+        for i in range(n):
+            if self.mode == 'static':
+                file_name = f"fix_H{i + 1}_W_withprice.csv"
+                #filename = os.path.join(BASE_DIR, rf"data_fix_withprice/{file_name}")
+                #df = pd.read_csv(rf"data_fix_withprice/{file_name}")
+                filename = os.path.join(self.data_path, file_name)
+                df = pd.read_csv(filename)
             else:
-                model.bess_charge_level_at_t.add(model.bess_soc[t] == model.bess_soc[t-1] - model.bess_cd[t])
+                print(f"==== Running predictions for PROSUMER No. {i+1} using {self.model} model ====")
+                df = run_model(self.model) 
+                df = df.reset_index()
+            
+            mask = pd.to_datetime(df['date']).between(t0, tf, inclusive="left")
+            print(f"df columns: {df.columns}")
+            print(f"df index: {df.index}")
+            print(f"mask sum: {mask.sum()}")
+            print(f"mask range: {t0} -> {tf}")
+            print(f"df date min: {df['date'].min() if 'date' in df else df.index.min()}")
+            print(f"df date max: {df['date'].max() if 'date' in df else df.index.max()}")
 
-        solver = po.SolverFactory("glpk")
-        #solver.solve(model)
-        result = solver.solve(model, tee=True)  # tee=True stampa il log del solver
-        print("Solver status:", result.solver.status)
-        print("Solver termination condition:", result.solver.termination_condition)
+            c_fut[:, i] = Mw @ df.loc[mask, 'Consumption(W)'].interpolate().astype(int).to_numpy() / 1000
+            g_fut[:, i] = Mw @ df.loc[mask, 'Production(W)'].interpolate().astype(int).to_numpy() / 1000
 
+            if i == 0:
+                rho_p_all = Mw @ df.loc[mask, 'Price(eur/kWh)'].interpolate().astype(float).to_numpy()
+                rho_s_all = 0.5 * rho_p_all
+                rho_sh_all = 0.3 * rho_s_all
 
-        """
-        print(f"Quantità totale di energia consumata dalla rete: {model.minimize_grid():.2f} kWh")
-        print("t \t PV \t Load \t Ch/Dis \t SoC \t Grid  \t Feed-in \t State")
-        for t, pv_t in zip(time_steps, pv_time_intervals):
-            print(f"{pv_t} \t {model.pv[t]:.3f} \t {model.load_demand[t]():.3f} \t {model.bess_cd[t].value:.3f} \t {model.bess_soc[t].value:.3f} \t {model.grid_imp[t].value:.3f} \t {model.grid_exp[t].value:.3f} \t {model.state[t].value}")
-        """
-        #print(f"Quantità totale di energia consumata dalla rete: {model.minimize_grid():.2f} kWh")
-        #print("t \t PV \t Load  \t SoC \t Grid  \t Feed-in \t State")
-        #for t, pv_t in zip(time_steps, pv_time_intervals):
-        #    print(f"{pv_t} \t {model.pv[t]:.3f} \t {model.load_demand[t]():.3f} \t {model.bess_soc[t].value:.3f} \t {model.grid_imp[t].value:.3f} \t {model.grid_exp[t].value:.3f} \t {model.state[t].value}")
+        ve0 = 0 * np.ones((n, 1))
 
-        _, ax = plt.subplots()
-        p1, = ax.plot(pv_time_intervals, pv_values, "green", label="PV forecast")
-        p2, = ax.plot(pv_time_intervals, [model.load_demand[t]() for t in time_steps], "orange", label="Load")
-        p3, = ax.plot(pv_time_intervals, [model.grid_imp[t].value for t in time_steps], "red", label="Grid")
-        p4, = ax.plot(pv_time_intervals, [model.state[t].value * self.appliance.avg_demand for t in time_steps], "blue", label="Appliance State")
-        ax.set_xlabel("Time steps")
-        ax.set_ylabel("kW")
-        ax.legend(handles=[p1, p2, p3, p4])
-        plt.savefig('grid_minimization.png')
+        theta = np.zeros((hh + 1, 1))
+        r = np.zeros((Y, n))
+        d = np.zeros((Y, n))
+        p = np.zeros((Y, n))
+        s = np.zeros((Y, n))
+        ve = np.zeros((Y, n))
+        sh_en = np.zeros((hh + 1, 1))
 
-        grid_import_values = [round(model.grid_imp[t].value, 2) for t in model.time_steps]
-        time_steps = [t for t in pv_time_intervals]
-        pv_data = [round(model.pv[t], 2) for t in model.time_steps]
-        bess = [round(model.bess_soc[t].value, 2) for t in model.time_steps]
-        #state = [model.state[t].value for t in model.time_steps]
-        state = ["Sì" if model.state[t].value == 1.0 else "No" for t in model.time_steps]
-        #final = {"state":state, "grid":grid_import_values,"PV forecast":pv_data,"BESS SoC":bess}
-        final = {"orario":time_steps,"accensione":state, "kW importati dalla rete":grid_import_values,"kW prodotti dai pannelli":pv_data,"stato di carica della batteria (%)":bess}
+        # passo di ottimizzazione 
+        for k in range(Y - T + 1):
+            print(f"Step k = {k} of {Y - T}")
+            c = c_fut[k:k + T, :n]
+            g = g_fut[k:k + T, :n]
+            rho_p = rho_p_all[k:k + T].reshape(-1, 1)
+            rho_s = rho_s_all[k:k + T].reshape(-1, 1)
+            rho_sh = rho_sh_all[k:k + T].reshape(-1, 1)
 
-        #df = pd.DataFrame(final, index=time_steps)
-        df = pd.DataFrame(final)
-        #print(df)
+            r_p, d_p, p_p, s_p, ve_p, theta_p = solve_opt_prob(
+                k, n, c, g, Delta, Ups, h, T,
+                rmax, dmax, pmax, smax, emax, vemax, vemin,
+                rho_p, rho_s, rho_sh,
+                eta_da, eta_r, eta_d, ve0
+            )
 
-        #text = verbalize_result(T, time_resolution, grid_import_values, self.appliance.cycle_duration)
-        #print(df.head(12).to_string())
-        return df.head(12).to_string(index=False) #mantengo solo i risultati delle prime 12 ore, per limitare il contesto
-        #return df.to_csv("optimizer.csv", index=False)
+            ve0 = ve_p[[0], :].T
+            r[k:k + T, :n] = r_p
+            d[k:k + T, :n] = d_p
+            p[k:k + T, :n] = p_p
+            s[k:k + T, :n] = s_p
+            ve[k:k + T, :n] = ve_p
+            sh_en[k // Ups] = sh_en[k // Ups] + theta_p.reshape(h + 1, 1)[0]
+            sh_en[k // Ups + 1:k // Ups + h + 1] = theta_p.reshape(h + 1, 1)[1:]
 
+        # df e sintesi
+        time_index = pd.date_range(start=t0, periods=Y, freq=f"{Delta}min")
+        df_production = pd.DataFrame(
+            data=np.hstack([p, s, ve]),
+            index=time_index,
+            columns=[f"Potenza presa p{i + 1}" for i in range(n)] +
+                    [f"Potenza immessa p{i + 1}" for i in range(n)] +
+                    [f"% Carica batteria  p{i + 1}" for i in range(n)]
+        )
+
+        time_index_sh_en = pd.date_range(start=t0, periods=len(sh_en)-1, freq=f"{Delta*Ups}min")
+        df_shared_energy = pd.DataFrame(data=sh_en[:-1], index=time_index_sh_en, columns=["Energia condivisa"])
+
+        soc_cols = [c for c in df_production.columns if c.startswith('% Carica batteria')] #cambio da unita' frazionaria a percentuale
+        other_cols = [c for c in df_production.columns if c not in soc_cols]
+
+        df_resampled = df_production.resample('1H').agg(
+            {**{col: (lambda x: x.iloc[-1]*100) for col in soc_cols}, #aggrego prendendo solo l'ultimo valore dell'ora
+             **{col: (lambda x: (x.sum() * (Delta/60))) for col in other_cols}} #qui sommo tutte le potenze istantanee e poi converto in kWh, per avere energia oraria totale
+        ).round(2)
+        # **{col: 'last' for col in soc_cols} --> alternativa di aggrezazione senza %
+
+        df_resampled_sh = df_shared_energy.resample('1H').sum().round(2) # qui sommo perché sh_en contiene già i dati parziali sull'energia condivisa in una data finestra Delta*Ups
+
+        # Analisi per singolo prosumer
+        for prosumer_idx in range(n):
+            df_prosumer = df_resampled[
+                [f"Potenza presa p{prosumer_idx + 1}",
+                 f"Potenza immessa p{prosumer_idx + 1}",
+                 f"% Carica batteria  p{prosumer_idx + 1}"]
+            ].copy()
+            df_prosumer.columns = ["Potenza acquistata", "Potenza immessa in rete", "% Carica batteria"]
+
+            df_final = pd.concat([df_prosumer, df_resampled_sh], axis=1).dropna()
+            optim_data = summarize_data(df_final)
+
+            output_records.append({
+                "day": t0.strftime("%Y-%m-%d"),
+                "prosumer_number": prosumer_idx + 1,
+                "energy_data": optim_data
+            })
+
+        df_output = pd.DataFrame(output_records)
+
+        #salvo su file l'ottimizzazione completa
+        out_path = os.path.join(BASE_DIR, output_csv)
+        df_final.to_csv(out_path, index=False)
+
+        #restituisci il dato di un singolo prosumer (convenzionalmente il primo - per parametrizzare la selezione uso attributo self.prosumer-decrementato di 1 per poter essere usato come indice)
+        return df_output.iloc[self.prosumer-1]['energy_data']
+        
 
 if __name__ == "__main__":
-    start = datetime.now()
-    opt = Optimizer("hvac")
-    opt_start = datetime.now()
-    user_start = opt_start.replace(hour=21)
-    user_end = opt_start.replace(hour=22)
-    print(opt_start, user_start, user_end)
-    print(opt.grid_optimizer(opt_start, user_start, user_end, time_resolution=60))
+    opt = Optimizer()
+    opt.prosumer=1 ##riferimento al prosumer di cui voglioevere i dati
+    opt.n=1 #n. di prosumer della rec
+    opt.data_folder = 'forecasting'
+    opt.start = datetime.datetime.now().astimezone(pytz.timezone("Europe/Rome")).replace(second=0, microsecond=0).replace(tzinfo=None)
+    print(opt)
+    print(opt.ec_optimizer())

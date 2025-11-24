@@ -11,7 +11,7 @@ intents:
 - goodbye
 - greet
 - nlu_fallback
-- set_constraints
+#- set_constraints
 - start
 entities:
 - appliance
@@ -57,10 +57,11 @@ responses:
   - text: Non ho compreso bene. Fammi sapere se vuoi parlare di consumi energetici, produzione o strategie di efficienza.
   - text: Purtroppo non ho capito. Vuoi che ti aiuti con i dati energetici o qualche consiglio su come ottimizzare?
   - text: Il messaggio non è chiaro. Ti va di riprovare con una domanda su energia, consumi o produzione?
-  - text: Hmm, non sono riuscito a capire. Se vuoi, possiamo parlare di ottimizzazione, autoconsumo o produzione energetica.
-  - text: Scusami, puoi ripetere? Ti posso aiutare con analisi dei consumi, produzione o efficienza energetica.
+  - text: Hmm, non ho capito. Se vuoi, possiamo parlare di ottimizzazione, autoconsumo o produzione energetica. Dimmi pure cosa ti interessa sapere.
+  - text: Scusami, puoi ripetere? Ti posso aiutare con l’analisi dei consumi, produzione o efficienza energetica.
   - text: Non ho capito bene. Ricorda che posso darti info su energia, consumi e suggerimenti di ottimizzazione.
   - text: Puoi riformulare la tua richiesta? Posso supportarti su ciò che riguarda gli aspetti energetici della tua casa.
+  - text: Perdonami, non ho capito. Potresti darmi maggiori dettagli sulla tua richiesta?
 actions:
 - answer_optimization_request
 - answer_monitoring_request

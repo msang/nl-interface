@@ -1,23 +1,77 @@
 {% if intent=="check_consumption" %}
 Considera le seguenti informazioni relative all'andamento dei consumi elettrici domestici: 
 {{ data }}
+
+Usa le informazioni che ti ho appena fornito per rispondere alla seguente domanda: {{utterance}}
+
 {% elif intent=="check_production" %}
 Considera le seguenti informazioni relative all'andamento di un impianto fotovoltaico:
 {{ data }}
-{% elif intent=="ask_optimization" %}
-Considera i seguenti dati restituiti da un ottimizzatore che minimizza l'uso di energia dalla rete elettrica:
+
+Usa le informazioni che ti ho appena fornito per rispondere alla seguente domanda: {{utterance}}
+
+{% elif intent=="ask_optimization" or intent=="set_constraints" %}
+*Contesto*:
+Ricevi in input un riepilogo dei dati generati da un ottimizzatore che massimizza l’energia condivisa all’interno di una comunità energetica. I dati dell'ottimizzatore si riferiscono a un singolo utente (prosumer).
+
+Il riepilogo contiene queste voci, ciascuna con una fascia oraria (formato "HH:MM–HH:MM", oppure "-" se il dato non è disponibile) e un valore associato tra parentesi:
+- Consumo maggiore: intervallo di massimo consumo energetico
+- Surplus maggiore (se presente): intervallo in cui si produce energia in eccesso rispetto al consumo
+- Livello massimo di carica della batteria: fascia in cui la batteria raggiunge il massimo stato di carica
+- Valori massimi di energia condivisa: intervallo con il valore massimo di energia che può essere scambiata tra utenti della comunità.
+
+*Compito*:
+Genera un messaggio sintetico in italiano che fornisca un feedback energetico personalizzato all’utente, basandoti sui dati forniti.
+Il tuo messaggio deve aiutare l’utente a pianificare l’uso dell’energia in modo efficiente.
+
+Il feedback deve:  
+- considerare i dati forniti nel riepilogo
+- fornire indicazioni pratiche su quando conviene utilizzare energia
+- indicare fasce orarie ottimali nel formato "HH:MM - HH:MM"  
+- essere sintetico, chiaro e diretto (nessuna spiegazione generica)
+
+Prima di fornire la raccomandazione, analizza separatamente ciascuna voce del riepilogo (consumo, surplus, carica batteria, energia condivisa). Valuta quali fasce orarie sono più vantaggiose per consumare o immagazzinare energia, tenendo anche conto del costo dell'energia in base alle fasce orarie:
+- 0,17€/kWh nella fascia 00:00-06:59
+- 0,19€/kWh nelle fasce 07:00-07:59 e 19:00-23:59
+- 0,21€/kWh nella fascia 08:00–18:59
+Sintetizza un messaggio chiaro e diretto con consigli pratici, basati sull'integrazione di queste informazioni.
+Se ci sono preferenze dell’utente (es. su orari precisi, comfort termico, ecc.), integrale nel ragionamento.
+Non limitarti a ripetere i dati, ma interpreta e combina le informazioni per una raccomandazione utile.
+
+*Esempio di input*:
+Riepilogo ottimizzazione:
+- Consumo maggiore: 02:00–09:00 (1.5 kWh)
+- Surplus maggiore: 12:00–17:00 (4 kWh)
+- Stato di carica massimo della batteria:  14:00–16:00 (100%)
+- Valori massimi di energia condivisa: 13:00–16:00 (1.36 kWh)
+
+Richiesta dell'utente:
+devo fare lavatrice e asciugatrice di mattina
+
+*Esempio di output corretto*:
+Anche se preferisci farle di mattina, ti conviene posticipare lavatrice e asciugatrice tra le 12:00 e le 16:00, quando il surplus solare e la batteria coprono quasi tutto il consumo. In questo modo riduci i costi e aumenti l’autoconsumo.
+
+
+*Input*:
+Riepilogo ottimizzazione:
 {{ data }}
+
+Richiesta dell’utente:
+{{ utterance }}
+
 {% elif intent=="ask_netload_forecast" %}
 Considera le seguenti informazioni relative alle previsioni di consumi (intesi come la sola energia presa dalla rete) nelle prossime ore:
 {{ data }}
+
+Usa le informazioni che ti ho appena fornito per rispondere alla seguente domanda: {{utterance}}
+
 {% elif intent=="ask_selling_advice" %}
 Considera le seguenti informazioni relative a una comunità energetica che scambia energia tramite blockchain:
-
 - Ogni kWh è rappresentato da un NFT (ERC721).
 - Ogni centesimo di euro è rappresentato da un token ERC20.
 - I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
-  - Il prezzo deve essere maggiore di 0,04 € (prezzo di vendita alla rete)
-  - E minore di 0,16 € (prezzo di acquisto dalla rete)
+  - Il prezzo deve essere maggiore di 0,04€ (prezzo di vendita alla rete)
+  - E minore di 0,16€ (prezzo di acquisto dalla rete)
 
 1. C'è un ordine di priorità da considerare: 
    - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
@@ -26,9 +80,7 @@ Considera le seguenti informazioni relative a una comunità energetica che scamb
 
 Dati giornalieri dei membri della comunità (in kWh):
 {{ data }}
-{% endif %}
-{% if intent=="ask_selling_advice" %}
-Usa le informazioni che ti ho appena fornito per rispondere direttamente all'utente (che in questo caso è Peer1), che ti pone la seguente domanda: {{ utterance }}
-{% else %}
-Usa le informazioni che ti ho appena fornito per rispondere alla seguente domanda: {{utterance}}
+
+Usa le informazioni che ti ho appena fornito per rivolgerti direttamente all'utente, che ti pone la seguente domanda: {{ utterance }}
+
 {% endif %}

@@ -2,8 +2,10 @@
 #/models
 /actions/__pycache__
 /actions/.env
+/actions/forecasting/.env
+/nlg/__pycache__
 /jupyter_notebooks
-/story_graph.dot
+story_graph.dot
 /humEval
 /nl2optim
 .env
@@ -12,3 +14,15 @@ credentials.yml
 #endpoints.yml
 #docker-compose.yml
 requirements_all.txt
+.ipynb_checkpoints/
+actions/.ipynb_checkpoints/
+actions/shelly_simulated.csv
+nlg/_blockchain-tests_
+actions/data_fix_withprice
+actions/optim_results.csv
+data.json
+logs/
+nlg/__pycache__/context_memory.cpython-38.pyc
+nlg/context_memory.py
+/misc
+/ProsunAI

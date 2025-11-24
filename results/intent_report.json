@@ -1,0 +1,61 @@
+{
+  "ask_optimization": {
+    "precision": 0.8695652173913043,
+    "recall": 0.8,
+    "f1-score": 0.8333333333333333,
+    "support": 50,
+    "confused_with": {
+      "deny": 4,
+      "check_consumption": 3
+    }
+  },
+  "ask_netload_forecast": {
+    "precision": 0.8947368421052632,
+    "recall": 0.68,
+    "f1-score": 0.7727272727272727,
+    "support": 25,
+    "confused_with": {
+      "check_consumption": 3,
+      "ask_optimization": 3
+    }
+  },
+  "check_production": {
+    "precision": 0.8260869565217391,
+    "recall": 0.76,
+    "f1-score": 0.7916666666666667,
+    "support": 50,
+    "confused_with": {
+      "check_consumption": 10,
+      "ask_optimization": 2
+    }
+  },
+  "check_consumption": {
+    "precision": 0.7241379310344828,
+    "recall": 0.84,
+    "f1-score": 0.7777777777777777,
+    "support": 50,
+    "confused_with": {
+      "check_production": 5,
+      "goodbye": 1
+    }
+  },
+  "micro avg": {
+    "precision": 0.8106508875739645,
+    "recall": 0.7828571428571428,
+    "f1-score": 0.7965116279069768,
+    "support": 175
+  },
+  "macro avg": {
+    "precision": 0.8286317367631973,
+    "recall": 0.77,
+    "f1-score": 0.7938762626262625,
+    "support": 175
+  },
+  "weighted avg": {
+    "precision": 0.8191881502857593,
+    "recall": 0.7828571428571428,
+    "f1-score": 0.7968975468975469,
+    "support": 175
+  },
+  "accuracy": 0.7828571428571428
+}
