@@ -108,8 +108,11 @@ nlu:
     - aggiornami sull'[impianto]{"entity":"source","value":"pv"}
     - spiegami produzione in due parole
     - generazione? sale o scende?
-    - sto esportando energia adesso
-    
+    - sto esportando adesso
+    - sì, ma 0,25 kW sono pochi per corpire i consumi del riscaldamento. A quant'è la batteria? Riesco ad andare in autoconsumo con quella?
+    - quale energia in eccesso
+    - e a quanto sono di batteria
+    - ce la faccio con quel tanto di batteria a usare il riscaldamento restando in autoconsumo? se sì, per quanto?
 - intent: check_consumption
   examples: |
     - come stanno andando i consumi?
@@ -179,7 +182,11 @@ nlu:
     - confronta il mio consumo attuale con la media delle ultime 24 ore
     - ho superato il limite contrattuale in kW?
     - quant'è di corrente
-
+    - e a livello di consumi qual è il bilancio fino ad ora
+    - cioè quanto ho consumato finora
+    - fammi un riepilogo di com'è andata la mia giornata tra consumo e autoconsumo
+    - sì ma in sostanza quant'è che ho preso dalla rete stamattina
+    - ho l'asciugatrice in funzone, quanto sto consumando
 - intent: ask_optimization
   examples: |
     - desidero avere la [casa riscaldata]{"entity": "appliance", "value": "hvac"}
@@ -258,10 +265,18 @@ nlu:
     - come faccio a non spendere troppo
     - orario buono per far andare tutto
     - pianificami i consumi in base alle previsioni
-    - orari più economici per il condizionatore
+    - orari più economici per il [condizionatore]{"entity": "appliance", "value": "hvac"}
     - fammi usare il solare nel modo più furbo
     - e se accendo tutto ora
-    - oggi è previsto brutto tempo eio devo fare due lavatrici a 60°: al momento i pannelli stanno producendo qualcosa e la batteria è al 26%: mi conviene far caricare la batteria e fare le lavatrici dopo, oppure sfrutto ora la produzione per fare le lavatrici
+    - oggi è previsto brutto tempo eio devo fare due [lavatrici]{"entity": "appliance", "value": "washing_machine"} a 60°: al momento i [pannelli]{"entity": "source", "value": "pv"} stanno producendo qualcosa e la [batteria]{"entity": "source", "value": "bess"} è al 26%: mi conviene far caricare la [batteria]{"entity": "source", "value": "bess"} e fare le lavatrici dopo, oppure sfrutto ora la produzione per fare le lavatrici
+    - sì, ma io voglio sapere se posso usarlo adesso
+    - grazie, volevo sapere come organizzarmi stasera, dato che oggi ho già consumato molto e non posso contare sulla [batteria]{"entity": "source", "value": "bess"}
+    - anche oggi brutto tempo: cosa mi consigli per stasera
+    - ok, ora puoi dirmi come mi posso gestire i consumi stasera, dato che ora non ho [batteria]{"entity": "source", "value": "bess"}?
+    - ti ho chiesto un consiglio su come posso tenere la casa calda senza usare il [riscaldamento]{"entity": "appliance", "value": "hvac"}
+    - quindi la produzione oggi potrebbe essere buona. Ho già [lavastoviglie]{"entity": "appliance", "value": "dishwasher"} in azione, e sicuramente ne approfitterò per farmi un po' di [lavatrici]{"entity": "appliance", "value": "washing_machine"}. Miaccendo anche il [riscaldamento]{"entity": "appliance", "value": "hvac"} verso mezzogiorno?
+    - posticipare a quando?
+    - ciao, ora c'è il sole ma dopo sarà nuovoloso: dato lo stato della [batteria]{"entity": "source", "value": "bess"} cosa mi consigli di fare
 
 - intent: ask_netload_forecast
   examples: |
@@ -301,6 +316,10 @@ nlu:
     - considerato che ne ho già consumato 14kwh, non ho autonomia con la batteria, sta piovendo e devo ancora usare il [forno]{"entity": "appliance", "value": "oven"}: quanto sar il mio consumo in kwh alla fine della giornata
     - ciao, oggi piove e sto usando il [riscaldamento]{"entity": "appliance", "value": "hvac"}, quanti kw avrò consumato entro la fine della giornata
     - oggi il tempo è variabile. ho già conusmato molto, da qui astasera quanto mi devo aspettare?
+    - oggi ho già consumato 8 kwh, in giornata quanto avrò consumato secondo te
+    - ma tu quanto pensi che consumerò entro stasera
+    - indicativamente in serata quanto sarò mio consumo
+    - cosa prevedi per oggi
 - intent: ask_selling_advice
   examples: |
     - suggerisci a chi vendere e a quanto
