@@ -1,0 +1,192 @@
+version: "3.1"
+
+nlu:
+
+- intent: check_consumption
+  examples: |
+    - puoi mostrarmi il riepilogo dei miei consumi di oggi?
+    - quanta elettricità sto utilizzando in questo momento?
+    - quanto sto spendendo di energia ora?
+    - dimmi se sto usando troppa corrente
+    - vorrei sapere quanta energia ho già prelevato oggi
+    - analizza il consumo attuale della mia abitazione
+    - consumo più di ieri?
+    - quanto è il mio consumo medio orario?
+    - indicami la potenza che sto usando adesso
+    - hai dati sull'uso della rete oggi?
+    - sto consumando molto rispetto alla settimana scorsa?
+    - com'è il mio consumo istantaneo?
+    - ho raggiunto il picco di consumo oggi?
+    - controlla quanto sto prendendo dalla rete elettrica
+    - qual è il mio fabbisogno energetico attuale?
+    - voglio un confronto tra i consumi di oggi e ieri
+    - elencami i dispositivi che consumano di più ora
+    - mi serve una panoramica dei consumi per fascia oraria
+    - verifica se sto superando la soglia di consumo
+    - dammi un aggiornamento sui consumi domestici in tempo reale
+    - eeh ma quanto sto bruciando di corrente adesso?
+    - mi sa che sto spendendo troppo, vero?
+    - puoi dirmi se sto andando oltre il solito consumo?
+    - boh, il contatore gira troppo veloce oggi?
+    - è normale tutta 'sta luce accesa?
+    - quanto consumo tipo in media, più o meno?
+    - fammi capire se ho sforato la soglia o no
+    - c'è modo di sapere se sto usando troppa roba insieme?
+    - dimmi quanto sto pompando dalla rete
+    - consumo o produco più ora? non capisco
+    - i consumi di prima erano più alti, giusto?
+    - è cambiato qualcosa nei miei consumi da ieri?
+    - mi dici se la bolletta piangerà stavolta?
+    - sto andando in overconsumo o ci siamo?
+    - e rispetto a ieri sera, come sono messo?
+    - fammi vedere se la lavatrice ciuccia tanto
+    - c'è un modo per sapere se sto sprecando?
+    - sto usando più corrente del solito a quest'ora?
+    - il consumo è stabile o mi sta impennando?
+    - quant'è che sto tirando di energia in questo momento?
+    - aggiornamento sui consumi
+    - quanto sto tirando dalla rete rispetto a stamattina?
+    - verifica il mio consumo totale dell'ultima ora
+    - quanto sto usando
+    - quanto sto spendendo di luce
+    - sto esagerando con la corrent
+    - luce a quanto
+    - come sono a consumi
+    - ho preso molto oggi. ora?
+    - quanto dalla rete e quanto da batteria, per capire se ho fatto autoconusmo o altro
+
+- intent: check_production
+  examples: |
+    - quanta energia stanno generando i miei pannelli adesso?
+    - mostrami la potenza attuale dei pannelli solari
+    - a che livello di carica è la batteria oggi?
+    - dimmi quanto sto producendo rispetto a ieri
+    - sto immettendo energia in rete in questo momento?
+    - qual è il rendimento dell’impianto solare oggi?
+    - la produzione è maggiore di ieri?
+    - fammi un report sulla produzione rinnovabile di oggi
+    - quanto ha accumulato la batteria finora?
+    - posso sapere se sto producendo più di quanto consumo?
+    - verifica la resa della mia produzione fotovoltaica
+    - mostra la potenza erogata dai pannelli ora
+    - l'impianto sta generando a pieno regime?
+    - quanta energia verde ho generato finora?
+    - quant'è la capacità residua della batteria?
+    - com'è il mio autoconsumo rispetto alla produzione?
+    - aggiorna i dati di produzione fotovoltaica
+    - dimmi se la batteria è scarica o piena
+    - sto esportando energia in rete?
+    - qual è la percentuale di energia autoprodotta adesso?
+    - sto producendo qualcosa o è nuvolo e basta?
+    - e i pannelli? fanno il loro lavoro o dormono?
+    - la batteria è ancora viva o si è scaricata tutta?
+    - quanto sto rendendo col sole di oggi?
+    - ma sto caricando o scaricando la batteria?
+    - i miei pannelli si sono svegliati o no?
+    - la produzione è decente o da piangere?
+    - fammi sapere se sto immettendo qualcosa in rete
+    - il contatore gira al contrario o ancora no?
+    - quanto sto facendo mo’?
+    - rispetto a ieri, meglio o peggio come produzione?
+    - c'è un po’ di surplus o sto a zero?
+    - e la resa? fa schifo o va bene?
+    - i pannelli fanno qualcosa anche col cielo coperto?
+    - sto producendo più di quanto consumo, sì o no?
+    - dammi un feedback veloce sulla produzione
+    - guarda se i miei pannelli stanno lavorando o no
+    - produzione di oggi: buona o meh?
+    - la batteria si è riempita o ancora scarica?
+    - che dice la produzione? sale o scende?
+    - e adesso energia quanta dai pannelli
+    - i pannelli stanno spingendo o no?
+    - produzione ok oggi?
+    - FV sta andando
+    - potenza erogata in kW al momento?
+    - batteria?
+    - produco abbastanza rispetto a stamattina
+    - quanto ho fatto oggi
+    - sto mettendo qualcosa in batteria?
+    - il sole sta facendo qualcosa?
+
+
+- intent: ask_optimization
+  examples: |
+    - quale orario è più efficiente per lo scaldabagno?
+    - dammi indicazioni per massimizzare l’autoconsumo
+    - quando conviene avviare la lavastoviglie per risparmiare
+    - aiutami a pianificare i consumi in modo intelligente
+    - è conveniente far funzionare le pompe ora?
+    - come faccio a sfruttare il surplus energetico?
+    - quando usare la roba grossa?
+    - la lavatrice ora è una pessima idea?
+    - dimmi un orario buono per non far arrabbiare la bolletta
+    - ottimizzami tutto, non so da dove partire
+    - se accendo la pompa ora, spreco?
+    - posso lavare ora o meglio dopo pranzo?
+    - c’è un momento in cui la corrente costa meno?
+    - aiutami a non buttare via energia
+    - se la produzione è bassa, cosa mi conviene fare?
+    - e se faccio tutto ora? male?
+    - per evitare picchi di consumo
+    - lavatrice sì o no adesso?
+    - consigli veloci per usare meglio il solare
+    - suggerisci tu quando far partire le pompe
+    - come faccio a spremere il fotovoltaico al massimo?
+    - c’è un modo di risparmiare senza incasinarmi?
+    - ok, ottimizza tutto per favore
+    - come faccio a capire il momento giusto per attivare i dispositivi?
+    - sono fuori casa, ha senso far andare la lavatrice?
+    - fammi trovare la casa fresca domani pomeriggio
+    - imposta la temperatura ideale per dormire
+    - imposta il riscaldamento dalle 17 alle 22
+    - voglio l’acqua a 55 gradi entro le 20
+    - regola le pompe per mantenere 24 gradi tutto il giorno
+    - pianifica che l'acqua sia calda in giornata
+    - metti lo scaldabagno tipo verso le 8, se puoi
+    - fammi trovare l’acqua calda quando torno
+    - metti i termosifoni ma non troppo presto
+    - che ne dici di far partire la pompa dopo cena?
+    - voglio che la casa non si scaldi troppo
+    - temperatura a boh... vedi tu quanto
+    - accendi tutto ma non prima delle 7
+    - evita di accendere roba quando dormo
+    - acqua calda al risveglio
+    - tieni la casa sui 21 finché non esco
+    - lavastoviglie non prima delle 10, per favore
+    - quale può essere un orario intelligente per l’acqua?
+    - non far andare il riscaldamento troppo presto
+    - la pompa dalle 8 ma solo se serve
+    - controlla che la temperatura non superi i 25
+    - voglio il bagno caldo senza sprecare
+    - gestisci tu l’acqua calda, basta che non sia fredda alle 7
+    - dimmi tu quando accendo lo scaldabagno
+    - aiutami a distribuire meglio i consumi
+
+- intent: ask_netload_forecast
+  examples: |
+    - andamento previsto dei consumi
+    - quanto sarà il mio prelievo domani
+    - quali ore avranno i consumi più alti oggi?
+    - prevedi il mio consumo totale giornaliero
+    - come varia il consumo stimato nelle prossime ore?
+    - quant'è previsto il carico medio per domani?
+    - e domani quanto prendo, di più o di meno?
+    - prevedi se mi conviene accendere roba domani mattina
+    - quant'è che tirerò dalla rete stasera?
+    - fammi una stima tipo “oggi vs domani”
+    - andrò oltre la soglia domani?
+    - mi dici se domani avrò picchi?
+    - domani consumo di più o meno?
+    - quanta energia mi servirà se uso tutto insieme?
+    - se piove, avrò meno produzione?
+    - stima quanto preleverò la notte prossima
+    - il consumo previsto per dopodomani com’è?
+    - dai, indovina il mio carico per stasera
+    - c’è rischio di overconsumo domani mattina?
+    - fammi la previsione giornaliera, anche spannata
+    - quanto è previsto che io assorba dalla rete
+    - dimmi se il fabbisogno salirà nei prossimi giorni
+    - il netload di domani è alto?
+    - che dici, domani consumo tanto?
+    - fammi una proiezione tipo quanto spreco domani
+

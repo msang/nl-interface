@@ -1,0 +1,44 @@
+{% if intent=="check_consumption" %}
+DATI: 
+{{ data }}
+
+RICHIESTA: {utterance}}
+
+{% elif intent=="check_production" %}
+DATI:
+{{ data }}
+
+RICHIESTA: {{utterance}}
+
+{% elif intent=="ask_optimization" %}
+DATI:
+Riepilogo ottimizzazione:
+{{ data }}
+
+RICHIESTA: {{ utterance }}
+
+{% elif intent=="ask_netload_forecast" %}
+DATI:
+{{ data }}
+
+RICHIESTA: {{utterance}}
+
+{% elif intent=="ask_selling_advice" %}
+Considera le seguenti informazioni relative a una comunità energetica che scambia energia tramite blockchain:
+- Ogni kWh è rappresentato da un NFT (ERC721).
+- Ogni centesimo di euro è rappresentato da un token ERC20.
+- I membri scelgono liberamente a che prezzo vendere l’energia in surplus, con un vincolo:
+  - Il prezzo deve essere maggiore di 0,04€ (prezzo di vendita alla rete)
+  - E minore di 0,16€ (prezzo di acquisto dalla rete)
+
+1. C'è un ordine di priorità da considerare: 
+   - Prima i prosumer in deficit (cioè coloro che hanno consumato più di quanto prodotto).
+   - Solo il surplus residuo può essere venduto ai consumer.
+2. L’obiettivo è vendere quanto più possibile del proprio surplus, ottimizzando il prezzo. Il prezzo suggerito deve indicare un valore preciso, non un range generico.
+
+Dati giornalieri dei membri della comunità (in kWh):
+{{ data }}
+
+RICHIESTA: {{ utterance }}
+
+{% endif %}
