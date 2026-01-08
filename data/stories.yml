@@ -2,53 +2,104 @@ version: "3.1"
 
 stories:
 
-- story: happy path on optimization feedback w/o explanation
-  steps:
-  - intent: ask_optimization
-  - action: answer_optimization_request
-  - intent: deny
-  - action: utter_goodbye_pos
-
-- story: happy path on optimization feedback w/ explanation
-  steps:
-  - intent: ask_optimization
-  - action: answer_optimization_request
-  #- intent: affirm
-  #- action: answer_explanation_request
-
-- story: happy path on consumption monitoring
-  steps:
-    - intent: check_consumption
-    - action: answer_monitoring_request
-
-- story: happy path on renewable monitoring
-  steps:
-    - intent: check_production
-    - action: answer_monitoring_request
-
-# - story: happy path on acting on a device request
-#   steps:
-#     - intent: action_request
-#     - action: answer_act_on_device
-
-- story: happy path on status request
-  steps:
-    - intent: check_status
-    - action: answer_status_request
-
-
-- story: interactive_story_1
+# === MONITORAGGIO ===
+- story: monitoraggio consumo
   steps:
   - intent: check_consumption
   - action: answer_monitoring_request
-  - intent: ask_optimization
-    entities:
-    - device: washing_machine
-  - slot_was_set:
-    - device_name: washing_machine
-  - action: answer_optimization_request
-  - intent: deny
-  - action: utter_goodbye_pos
+
+- story: monitoraggio produzione
+  steps:
+  - intent: check_production
+  - action: answer_monitoring_request
+
+
+# === PREVISIONE (consumo o produzione) ===
+- story: previsione netload dopo monitoraggio
+  steps:
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+
+
+# === OTTIMIZZAZIONE ===
+- story: ottimizzazione diretta
+  steps:
   - intent: ask_optimization
   - action: answer_optimization_request
 
+- story: ottimizzazione dopo monitoraggio
+  steps:
+  - intent: check_production
+  - action: answer_monitoring_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+
+- story: ottimizzazione dopo previsione
+  steps:
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+
+
+# === VINCOLI (constraints) ===
+#- story: imposta vincoli e ottimizza
+#  steps:
+#  - intent: set_constraints
+#  - action: answer_optimization_request
+
+
+# === CONSULENZA DI VENDITA ===
+- story: richiesta consiglio vendita dopo ottimizzazione
+  steps:
+  - intent: ask_optimization
+  - action: answer_optimization_request
+  - intent: ask_selling_advice
+  - action: answer_selling_advice_request
+
+- story: richiesta consiglio vendita dopo monitoraggio
+  steps:
+  - intent: check_production
+  - action: answer_monitoring_request
+  - intent: ask_selling_advice
+  - action: answer_selling_advice_request
+
+
+# === FLUSSI COMPLETI ===
+- story: flusso previsionale completo
+  steps:
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: ask_netload_forecast
+  - action: answer_netload_forecast_request
+  - intent: ask_optimization
+  - action: answer_optimization_request
+  - intent: ask_selling_advice
+  - action: answer_selling_advice_request
+  #- action: utter_goodbye_pos
+
+- story: flusso completo da consumo a vendita
+  steps:
+  - intent: check_consumption
+  - action: answer_monitoring_request
+  - intent: check_production
+  - action: answer_monitoring_request
+  - intent: ask_selling_advice
+  - action: answer_selling_advice_request
+  #- action: utter_goodbye_pos
+
+
+# === OTTIMIZZAZIONE CON DEVICE ===
+- story: ottimizzazione con dispositivo specifico
+  steps:
+  - intent: ask_optimization
+    entities:
+    - appliance: washing_machine
+  - slot_was_set:
+    - device_name: washing_machine
+  - action: answer_optimization_request
+  - intent: ask_selling_advice
+  - action: answer_selling_advice_request
+  #- action: utter_goodbye_pos

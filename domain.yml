@@ -1,26 +1,22 @@
 version: ' 3.1'
 intents:
-- check_status
-- set_constraint_request
+#- affirm
 - ask_optimization:
     use_entities: true
 - check_consumption
 - check_production
-- affirm
+- ask_netload_forecast
+- ask_selling_advice
 - deny
 - goodbye
 - greet
-- start
 - nlu_fallback
+#- set_constraints
+- start
 entities:
-- source
 - appliance
-#duckling
-- time_constraint
-- temperature
-- time
-- numeral
-
+- constr_time
+- source
 slots:
   source_name:
     type: text
@@ -28,72 +24,52 @@ slots:
     mappings:
     - type: from_entity
       entity: source
-
   device_name:
     type: text
     influence_conversation: true
     mappings:
     - type: from_entity
       entity: appliance
-  time:
-    type: any
-    mappings:
-    - type: from_entity
-      entity: time
-  start_time:
-    type: any
-    mappings:
-    - type: custom
-  end_time:
-    type: any
-    mappings:
-    - type: custom
-  temperature:
-    type: any
-    mappings:
-    - type: from_entity
-      entity: temperature
-  numeral:
-    type: any
-    mappings:
-    - type: from_entity
-      entity: numeral
-forms:
-  temperature_schedule_form:
-    required_slots:
-      - device_name
-      - temperature
-      - time
-  device_form:
-    required_slots:
-      - device_name
-
 responses:
   utter_greet:
   - text: Ciao, in cosa posso esserti utile?
+  - text: Ciao! Hai domande su consumi, produzione o ottimizzazione energetica?
+  - text: Salve! Posso aiutarti con l’analisi dei consumi o suggerimenti per migliorare l’efficienza.
+  - text: Ciao! Vuoi un consiglio su come ottimizzare la tua energia o capire meglio i tuoi consumi?
+  - text: Benvenuto! Fammi sapere se hai bisogno di informazioni su produzione o vendita di energia.
+  - text: Ciao, sono qui per aiutarti con i tuoi dati energetici. Da dove vogliamo partire?
+  - text: Ciao! Ti interessa ottimizzare i tuoi consumi o monitorare la produzione?
+  - text: Buongiorno! Inizia pure con una domanda su energia, consumi o ottimizzazione.
+  - text: Ciao! Posso offrirti supporto su efficienza, autoconsumo o strategie di vendita energetica.
   utter_goodbye_pos:
   - text: Va bene. Ciao, alla prossima
+  - text: Va bene. Se vuoi, puoi farmi altre domande relative ai tuoi consumi o produzione, o a consigli di ottimizzazione o vendita di energia.
+  - text: Bene. Vuoi chiedermi altro?
+  - text: A disposizione per qualsiasi altra domanda su energia, consumi o produzione.
+  - text: Ricorda, posso aiutarti a ottimizzare i tuoi consumi o a valutare la vendita dell’energia in eccesso.
+  - text: Grazie per la conversazione! Torna pure se ti serve altro.
   utter_greet_telegram:
   - text: ciao, mi chiamo Energy Feedbot e posso aiutarti nella gestione dei tuoi consumi domestici
-  utter_fallback:
+  utter_nlu_fallback:
   - text: Mi dispiace, non ho capito la tua richiesta. Puoi riformularla o chiedermi informazioni sui consumi, produzione o ottimizzazione energetica?
-  utter_ask_device_name:
-    - text: "Potresti fornirmi il dispositivo?"
-  utter_ask_temperature:
-    - text: "A quale temperatura desideri impostare l'elettrodomestico?"
-  utter_ask_time:
-    - text: "Per quale orario devo impostare l'azione?"
+  - text: Scusa, temo di non aver capito. Puoi ripetere la domanda o chiedermi qualcosa su energia o consumi?
+  - text: Potresti riformulare? Posso aiutarti con consumi, produzione, vendita o ottimizzazione energetica.
+  - text: Non ho compreso bene. Fammi sapere se vuoi parlare di consumi energetici, produzione o strategie di efficienza.
+  - text: Purtroppo non ho capito. Vuoi che ti aiuti con i dati energetici o qualche consiglio su come ottimizzare?
+  - text: Il messaggio non è chiaro. Ti va di riprovare con una domanda su energia, consumi o produzione?
+  - text: Hmm, non ho capito. Se vuoi, possiamo parlare di ottimizzazione, autoconsumo o produzione energetica. Dimmi pure cosa ti interessa sapere.
+  - text: Scusami, puoi ripetere? Ti posso aiutare con l’analisi dei consumi, produzione o efficienza energetica.
+  - text: Non ho capito bene. Ricorda che posso darti info su energia, consumi e suggerimenti di ottimizzazione.
+  - text: Puoi riformulare la tua richiesta? Posso supportarti su ciò che riguarda gli aspetti energetici della tua casa.
+  - text: Perdonami, non ho capito. Potresti darmi maggiori dettagli sulla tua richiesta?
 actions:
-- answer_set_constraint
-- answer_act_on_device
-- answer_status_request
 - answer_optimization_request
 - answer_monitoring_request
+- answer_netload_forecast_request
+- answer_selling_advice_request
 - utter_goodbye_pos
 - utter_greet
 - utter_greet_telegram
-- validate_device_form
-- validate_temperature_schedule_form
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

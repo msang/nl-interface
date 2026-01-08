@@ -15,7 +15,8 @@ pipeline:
 # # If you'd like to customize it, uncomment and adjust the pipeline.
 # # See https://rasa.com/docs/rasa/tuning-your-model for more information.
     - name: SpacyNLP
-      model: it_core_news_sm
+      #model: it_core_news_sm
+      model: it_core_news_lg
     - name: SpacyTokenizer
     - name: SpacyFeaturizer
     - name: LexicalSyntacticFeaturizer
@@ -34,11 +35,12 @@ pipeline:
     - name: FallbackClassifier
       threshold: 0.7
       ambiguity_threshold: 0.1
-    - name: "DucklingEntityExtractor"
-      url: "http://localhost:8000"
-      dimensions: ["numeral", "time", "temperature"]
-      locale: "it_IT"
-      timezone: "Europe/Rome"
+    #- name: "DucklingEntityExtractor"
+      #url: "http://localhost:8000"
+      #url: "http://rasa-duckling:8000" # to use duckling in a docker container
+      #dimensions: ["numeral", "time", "temperature"]
+      #locale: "it_IT"
+      #timezone: "Europe/Rome"
 #https://www.youtube.com/watch?v=MDF-4LDvn0M&ab_channel=Rasa  Duckling tutorial
 
 
@@ -50,9 +52,12 @@ policies:
 # # See https://rasa.com/docs/rasa/policies for more information.
    - name: MemoizationPolicy
    - name: RulePolicy
-   - name: UnexpecTEDIntentPolicy
-     max_history: 5
-     epochs: 100
+     core_fallback_action_name: "utter_nlu_fallback"
+     core_fallback_threshold: 0.4
+     enable_fallback_prediction: True
+   #- name: UnexpecTEDIntentPolicy
+   #  max_history: 5
+   #  epochs: 100
    - name: TEDPolicy
      max_history: 5
      epochs: 100
