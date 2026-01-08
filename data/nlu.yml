@@ -255,7 +255,7 @@ nlu:
     - necessito dell'[acqua calda]{"entity": "appliance", "value": "water_heater"} tutte le mattine [alle 8](constr_time)
     - [casa rinfrescata]{"entity": "appliance", "value": "hvac"} [per stasera](constr_time)
     - Ho bisogno dell'[acqua calda]{"entity": "appliance", "value": "water_heater"} [alle 19](constr_time)
-    - Attivami le [pompe di calore]{"entity": "appliance", "value": "hvac"} per avere la casa calda [tra qualche ora]
+    - Attivami le [pompe di calore]{"entity": "appliance", "value": "hvac"} per avere la casa calda [tra qualche ora](constr_time)
     - Mi serve che accenda lo [scaldabagno]{"entity": "appliance", "value": "water_heater"} in modo tale da farmi avere l'[acqua calda]{"entity": "appliance", "value": "water_heater"} [tra un'oretta circa](constr_time)
     - [Domani alle 8](constr_time) fammi trovare una [temperatura]{"entity": "appliance", "value": "hvac"} di 26 gradi
     - [acqua calda]{"entity": "appliance", "value": "water_heater"} [dalle 7](constr_time)
@@ -277,7 +277,9 @@ nlu:
     - quindi la produzione oggi potrebbe essere buona. Ho già [lavastoviglie]{"entity": "appliance", "value": "dishwasher"} in azione, e sicuramente ne approfitterò per farmi un po' di [lavatrici]{"entity": "appliance", "value": "washing_machine"}. Miaccendo anche il [riscaldamento]{"entity": "appliance", "value": "hvac"} verso mezzogiorno?
     - posticipare a quando?
     - ciao, ora c'è il sole ma dopo sarà nuovoloso: dato lo stato della [batteria]{"entity": "source", "value": "bess"} cosa mi consigli di fare
-
+    - ciao, oggi come mi posso regolare con i consumi
+    - dato che prevede bel tempo probabilmente produrrò tanto oggi. Consigli su come gestire i consumi della giornata?
+    - se volessi prendere energia condivisa da altri prosumer quando potrei farlo?
 - intent: ask_netload_forecast
   examples: |
     - quanto prenderò dalla rete oggi

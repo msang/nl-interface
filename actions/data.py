@@ -41,9 +41,25 @@ class PV:
     def get_pv_forecast(self) -> Dict[str, List]:
 
         pv_filename = 'data.json'
-        #print("FILE EXISTS? -> ", os.path.isfile(pv_filename))
-        if not os.path.isfile(pv_filename):
+        recreate=False
+
+        if os.path.isfile(pv_filename):
+            timestamp_of_file_modified = os.path.getmtime(pv_filename)
+            modification_date = datetime.fromtimestamp(timestamp_of_file_modified)
+            number_of_hours = (datetime.now() - modification_date).seconds // 3600 ###NB: non esiste attributo .hours
+    
+            # se il file ha predizioni datate, lo elimino
+            if number_of_hours > 3:
+                # remove file 
+                os.remove(pv_filename)
+                recreate=True
+        # se il file non esiste più, lo ricreo
+        else:
+            recreate=True
+
+        if recreate:
             self._solcast_api() ##helper func. che crea il json con le predizioni pv -> lo crea solo se non c'è, altrimenti si usa campione già creato (causa limiti di chiamate api)
+
         with open(pv_filename, 'r', encoding='utf-8') as f:
             data = json.load(f)
             df = pd.DataFrame(data["forecasts"])
@@ -52,7 +68,6 @@ class PV:
             
             return {"intervals":df["intervals"].to_list(), "values":df["pv_estimate"].to_list()}
         
-
         
 ############################################
 def solaredge_api(start_time, end_time):

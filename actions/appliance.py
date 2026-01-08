@@ -5,8 +5,9 @@ class Appliance:
     def __init__(self, app_name: str) -> None:
 
         #dati su elettrodom. definiti a priori (in kWh)
-        avg_kWh = {"washing_machine": 1.5, "dryer": 1.5, "hvac":  4.0, "water_heater": 4.0, \
+        avg_kWh = {"washing_machine": 1.5, "dryer": 1.5, "hvac":  3.5, "water_heater": 3.5, \
                                   "oven": 3.0, "dishwasher": 1.5} 
+
         # durata espressa di default in numero di ore
         avg_h = {"dishwasher": 3, "washing_machine": 2, "oven": 2, "dryer": 3}
         
@@ -37,14 +38,25 @@ class Appliance:
                        time_resolution:int=60) -> None:
         
         #riparametrizzo indici degli intervalli e durata d'uso (quando impostata) in base a risoluz. temporale
-        if time_resolution == 15:
-            self.cycle_duration = self.cycle_duration*4 # interv. di 15 min 
-            self.start_idx = (start_idx-1)*4
-            self.avg_demand = self.avg_demand / 4
-        elif time_resolution == 30:
-            self.cycle_duration = self.cycle_duration*2 #interv. di 30 min
-            self.start_idx = (start_idx-1)*2
-            self.avg_demand = self.avg_demand / 2
+        upsilon = 60/time_resolution
+        if upsilon > 1:
+            self.cycle_duration = self.cycle_duration*upsilon
+            self.start_idx = (start_idx-1)*upsilon
+            self.avg_demand = self.avg_demand/upsilon
+            """
+            elif time_resolution == 5:
+                self.cycle_duration = self.cycle_duration*12 # interv. di 5 min 
+                self.start_idx = (start_idx-1)*12
+                self.avg_demand = self.avg_demand / 12
+            elif time_resolution == 15:
+                self.cycle_duration = self.cycle_duration*4 # interv. di 15 min 
+                self.start_idx = (start_idx-1)*4
+                self.avg_demand = self.avg_demand / 4
+            elif time_resolution == 30:
+                self.cycle_duration = self.cycle_duration*2 #interv. di 30 min
+                self.start_idx = (start_idx-1)*2
+                self.avg_demand = self.avg_demand / 2
+            """
         else:
             self.start_idx = start_idx
             #cycle_duration e avg_demand restano quelle già stabilite di default

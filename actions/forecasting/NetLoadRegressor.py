@@ -95,7 +95,7 @@ class NetLoadMLPModel:
 
         # re-sample using interpolation to propagate the last known values 
         # NOTE: Change interval HERE in case of different time resolution
-        df_weather_resampled = df_weather.resample('30T').interpolate()#.reset_index()
+        df_weather_resampled = df_weather.resample('30min').interpolate()#.reset_index()
         df_weather_resampled
         
         # full join on the "Datetime" column + sort data again
@@ -179,11 +179,11 @@ class NetLoadMLPModel:
         """TODO: summarize data in kWh - aggregate hourly """
         df_final['Ora'] = pd.to_datetime(df_final['Ora'])
         df_final.set_index('Ora', inplace=True)
-        df_resampled = df_final.resample('1H').agg(
+        df_resampled = df_final.resample('1h').agg(
             {'Previsione consumi (kW)': lambda x: x.sum() * 30/60}
         ).round(2)
 
-        df_resampled.rename(columns={'Previsione consumi (kW)':'Previsione consumi (kWh)'})
+        df_resampled.rename(columns={'Previsione consumi (kW)':'Previsione consumi (kWh)'}, inplace=True)
         
         return df_resampled
 

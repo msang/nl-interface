@@ -1,44 +1,14 @@
-from datetime import timedelta, datetime
-from typing import List, Tuple
+import dateparser, pytz, re
+from datetime import timedelta, datetime, time
+from typing import Dict, List, Optional, Tuple
 import numpy as np
-import duckling, pytz
+from .appliance import Appliance
 
-
-def parse_time_with_duckling(text: str):
-    """ Usa il parser locale di Duckling per estrarre e convertire un'espressione temporale in datetime """
-    try:
-        parser = duckling.Duckling()
-        parser.load(locale="it_IT")  
-        result = parser.parse_time(text)
-
-        if not result:
-            return None, None
-
-        time_data = result[0]["value"]
-
-        # Duckling può restituire un singolo valore o un intervallo
-        if "from" in time_data and "to" in time_data:
-            start = datetime.fromisoformat(time_data["from"]["value"].replace("Z", "+00:00"))
-            end = datetime.fromisoformat(time_data["to"]["value"].replace("Z", "+00:00"))
-        else:
-            start = datetime.fromisoformat(time_data["value"].replace("Z", "+00:00"))
-            end = None
-
-    except Exception as e:
-        print(f"Errore Duckling: {e}")
-        return None, None
-
-    # Converte in timezone locale
-    rome = pytz.timezone("Europe/Rome")
-    start = start.astimezone(rome)
-    if end:
-        end = end.astimezone(rome)
-
-    return start, end
 
 
 def create_time_intervals(T:int, delta:int) -> List:
-    now = datetime.now()
+    #now = datetime.now()
+    now = _now_local("Europe/Rome")
     step = timedelta(minutes=delta)
     time_intervals = []
 
@@ -48,100 +18,6 @@ def create_time_intervals(T:int, delta:int) -> List:
         
     return time_intervals
 
-
-def date_to_string(start_time: datetime, end_time: datetime = None) -> str:
-     today = datetime.now().date()
-     tomorrow = today + timedelta(days=1)
-     text = ""
-
-    # Se viene passato solo start_time
-     if start_time == end_time:
-          if start_time.date() == today:
-               text = f"alle {start_time.strftime('%H:%M')}"
-          elif start_time.date() == tomorrow:
-               text = f"alle {start_time.strftime('%H:%M')} di domani"
-          else:
-               text = f"alle {start_time.strftime('%H:%M')} del {start_time.strftime('%d/%m/%Y')}"
-     # Se viene passato un intervallo illimitato inferiormente (stringhe temporanee)
-     elif start_time is None:
-        if end_time.date() == today:
-            text = f"prima delle {end_time.strftime('%H:%M')}"
-        elif end_time.date() == tomorrow:
-            text = f"prima delle {end_time.strftime('%H:%M')} di domani"
-        else:
-            text = f"prima delle {end_time.strftime('%H:%M')} del {end_time.strftime('%d/%m/%Y')}"
-     # Se viene passato un intervallo illimitato superiormente (stringhe temporanee)
-     elif end_time is None:
-        if start_time.date() == today:
-            text = f"dopo le {start_time.strftime('%H:%M')}"
-        elif start_time.date() == tomorrow:
-            text = f"dopo le {start_time.strftime('%H:%M')} di domani"
-        else:
-            text = f"dopo le {start_time.strftime('%H:%M')} del {start_time.strftime('%d/%m/%Y')}"
-     # Se viene passato un intervallo
-     else:
-          if start_time.date() == today and end_time.date() == today:
-               text = f"dalle {start_time.strftime('%H:%M')} alle {end_time.strftime('%H:%M')}"
-          elif start_time.date() == tomorrow and end_time.date() == tomorrow:
-               text = f"dalle {start_time.strftime('%H:%M')} alle {end_time.strftime('%H:%M')} di domani"
-          else:
-               start_text = f"del {start_time.strftime('%d/%m/%Y')}" if start_time.date() != today and start_time.date() != tomorrow else ""
-               end_text = f"del {end_time.strftime('%d/%m/%Y')}" if end_time.date() != today and end_time.date() != tomorrow else ""
-               
-               text = f"dalle {start_time.strftime('%H:%M')} {start_text} alle {end_time.strftime('%H:%M')} {end_text}"
-     return text
-
-
-def create_matrix(time_steps:range, time_intervals:list, grid_import) -> np.array:
-
-    matrix = []
-     
-    for interval, t in zip(time_intervals, time_steps):        
-        row = [interval, grid_import[t]]
-        matrix.append(row)
-
-    return np.array(matrix)
-
-
-def get_idx(pv_intervals:List[datetime], appl_time: datetime) -> int:
-    """
-    restituisce la posizione dell'array in cui l'orario di avvio dell'elettrodomestico rientra nella fascia oraria 
-    di predizione del pv (rilasciata a intervalli 30 min)
-    """
-    start_idx=0
-    for i, pv_interval in enumerate(pv_intervals):
-        #print(pv_interval, i)
-        if appl_time == pv_interval:
-            start_idx = i
-        elif appl_time > pv_interval and appl_time <= pv_intervals[i+1]:
-            start_idx = i+1
-
-    return start_idx
-
-
-def redefine_values(time_intervals: list, time_resolution:int) -> list:
-    #per ora le sole altre risoluzioni ammesse sono di 15 o 60 min.
-    if time_resolution==15:
-        time_intervals = [t/2 for t in time_intervals for _ in range(2)]
-    elif time_resolution==60:
-        if len(time_intervals) % 2 == 0:
-            time_intervals = [time_intervals[e] + time_intervals[e+1] for e in range(0, len(time_intervals), 2)]
-        else:
-            time_intervals = [time_intervals[e] + time_intervals[e+1] for e in range(0, len(time_intervals) - 1, 2)]
-
-    return time_intervals
-
-
-def redefine_intervals(time_intervals: list, time_resolution:int) -> list:
-      
-    if time_resolution == 15:
-        time_intervals = [t + timedelta(minutes=i * time_resolution) for t in time_intervals for i in range(2)]
-   
-    elif time_resolution==60:
-        time_intervals = [t for i, t in enumerate(time_intervals) if i % 2 == 0]
-
-    return time_intervals
-        
 
 def find_min_sum(grid_import, time_intervals, time_window: int=0) -> Tuple[datetime, datetime, float]:
 
@@ -162,34 +38,336 @@ def find_min_sum(grid_import, time_intervals, time_window: int=0) -> Tuple[datet
     return start_time, end_time, round(min_sum, 2)
 
 
-def verbalize_result(T, delta, grid_import, time_window=0):
-    time_intervals = create_time_intervals(T, delta) #crea array di oggetti datetime a partire dall'ora corrente; T è uguale alla lunghezza dell'array delle previsioni PV
-    start, end, _ = find_min_sum(grid_import, time_intervals, time_window)
+def get_idx(pred_intervals:List[datetime], appl_time: datetime) -> int:
+    """
+    restituisce la posizione dell'array in cui l'orario di avvio dell'elettrodomestico rientra nella fascia oraria 
+    di predizione 
+    """
+    start_idx=0
+    for i, interval in enumerate(pred_intervals):
+        #print(pv_interval, i)
+        if appl_time == interval:
+            start_idx = i
+        elif appl_time > interval and appl_time <= pred_intervals[i+1]:
+            start_idx = i+1
 
-    return date_to_string(start, end)
+    return start_idx
+
+# ============================================================
+# -- prendi orario e applicalo a consumi appliance
+# ============================================================
+
+def map_consumption(app_str, user_preference, predicted_load=[]):
+    app = Appliance(app_str)
+    now = _now_local("Europe/Rome")
+    time_steps = 24*60
+    time_intervals = create_time_intervals(time_steps,1) # T=il numero di step, delta=risoluzione (1 min)
+    print(time_intervals[0])
+    parsed_pref = parse_time_constraint(user_preference)
+    print(parsed_pref)
+    app.start_time = parsed_pref['start'] if parsed_pref['start'] is not None else now #passo all'eltettrodom. l'avvio identificato nella custom action (o user-defined o datetime.now())
+    app.end_time = parsed_pref['end'] if parsed_pref['end'] is not None else app.start_time + timedelta(hours=2)
+    appliance_consumption = [app.avg_demand*1000 if t >= app.start_time and t < app.end_time else 0 for t in time_intervals]
+ 
+    if predicted_load == []:
+        predicted_load = [0.1]*(time_steps) 
+
+    tot_load = list(map(lambda x,y: x+y, appliance_consumption, predicted_load)) #
+    print(app.start_idx, app.start_time, app.cycle_duration, tot_load)
+
+    return tot_load
 
 
+# ============================================================
+# Helpers
+# ============================================================
+
+def _now_local(timezone: str) -> datetime:
+    """Current local time without tzinfo."""
+    return datetime.now(pytz.timezone(timezone)).replace(tzinfo=None)
+
+
+# ============================================================
+# Relative time parser
+# ============================================================
+
+def parse_relative_delta(text: str) -> Optional[timedelta]:
+    """
+    Interpreta espressioni relative come:
+    - un'ora, due ore, quattro ore circa
+    - 1h e mezza
+    - qualche ora
+    - 30 minuti, mezz’ora, un quarto d’ora
+    """
+    
+    text = text.lower().strip()
+    text = text.replace("circa", "").strip()
+
+    # --- casi particolari ---
+    if "qualche" in text:  
+        return timedelta(hours=2)
+
+    if "mezz" in text:  
+        return timedelta(minutes=30)
+
+    if "quarto" in text:  
+        return timedelta(minutes=15)
+
+    # "1h e mezza"
+    m = re.match(r"(\d+)\s*h\s*e\s*mezz", text)
+    if m:
+        h = int(m.group(1))
+        return timedelta(hours=h, minutes=30)
+
+    # numeri tipo: "x ore", "x ora", "x h"
+    m = re.match(r"(\d+)\s*(ora|ore|h)\b", text)
+    if m:
+        return timedelta(hours=int(m.group(1)))
+
+    # numeri tipo: "x minuti"
+    m = re.match(r"(\d+)\s*(minuti|minuto|min)", text)
+    if m:
+        return timedelta(minutes=int(m.group(1)))
+
+    # numeri scritti in lettere
+    words_to_hours = {
+        "un": 1, "una": 1, "uno": 1, "un'": 1,
+        "due": 2, "tre": 3, "quattro": 4,
+        "cinque": 5, "sei": 6
+    }
+    for word, h in words_to_hours.items():
+        if text.startswith(word):
+            return timedelta(hours=h)
+
+    return None
+
+
+# ============================================================
+# Main Parser
+# ============================================================
+
+def parse_time_constraint(expr: str, timezone="Europe/Rome") -> Dict:
+    """
+    Ritorna un dict standardizzato:
+
+    {
+        "type": "point" | "range" | None,
+        "start": datetime | None,
+        "end": datetime | None
+    }
+    """
+    if not expr:
+        return {"type": None, "start": None, "end": None}
+
+    expr_low = expr.lower().strip()
+    now = _now_local(timezone)
+
+    # ============================================================
+    # 1) Espressioni relative
+    # ============================================================
+
+    # ENTRO X TEMPO → range da ora a ora+X
+    m = re.match(r"entro\s+(.*)", expr_low)
+    if m:
+        delta = parse_relative_delta(m.group(1))
+        if delta:
+            return {
+                "type": "range",
+                "start": now,
+                "end": now + delta
+            }
+
+    # TRA X TEMPO → punto singolo nel futuro
+    m = re.match(r"(tra|fra)\s+(.*)", expr_low)
+    if m:
+        delta = parse_relative_delta(m.group(2))
+        if delta:
+            return {
+                "type": "point",
+                "start": now + delta,
+                "end": None
+            }
+
+    # DOPO LE X
+    m = re.match(r"dopo\s+le\s+(.*)", expr_low)
+    if m:
+        parsed = dateparser.parse(
+            m.group(1),
+            languages=["it"],
+            settings={"PREFER_DATES_FROM": "future"}
+        )
+        if parsed:
+            dt = parsed.astimezone(pytz.timezone(timezone)).replace(tzinfo=None)
+            return {"type": "range", "start": dt, "end": None}
+
+    # DALLE X
+    m = re.match(r"(dalle|da)\s+(.*)", expr_low)
+    if m:
+        raw_time = m.group(2).strip()
+        
+        # --- Caso 1: è solo un numero → interpretalo come ORA ---
+        if re.match(r"^\d{1,2}$", raw_time):
+            hour = int(raw_time)
+            now = datetime.now(pytz.timezone(timezone))
+            dt = now.replace(hour=hour, minute=0, second=0, microsecond=0).replace(tzinfo=None)
+            return {"type": "range", "start": dt, "end": None}
+        
+        # --- Caso 2: parole riconoscibili ("mezzogiorno", "mezzanotte") ---
+        alias = {
+            "mezzogiorno": 12,
+            "mezzanotte": 0
+        }
+        if raw_time in alias:
+            hour = alias[raw_time]
+            now = datetime.now(pytz.timezone(timezone))
+            dt = now.replace(hour=hour, minute=0, second=0, microsecond=0).replace(tzinfo=None)
+            return {"type": "range", "start": dt, "end": None}
+    
+        # --- Caso 3: fallback → usa dateparser ---
+        parsed = dateparser.parse(
+            raw_time,
+            languages=["it"],
+            settings={
+                "PREFER_DATES_FROM": "future",
+                "TIMEZONE": timezone,
+                "RETURN_AS_TIMEZONE_AWARE": True
+            }
+        )
+    
+        if parsed:
+            dt = parsed.astimezone(pytz.timezone(timezone)).replace(tzinfo=None)
+            return {"type": "range", "start": dt, "end": None}
+
+
+    # ============================================================
+    # 2) Intervalli "dalle X alle Y"
+    # ============================================================
+
+    m = re.match(
+        r"(dalle|dal|da)\s+(.*?)\s+(alle|fino alle|fino a|fino)\s+(.*)",
+        expr_low
+    )
+    
+    if m:
+        start_expr, end_expr = m.group(2).strip(), m.group(4).strip()
+        now = datetime.now(pytz.timezone(timezone))
+    
+        def parse_time_part(part):
+            """Parsa una delle due estremità dell'intervallo."""
+    
+            # Caso 1: solo numero → interpretalo come ORA
+            if re.match(r"^\d{1,2}$", part):
+                hour = int(part)
+                return now.replace(hour=hour, minute=0, second=0, microsecond=0).replace(tzinfo=None)
+    
+            # Caso 2: alias noti
+            alias = {
+                "mezzogiorno": 12,
+                "mezzanotte": 0
+            }
+            if part in alias:
+                hour = alias[part]
+                return now.replace(hour=hour, minute=0, second=0, microsecond=0).replace(tzinfo=None)
+    
+            # Caso 3: fallback → usa dateparser
+            parsed = dateparser.parse(
+                part,
+                languages=["it"],
+                settings={
+                    "PREFER_DATES_FROM": "future",
+                    "TIMEZONE": timezone,
+                    "RETURN_AS_TIMEZONE_AWARE": True
+                }
+            )
+            if parsed:
+                return parsed.astimezone(pytz.timezone(timezone)).replace(tzinfo=None)
+    
+            return None
+    
+        start_dt = parse_time_part(start_expr)
+        end_dt = parse_time_part(end_expr)
+    
+        if start_dt and end_dt:
+            return {
+                "type": "range",
+                "start": start_dt,
+                "end": end_dt
+            }
+
+    # ============================================================
+    # 3) Orari semplici: "le 19", "alle 14", "verso le 8"
+    # ============================================================
+
+    # "le 14"
+    m = re.match(r"(le|alle|verso le)\s+(\d{1,2})$", expr_low)
+    if m:
+        hour = int(m.group(2))
+        start = now.replace(hour=hour, minute=0, second=0, microsecond=0)
+        if start < now:
+            start += timedelta(days=1)
+        return {"type": "point", "start": start, "end": None}
+
+    # ============================================================
+    # 4) Fallback: dateparser generale
+    # ============================================================
+
+    dt = dateparser.parse(
+        expr_low,
+        languages=['it'],
+        settings={
+            'TIMEZONE': timezone,
+            'RETURN_AS_TIMEZONE_AWARE': True,
+            'PREFER_DATES_FROM': 'future'
+        }
+    )
+    if dt:
+        dt = dt.astimezone(pytz.timezone(timezone)).replace(tzinfo=None)
+        return {"type": "point", "start": dt, "end": None}
+
+    # ============================================================
+    # Nessuna interpretazione possibile
+    # ============================================================
+
+    return {"type": None, "start": None, "end": None}
+
+
+
+# ============================================================
+# ESTRAZIONE ENTITA' DA ENUNCIATO
+# ============================================================
+
+def extract_entity_text(text, entity_name):
+    for ent in tracker.latest_message.get("entities", []):
+        if ent.get("entity") == entity_name:
+            return text[ent["start"]:ent["end"]]
+    return None
+
+
+# ============================================================
+# ============================================================
 if __name__ == "__main__":
-    import random
-    T = 10
-    delta = 30
-    parse_time_with_duckling('stasera')
-    #intervals = create_time_intervals(T,delta)
-    #text0 = date_to_string(None, intervals[0])
-    #text = date_to_string(intervals[0])
-    #text1 = date_to_string(intervals[0], intervals[1])
-    #print(text0)
-    #print(text)
-    #print(text1)
-    #random_grid_imp = [round(random.uniform(0,2), 2) for i in range(T)] #[0.88, 1.64, 0.14, 0.11, 0.66, 0.41, 1.51, 1.93, 1.09, 0.71, 0.69, 0.13]
-    #time_steps=range(12)
-    #matrix = create_matrix(time_steps, intervals, random_grid_imp)
-    #print(matrix)
-    #da, a, somma = find_min_sum(random_grid_imp, intervals, 4)
-    #print(da, a , somma)
-    #text4 = date_to_string(da, a)
-    #print(text4)
-    #print(intervals)
-    #print(datetime.now())
-    #print(get_idx(intervals, datetime.now()))
+    tests = [
+        "entro un'ora",
+        "tra quattro ore circa",
+        "tra qualche ora",
+        "dalle 10 di mattina fino alle 15",
+        "dopo le 18",
+        "alle 21",
+        "le 8",
+        "domani alle 7",
+        "mercoledì alle 14",
+        "alle 9,30",
+        "dalle 10:30",
+        "alle 8 e mezza",
+        "per le 8 e mezzo"
+    ]
+
+    for t in tests:
+        print(t, "→", parse_time_constraint(t))
+
+    user_pref = "alle 2"
+    user_pref = "dalle 14 alle 15"
+    #constr = parse_time_constraint(user_pref)
+    #print(constr)
+    map_consumption("hvac", user_pref)
 

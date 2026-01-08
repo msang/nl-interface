@@ -3,14 +3,14 @@ from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet, Form, FollowupAction
 from datetime import datetime, timedelta
-import json, logging, pytz, random, requests, sys
+import argparse, json, logging, pytz, random, requests, sys
 from .monitoring import EnergyMonitoring
 from .optimization import Optimizer
 from .appliance import Appliance
 from .forecasting.MLPRegressor import SolarMLPModel
 from .forecasting.NetLoadRegressor import NetLoadMLPModel
 from .forecasting.LSTMRegressor import SolarLSTMModel
-from .utils import date_to_string
+from .utils import extract_entity_text
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -21,6 +21,16 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
+
+
+########
+# ---- cache globale ----
+CACHE = {
+    "ask_optimization": None,
+    "ask_netload_forecast": None,
+    "timestamp": None
+}
+###########
 
 
 def send_to_nlg(intent: str, utterance: str, energy_data: str) -> str:
@@ -95,32 +105,42 @@ class AnswerOptimizationRequest(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
         print(self.name,flush=True) #flush consente la stampa nel file di log
-        opt = Optimizer()
-        user_start = user_end = None #TODO: aggiornare qui
-        opt_start = datetime.now()
         intent = tracker.latest_message['intent'].get('name')
         print(intent, flush=True)
         utterance = tracker.latest_message.get("text")
 
-        try:
-            app = tracker.get_slot("device_name") or "hvac"
-            opt.appliance = Appliance(app)
-        except Exception:
-            opt.appliance = Appliance("hvac")
+        appliance = tracker.get_slot("appliance")
+        user_preference = None
 
-        try:
-            if intent == "set_constraints":
-                user_start, user_end = ("","")  #TODO: parte su revisione degli orari al momento resta  non-implementata
-            opt.data_folder='forecasting'
-            opt.start = datetime.now().astimezone(pytz.timezone("Europe/Rome")).replace(second=0, microsecond=0).replace(tzinfo=None)
-            energy_data = opt.ec_optimizer()
-        except Exception as e:
-            logger.error(f"Errore durante l'ottimizzazione: {e}", exc_info=True)
-            dispatcher.utter_message(text="Mi dispiace, non ho modo di recuperare i dati dell'ottimizzatore in questo momento. Richiedimelo più tardi.")
-            return []
+        for ent in tracker.latest_message.get("entities", []):
+            if ent.get("entity") == "constr_time":
+                user_preference = utterance[ent["start"]:ent["end"]]
+        print(appliance,user_preference )
+        opt = Optimizer()
+        opt.start = datetime.now().astimezone(pytz.timezone("Europe/Rome")).replace(second=0, microsecond=0).replace(tzinfo=None)
+        #"""
+        if CACHE.get(intent) is not None:
+            energy_data = CACHE[intent]
+            print("Energy_data già presente")
+        else:
+            try:
+                opt.data_folder='forecasting'
+                if user_preference is not None:
+                    energy_data = opt.ec_optimizer(appliance, user_preference)
+                else:                   
+                    energy_data = opt.ec_optimizer()
+            except Exception as e:
+                logger.error(f"Errore durante l'ottimizzazione: {e}", exc_info=True)
+                dispatcher.utter_message(text="Mi dispiace, non ho modo di recuperare i dati dell'ottimizzatore in questo momento. Richiedimelo più tardi.")                
+                return []
+
+            print("Cache vuota")
+            CACHE[intent] = energy_data
+            CACHE["timestamp"] = datetime.now()
 
         generated_text = send_to_nlg(intent, utterance, energy_data)
         dispatcher.utter_message(text=generated_text)
+        #"""
         return []
 
 
@@ -189,7 +209,7 @@ def _create_rec_profiles():
     em.fetch_energy_details()
     user_p = em.daily_production
     user_c = em.daily_consumption
-    ###genero profili random di produzione e consumo
+    ### profili random di produzione e consumo
     SYNTH_PROSUMERS = 2
     SYNTH_CONSUMERS = 4
     random_production = [round(user_p * random.random(), 2) for i in range(SYNTH_PROSUMERS)] 
@@ -206,23 +226,142 @@ def _create_rec_profiles():
     
 
 if __name__ == "__main__":
-    intent = {"name": "ask_optimization"}
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-i", "--intent", default="ask_optimization")
+    parser.add_argument("-u", "--utterance", default="quale orario è più efficiente per lo scaldabagno? vorrei usarlo adesso")
+    args = parser.parse_args()
+    
+    entities = [{
+        "entity": "appliance",
+        "value": "water_heater",
+        "start": 38,
+        "end": 49,
+        "confidence": 1.0
+    }, 
+      {
+        "entity": "constr_time",
+        "start": 64,
+        "end": 71,
+        "confidence": 1.0
+    }
+    ]
+
     latest_message = {
-                "intent": intent,
-                "text": "quale orario è più efficiente per lo scaldabagno?",  
-                "entities": []
-            }
+        "intent": {
+            "name": args.intent,
+            "confidence": 1.0
+        },
+        "text": args.utterance,
+        "entities": entities
+    }
+
+    slots = {
+        "appliance": "water_heater"
+    }
+
     tracker = Tracker(
-        sender_id="x",
-        slots=[],
-        latest_message=latest_message,
+        sender_id="test_user",
+        slots=slots,                      # <-- slot corretti
+        latest_message=latest_message,    # <-- messaggio completo
         events=[],
         paused=False,
         followup_action=None,
         active_loop=None,
         latest_action_name=None
     )
+
     dispatcher = CollectingDispatcher()
     domain={}
     monit = AnswerOptimizationRequest()
     monit.run(dispatcher, tracker, domain)
+    """
+    # Mappa intent → classe della custom action
+    intent_action_map = {
+        "ask_optimization": AnswerOptimizationRequest,
+        "ask_netload_forecast": AnswerNetLoadForecastRequest,
+        "check_consumption": AnswerMonitoringRequest,
+        "check_production": AnswerMonitoringRequest
+    }
+
+    # Utterance di test per ciascun intent
+    utterances = {
+        "ask_optimization": "quale orario è più efficiente per lo scaldabagno? vorrei usarlo adesso",
+        "ask_netload_forecast": "mi puoi dare le previsioni di carico netto per domani?",
+        "check_consumption": "vorrei sapere i consumi di ieri",
+        "check_production": "quanta energia ho prodotto la settimana scorsa?"
+    }
+
+    # Entità di test (puoi personalizzarle)
+    base_entities = [
+        {
+            "entity": "appliance",
+            "value": "water_heater",
+            "start": 38,
+            "end": 49,
+            "confidence": 1.0
+        },
+        {
+            "entity": "constr_time",
+            "start": 64,
+            "end": 71,
+            "confidence": 1.0
+        }
+    ]
+
+    # Lista per salvare risultati
+    results = []
+
+    # Loop su ciascun intent
+    for intent, action_class in intent_action_map.items():
+        print(f"\n▶ TEST INTENT: {intent}")
+
+        for i in range(1):
+            print(f"  → iterazione {i+1}/10")
+
+            # Costruzione latest_message
+            latest_message = {
+                "intent": {
+                    "name": intent,
+                    "confidence": 1.0
+                },
+                "text": utterances[intent],
+                "entities": base_entities
+            }
+
+            # Slots
+            slots = {"appliance": "water_heater"}
+
+            # Tracker
+            tracker = Tracker(
+                sender_id=f"test_user_{intent}_{i}",
+                slots=slots,
+                latest_message=latest_message,
+                events=[],
+                paused=False,
+                followup_action=None,
+                active_loop=None,
+                latest_action_name=None
+            )
+
+            dispatcher = CollectingDispatcher()
+            domain = {}
+
+            # Instanziazione della custom action
+            action = action_class()
+
+            # Esecuzione
+            action.run(dispatcher, tracker, domain)
+
+            # Salva risultato
+            results.append({
+                "intent": intent,
+                "iteration": i + 1,
+                "response": dispatcher.messages
+            })
+
+    # Output finale su console
+    print("\n📌 RISULTATI TOTALI:")
+    for r in results:
+        print(f"\nIntent: {r['intent']} | Iterazione: {r['iteration']}")
+        print("Risposta:", r["response"])

@@ -159,8 +159,8 @@ class SolarMLPModel:
         y_test = y_full[n_train_samples:]
 
         #prove autocorrelazione:
-        df = pd.DataFrame({'X_t': y_train, 'X_t-1': X_train})
-        print(df['X_t'].corr(df['X_t-1']))
+        #df = pd.DataFrame({'X_t': y_train, 'X_t-1': X_train})
+        #print(df['X_t'].corr(df['X_t-1']))
 
         print(f"Train shape: {X_train.shape}, Test shape: {X_test.shape}")
         return X_train, y_train, X_test, y_test, timestamps_test
@@ -338,6 +338,7 @@ class SolarMLPModel:
         """ Esegue la pipeline completa di addestramento e predizione/test """
         # carico il modello pre-addestrato o lo ri-addestro, se assente
         year = start_date.year
+        diff = year-2024 ## offset da applicare per avere allineamento con dati di training
         month = start_date.month
         df_data = self.load_data()
         self.train_or_load_model(df_data, month, year)
@@ -351,7 +352,7 @@ class SolarMLPModel:
                 print(e)
                 return
         else:
-            _, _, X_test, y_test, timestamps = self.prepare_monthly_data(df_data, year=year-1, month=month)
+            _, _, X_test, y_test, timestamps = self.prepare_monthly_data(df_data, year=year-diff, month=month)
             return self.test_model(X_test, y_test, timestamps)
 
 

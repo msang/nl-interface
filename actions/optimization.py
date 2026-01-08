@@ -9,6 +9,7 @@ from .solve_opt_prob import solve_opt_prob
 from .forecasting.create_data import run_model
 from .forecasting.LSTMRegressor import SolarLSTMModel
 from .forecasting.MLPRegressor import SolarMLPModel
+from .utils import map_consumption
 
 pd.options.mode.chained_assignment = None
 BASE_DIR = os.path.dirname(__file__)
@@ -16,7 +17,7 @@ BASE_DIR = os.path.dirname(__file__)
 
 ## ====== OPTIMIZER CLASS =======
 class Optimizer:
-    def __init__(self, n=1, Delta=5, Ups=3, h=96, hh=96, prosumer_no=1, start=datetime.datetime(2020, 6, 20, 1, 0, 0), data_folder = 'data_fix_withprice', forecast_model='MLP'):
+    def __init__(self, n=5, Delta=5, Ups=3, h=96, hh=96, prosumer_no=1, start=datetime.datetime(2020, 6, 20, 1, 0, 0), data_folder = 'data_fix_withprice', forecast_model='MLP'):
         self.n = n                  # Numero di prosumer
         self.Delta = Delta          # Tempo di campionamento [min]
         self.Ups = Ups              # Numero di campioni per finestra di prezzo
@@ -48,7 +49,7 @@ class Optimizer:
         """
 
         
-    def ec_optimizer(self, output_csv="optim_results.csv"):
+    def ec_optimizer(self, app_str=None, user_preference=None,  output_csv="optim_results.csv"):
         n, Delta, Ups, h, hh, t0 = self.n, self.Delta, self.Ups, self.h, self.hh, self.start
         #print(n, self.prosumer)
 
@@ -88,12 +89,16 @@ class Optimizer:
             else:
                 print(f"==== Running predictions for PROSUMER No. {i+1} using {self.model} model ====")
                 df = run_model(self.model) 
+                # adatto le previsioni alle preferenze di tempo dell'utente (se espresse)
+                if app_str is not None:
+                    df['Consumption(W)'] = map_consumption(app_str, user_preference, df['Consumption(W)'].to_list())
+                #print(df)
                 df = df.reset_index()
             
             mask = pd.to_datetime(df['date']).between(t0, tf, inclusive="left")
-            print(f"df columns: {df.columns}")
-            print(f"df index: {df.index}")
-            print(f"mask sum: {mask.sum()}")
+            #print(f"df columns: {df.columns}")
+            #print(f"df index: {df.index}")
+            #print(f"mask sum: {mask.sum()}")
             print(f"mask range: {t0} -> {tf}")
             print(f"df date min: {df['date'].min() if 'date' in df else df.index.min()}")
             print(f"df date max: {df['date'].max() if 'date' in df else df.index.max()}")
@@ -200,4 +205,4 @@ if __name__ == "__main__":
     opt.data_folder = 'forecasting'
     opt.start = datetime.datetime.now().astimezone(pytz.timezone("Europe/Rome")).replace(second=0, microsecond=0).replace(tzinfo=None)
     print(opt)
-    print(opt.ec_optimizer())
+    print(opt.ec_optimizer(app_str="hvac", user_preference="dalle 15"))

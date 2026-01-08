@@ -66,7 +66,7 @@ class EnergyMonitoring():
         self.storage_status = None
 
     def fetch_data(self) -> None:
-        """Recupera i dati attuali dal sito SolarEdge e imposta gli attributi della classe."""
+        """Recupera i dati istantanei dal sito SolarEdge e imposta gli attributi corrispondenti."""
         self.current = self.api.get_site_current_power_flow(self.site_id).data["siteCurrentPowerFlow"]
         self.power_flows = self.current["connections"]
         self.pv_power = self.current["PV"]["currentPower"]

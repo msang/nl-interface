@@ -15,7 +15,8 @@ pipeline:
 # # If you'd like to customize it, uncomment and adjust the pipeline.
 # # See https://rasa.com/docs/rasa/tuning-your-model for more information.
     - name: SpacyNLP
-      model: it_core_news_sm
+      #model: it_core_news_sm
+      model: it_core_news_lg
     - name: SpacyTokenizer
     - name: SpacyFeaturizer
     - name: LexicalSyntacticFeaturizer
