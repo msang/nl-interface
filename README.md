@@ -15,7 +15,7 @@ The repository is organized as follows:
 - `config.yml`: Defines the training configuration for RASA NLU and RASA Core.
 - `domain.yml`: Defines the domain of the conversational agent, including intents, actions, entities, and slots.
 - `credentials.yml`: Contains credentials for integration with external interfaces via REST and Socket.IO channels
-- `endopoints.yml`: Contains the endpoint for the rasa action server and NLG server
+- `endpoints.yml`: Contains the endpoint for the rasa action server and NLG server
 
 
 
