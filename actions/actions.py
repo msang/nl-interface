@@ -109,7 +109,7 @@ class AnswerOptimizationRequest(Action):
         print(intent, flush=True)
         utterance = tracker.latest_message.get("text")
 
-        appliance = tracker.get_slot("appliance")
+        appliance = tracker.get_slot("device_name")
         user_preference = None
 
         for ent in tracker.latest_message.get("entities", []):
@@ -118,7 +118,6 @@ class AnswerOptimizationRequest(Action):
         print(appliance,user_preference )
         opt = Optimizer()
         opt.start = datetime.now().astimezone(pytz.timezone("Europe/Rome")).replace(second=0, microsecond=0).replace(tzinfo=None)
-        #"""
         if CACHE.get(intent) is not None:
             energy_data = CACHE[intent]
             print("Energy_data già presente")
@@ -140,7 +139,7 @@ class AnswerOptimizationRequest(Action):
 
         generated_text = send_to_nlg(intent, utterance, energy_data)
         dispatcher.utter_message(text=generated_text)
-        #"""
+
         return []
 
 

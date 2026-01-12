@@ -213,8 +213,8 @@ class OllamaLLM(BaseLLM):
 class LLM:
     def __init__(self):
         self.hf_model = HFLLM("swap-uniba/LLaMAntino-3-ANITA-8B-Inst-DPO-ITA")
-        #self.ollama_model = OllamaLLM("gemma3:4b-it-qat") 
-        self.ollama_model = OllamaLLM("mixtral:8x22b")
+        self.ollama_model = OllamaLLM("gemma3:4b-it-qat") 
+        #self.ollama_model = OllamaLLM("mixtral:8x22b")
 
         # aggiungo memoria semplice di contesto
         self.context = [] 

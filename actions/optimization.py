@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 from .data import summarize_data
 from .solve_opt_prob import solve_opt_prob
 from .forecasting.create_data import run_model
-from .forecasting.LSTMRegressor import SolarLSTMModel
-from .forecasting.MLPRegressor import SolarMLPModel
+#from .forecasting.LSTMRegressor import SolarLSTMModel
+#from .forecasting.MLPRegressor import SolarMLPModel
 from .utils import map_consumption
 
 pd.options.mode.chained_assignment = None
@@ -17,13 +17,13 @@ BASE_DIR = os.path.dirname(__file__)
 
 ## ====== OPTIMIZER CLASS =======
 class Optimizer:
-    def __init__(self, n=5, Delta=5, Ups=3, h=96, hh=96, prosumer_no=1, start=datetime.datetime(2020, 6, 20, 1, 0, 0), data_folder = 'data_fix_withprice', forecast_model='MLP'):
+    def __init__(self, n=3, Delta=5, Ups=3, h=96, hh=96, prosumer_id=1, start=datetime.datetime(2020, 6, 20, 1, 0, 0), data_folder = 'data_fix_withprice', forecast_model='MLP'):
         self.n = n                  # Numero di prosumer
         self.Delta = Delta          # Tempo di campionamento [min]
         self.Ups = Ups              # Numero di campioni per finestra di prezzo
         self.h = h                  # Numero finestre nell'orizzonte di ottimizzazione
         self.hh = hh                # Numero finestre nell'orizzonte di simulazione
-        self.prosumer = prosumer_no
+        self.prosumer = prosumer_id # convenzionalmente, il prosumer interessato e' il primo
         self.start = start          # t0 -->NB: il valore di default poi andrà cambiato!!!
         self.data_folder = data_folder
         self.model=forecast_model
@@ -73,10 +73,19 @@ class Optimizer:
         tf = t0 + datetime.timedelta(minutes=S)
         c_fut, g_fut = np.zeros((Y, n)), np.zeros((Y, n))
 
+        #creo preliminarmente una griglia temporale per uniformare i timestamp
+        time_grid = pd.date_range(start=t0, end=tf, freq=f"1min", inclusive="left") 
+
         # Matrice di media
         Mtemp = np.kron(np.eye(Y), np.ones((1, Delta)))
         Mwsum = np.where(Mtemp.sum(axis=1) == 0, 1, Mtemp.sum(axis=1))
         Mw = Mtemp / Mwsum[:, np.newaxis]
+
+        # creo i flag (servono dopo nel ciclo)
+        rho_p_all = None
+        rho_s_all = None
+        rho_sh_all = None
+
 
         # Caricamento dati per ogni prosumer
         for i in range(n):
@@ -86,6 +95,7 @@ class Optimizer:
                 #df = pd.read_csv(rf"data_fix_withprice/{file_name}")
                 filename = os.path.join(self.data_path, file_name)
                 df = pd.read_csv(filename)
+                
             else:
                 print(f"==== Running predictions for PROSUMER No. {i+1} using {self.model} model ====")
                 df = run_model(self.model) 
@@ -94,22 +104,58 @@ class Optimizer:
                     df['Consumption(W)'] = map_consumption(app_str, user_preference, df['Consumption(W)'].to_list())
                 #print(df)
                 df = df.reset_index()
-            
-            mask = pd.to_datetime(df['date']).between(t0, tf, inclusive="left")
-            #print(f"df columns: {df.columns}")
-            #print(f"df index: {df.index}")
-            #print(f"mask sum: {mask.sum()}")
-            print(f"mask range: {t0} -> {tf}")
-            print(f"df date min: {df['date'].min() if 'date' in df else df.index.min()}")
-            print(f"df date max: {df['date'].max() if 'date' in df else df.index.max()}")
+            df['date'] = pd.to_datetime(df['date'])
 
-            c_fut[:, i] = Mw @ df.loc[mask, 'Consumption(W)'].interpolate().astype(int).to_numpy() / 1000
-            g_fut[:, i] = Mw @ df.loc[mask, 'Production(W)'].interpolate().astype(int).to_numpy() / 1000
+            # definisco i prezzi (uguali per tutti i prosumer)
+            df_prices = df.copy()  
+            df_prices['date'] = pd.to_datetime(df_prices['date'])
 
-            if i == 0:
-                rho_p_all = Mw @ df.loc[mask, 'Price(eur/kWh)'].interpolate().astype(float).to_numpy()
+            # allineo df a time_grid
+            df = (df.set_index('date').reindex(time_grid).sort_index())
+
+
+            # calcolo prezzi (una sola volta) 
+            if rho_p_all is None:
+                prices = (
+                    df['Price(eur/kWh)']
+                    .interpolate(limit_direction="both")
+                    .to_numpy()
+                )
+
+                rho_p_all = prices
                 rho_s_all = 0.5 * rho_p_all
                 rho_sh_all = 0.3 * rho_s_all
+
+            cons = df['Consumption(W)'].interpolate().to_numpy()
+            prod = df['Production(W)'].interpolate().to_numpy()
+
+            if cons.shape[0] == Mw.shape[1]:  # 1440 → Δ-level
+                c_fut[:, i] = Mw @ cons / 1000
+                g_fut[:, i] = Mw @ prod / 1000
+            elif cons.shape[0] == Y:          # 288 → Ups-level
+                c_fut[:, i] = cons / 1000
+                g_fut[:, i] = prod / 1000
+            else:
+                raise ValueError(
+                    f"Unexpected time resolution: {cons.shape[0]} samples"
+                )
+            
+            # definisco i prezzi (uguali per tutti i prosumer)
+            #df_prices = df.copy()  
+            #df_prices['date'] = pd.to_datetime(df_prices['date'])
+            prices = (
+                df_prices
+                .set_index('date')
+                .reindex(time_grid)
+                ['Price(eur/kWh)']
+                .interpolate()
+                .to_numpy()
+            )          
+
+            #rho_p_all = Mw @ prices
+            #rho_s_all = 0.5 * rho_p_all
+            #rho_sh_all = 0.3 * rho_s_all
+
 
         ve0 = 0 * np.ones((n, 1))
 
@@ -201,7 +247,7 @@ class Optimizer:
 if __name__ == "__main__":
     opt = Optimizer()
     opt.prosumer=1 ##riferimento al prosumer di cui voglioevere i dati
-    opt.n=1 #n. di prosumer della rec
+    opt.n=2 #n. di prosumer della rec
     opt.data_folder = 'forecasting'
     opt.start = datetime.datetime.now().astimezone(pytz.timezone("Europe/Rome")).replace(second=0, microsecond=0).replace(tzinfo=None)
     print(opt)
