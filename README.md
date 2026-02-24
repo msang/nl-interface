@@ -87,5 +87,5 @@ To begin using the agent, follow these steps:
    The script automatically starts the RASA server, the RASA Actions server and the NLG server.
    
 
-5. To interact with the agent via GUI, use the `ProsunAI` demo (see [`dev-gui`](https://github.com/msang/nl-interface/tree/dev-gui) branch).
+5. To interact with the agent via GUI, you can either use the `ProsunAI` demo (see [`dev-gui`](https://github.com/msang/nl-interface/tree/dev-gui) branch), or open with your browser the [`chat_demo.html`](https://github.com/msang/nl-interface/blob/main/chat_demo.html) file.
 
