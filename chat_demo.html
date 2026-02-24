@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>EcoFeedBot Web Chat</title>
+    <style>
+        body {
+            font-family: Roboto, sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            padding: 40px 0;
+        }
+
+        #chat-container {
+            width: 600px;
+            background: #020617;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            max-height: 90vh;
+        }
+
+        #chat {
+            padding: 24px;
+            height: 500px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            line-height: 1.6;
+            max-width: 100%;
+        }
+
+        .user {
+            color: #93c5fd;
+            align-self: flex-end;
+        }
+
+        .bot {
+            color: #e5e7eb;
+            align-self: flex-start;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            background: #020617;
+        }
+
+        #input-container {
+            display: flex;
+            gap: 8px;
+            padding: 16px;
+            background: #020617;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        #message-input {
+            flex: 1;
+            background: #0f172a;
+            color: #e5e7eb;
+            border-radius: 8px;
+            padding: 12px 14px;
+            border: none;
+        }
+
+        #send-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            background: #2563eb;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+        }
+
+        #send-btn:hover {
+            background: #1d4ed8;
+        }
+
+        #send-btn svg {
+            pointer-events: none;
+        }
+
+        /* Typing indicator */
+        .typing {
+            color: #e5e7eb;
+            font-style: italic;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="chat-container">
+    <div id="chat">
+        <div id="typing-indicator" class="typing hidden">
+            Sto elaborando la risposta…
+        </div>
+    </div>
+
+    <div id="input-container">
+        <input type="text" id="message-input" placeholder="Scrivi un messaggio..." />
+        <button id="send-btn" onclick="sendMessage()" aria-label="Invia">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M13 5l7 7-7 7"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </div>
+</div>
+
+<script>
+    const RASA_URL = "http://<IP>:5005/webhooks/rest/webhook"; // replace <IP> with the correct ip address
+    const SENDER_ID = "utente_web_1";
+
+    function addMessage(text, sender) {
+        const chat = document.getElementById("chat");
+
+        const message = document.createElement("div");
+        message.classList.add("message", sender);
+
+        const avatar = document.createElement("img");
+        avatar.classList.add("avatar");
+        avatar.src = sender === "bot" ? "ecofeedbot.svg" : "user.svg";
+        avatar.alt = sender === "bot" ? "Bot" : "Utente";
+
+        const span = document.createElement("span");
+        span.innerText = text;
+
+        message.appendChild(avatar);
+        message.appendChild(span);
+
+        // inserisce prima del typing indicator
+        const typing = document.getElementById("typing-indicator");
+        chat.insertBefore(message, typing);
+
+        // scroll automatico
+        chat.scrollTop = chat.scrollHeight;
+    }
+
+    function showTyping(show) {
+        const indicator = document.getElementById("typing-indicator");
+        indicator.classList.toggle("hidden", !show);
+        // scroll se necessario
+        const chat = document.getElementById("chat");
+        chat.scrollTop = chat.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const input = document.getElementById("message-input");
+        const text = input.value.trim();
+        if (!text) return;
+
+        addMessage(text, "user");
+        input.value = "";
+        showTyping(true);
+
+        try {
+            const response = await fetch(RASA_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ sender: SENDER_ID, message: text })
+            });
+
+            if (!response.ok) {
+                console.error("Errore Rasa:", response.status, response.statusText);
+                return;
+            }
+
+            const data = await response.json();
+
+            data.forEach(msg => {
+                if (msg.text) addMessage(msg.text, "bot");
+            });
+
+        } catch (err) {
+            console.error("Fetch fallito:", err);
+        } finally {
+            showTyping(false);
+        }
+    }
+
+    // invio premendo Enter
+    document.getElementById("message-input").addEventListener("keypress", function(e) {
+        if (e.key === "Enter") sendMessage();
+    });
+</script>
+
+</body>
+</html>

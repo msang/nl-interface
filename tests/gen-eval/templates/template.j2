@@ -1,0 +1,26 @@
+{% if intent=="check_consumption" %}
+DATI: 
+{{ data }}
+
+RICHIESTA: {{utterance}}
+
+{% elif intent=="check_production" %}
+DATI:
+{{ data }}
+
+RICHIESTA: {{utterance}}
+
+{% elif intent=="ask_optimization" %}
+DATI:
+Riepilogo ottimizzazione:
+{{ data }}
+
+RICHIESTA: {{ utterance }}
+
+{% elif intent=="ask_netload_forecast" %}
+DATI:
+{{ data }}
+
+RICHIESTA: {{utterance}}
+
+{% endif %}

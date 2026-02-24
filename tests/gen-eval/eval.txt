@@ -1,0 +1,199 @@
+generated_hf.csv eval_hf.csv
+Bert score medio per modello: 
+ modello
+google/gemma-3-27b-it                            0.739345
+google/gemma-3-4b-it                             0.740376
+jobautomation/OpenEuroLLM-Italian                0.729131
+meta-llama/Llama-3.3-70B-Instruct                0.746041
+mistralai/Mixtral-8x22B-Instruct-v0.1            0.742119
+swap-uniba/LLaMAntino-3-ANITA-8B-Inst-DPO-ITA    0.732132
+Name: bertscore_f1, dtype: float64
+Tempi di inferenza medi:
+ modello
+google/gemma-3-27b-it                             4.181671
+google/gemma-3-4b-it                              1.505408
+jobautomation/OpenEuroLLM-Italian                11.752271
+meta-llama/Llama-3.3-70B-Instruct                 3.487754
+mistralai/Mixtral-8x22B-Instruct-v0.1             6.488863
+swap-uniba/LLaMAntino-3-ANITA-8B-Inst-DPO-ITA     1.003129
+Name: tempo_esecuzione, dtype: float64
+Bert score medio per modello e per setting:
+ modello                                        shot
+google/gemma-3-27b-it                          0       0.707238
+                                               1       0.737030
+                                               3       0.751658
+                                               5       0.761454
+google/gemma-3-4b-it                           0       0.710040
+                                               1       0.742314
+                                               3       0.750420
+                                               5       0.758558
+jobautomation/OpenEuroLLM-Italian              0       0.693855
+                                               1       0.727053
+                                               3       0.743774
+                                               5       0.751842
+meta-llama/Llama-3.3-70B-Instruct              0       0.727524
+                                               1       0.736069
+                                               3       0.758725
+                                               5       0.761738
+mistralai/Mixtral-8x22B-Instruct-v0.1          0       0.709378
+                                               1       0.740727
+                                               3       0.756595
+                                               5       0.762580
+swap-uniba/LLaMAntino-3-ANITA-8B-Inst-DPO-ITA  0       0.713851
+                                               1       0.734026
+                                               3       0.737410
+                                               5       0.743241
+Name: bertscore_f1, dtype: float64
+Bert score medio per intent:
+ modello                                        intent                 
+google/gemma-3-27b-it                          ask_netload_forecast       0.726872
+                                               ask_optimization           0.738379
+                                               check_consumption          0.747725
+                                               check_production           0.738168
+google/gemma-3-4b-it                           ask_netload_forecast       0.725000
+                                               ask_optimization           0.743615
+                                               check_consumption          0.746133
+                                               check_production           0.739097
+jobautomation/OpenEuroLLM-Italian              ask_netload_forecasting    0.657011
+                                               ask_optimization           0.740967
+                                               check_consumption          0.737956
+                                               check_production           0.744529
+meta-llama/Llama-3.3-70B-Instruct              ask_netload_forecasting    0.644661
+                                               ask_optimization           0.754505
+                                               check_consumption          0.770290
+                                               check_production           0.764137
+mistralai/Mixtral-8x22B-Instruct-v0.1          ask_netload_forecasting    0.643629
+                                               ask_optimization           0.753867
+                                               check_consumption          0.755438
+                                               check_production           0.740739
+swap-uniba/LLaMAntino-3-ANITA-8B-Inst-DPO-ITA  ask_netload_forecast       0.709167
+                                               ask_optimization           0.740199
+                                               check_consumption          0.734866
+                                               check_production           0.732814
+Name: bertscore_f1, dtype: float64
+Tempi di inferenza medi per modello e per intent:
+ modello                                        intent                 
+google/gemma-3-27b-it                          ask_netload_forecast        3.399700
+                                               ask_optimization            5.686300
+                                               check_consumption           4.081650
+                                               check_production            3.168050
+google/gemma-3-4b-it                           ask_netload_forecast        1.500000
+                                               ask_optimization            1.932450
+                                               check_consumption           1.449196
+                                               check_production            1.137000
+jobautomation/OpenEuroLLM-Italian              ask_netload_forecasting     6.501900
+                                               ask_optimization           14.661800
+                                               check_consumption          12.110900
+                                               check_production           11.109300
+meta-llama/Llama-3.3-70B-Instruct              ask_netload_forecasting     4.973200
+                                               ask_optimization            4.267350
+                                               check_consumption           3.182312
+                                               check_production            2.269350
+mistralai/Mixtral-8x22B-Instruct-v0.1          ask_netload_forecasting     8.377778
+                                               ask_optimization            7.728100
+                                               check_consumption           5.760225
+                                               check_production            4.532650
+swap-uniba/LLaMAntino-3-ANITA-8B-Inst-DPO-ITA  ask_netload_forecast        1.012100
+                                               ask_optimization            1.223700
+                                               check_consumption           1.090150
+                                               check_production            0.691050
+Name: tempo_esecuzione, dtype: float64
+Bert score medio per intent e per shot:
+ modello                                        intent                   shot
+google/gemma-3-27b-it                          ask_netload_forecast     0       0.704229
+                                                                        1       0.731992
+                                                                        3       0.728010
+                                                                        5       0.743258
+                                               ask_optimization         0       0.714130
+                                                                        1       0.740493
+                                                                        3       0.749959
+                                                                        5       0.748933
+                                               check_consumption        0       0.709214
+                                                                        1       0.744262
+                                                                        3       0.762224
+                                                                        5       0.775202
+                                               check_production         0       0.699876
+                                                                        1       0.728853
+                                                                        3       0.754615
+                                                                        5       0.769327
+google/gemma-3-4b-it                           ask_netload_forecast     0       0.699510
+                                                                        1       0.726584
+                                                                        3       0.740789
+                                                                        5       0.733115
+                                               ask_optimization         0       0.733420
+                                                                        1       0.744810
+                                                                        3       0.742805
+                                                                        5       0.753425
+                                               check_consumption        0       0.708973
+                                                                        1       0.750228
+                                                                        3       0.761269
+                                                                        5       0.763320
+                                               check_production         0       0.692971
+                                                                        1       0.739771
+                                                                        3       0.751999
+                                                                        5       0.771649
+jobautomation/OpenEuroLLM-Italian              ask_netload_forecasting  0       0.621546
+                                                                        1       0.658804
+                                                                        3       0.672103
+                                                                        5       0.675590
+                                               ask_optimization         0       0.718757
+                                                                        1       0.741399
+                                                                        3       0.750393
+                                                                        5       0.753320
+                                               check_consumption        0       0.701216
+                                                                        1       0.734504
+                                                                        3       0.750704
+                                                                        5       0.765402
+                                               check_production         0       0.697746
+                                                                        1       0.739381
+                                                                        3       0.766059
+                                                                        5       0.774929
+meta-llama/Llama-3.3-70B-Instruct              ask_netload_forecasting  0       0.618743
+                                                                        1       0.618587
+                                                                        3       0.661404
+                                                                        5       0.679911
+                                               ask_optimization         0       0.747754
+                                                                        1       0.749552
+                                                                        3       0.759309
+                                                                        5       0.761406
+                                               check_consumption        0       0.749406
+                                                                        1       0.761577
+                                                                        3       0.785243
+                                                                        5       0.784517
+                                               check_production         0       0.740240
+                                                                        1       0.755820
+                                                                        3       0.780285
+                                                                        5       0.780203
+mistralai/Mixtral-8x22B-Instruct-v0.1          ask_netload_forecasting  0       0.599776
+                                                                        1       0.664112
+                                                                        3       0.652077
+                                                                        5       0.659173
+                                               ask_optimization         0       0.730391
+                                                                        1       0.750254
+                                                                        3       0.764019
+                                                                        5       0.770801
+                                               check_consumption        0       0.716981
+                                                                        1       0.751536
+                                                                        3       0.775413
+                                                                        5       0.780257
+                                               check_production         0       0.706338
+                                                                        1       0.738363
+                                                                        3       0.757124
+                                                                        5       0.761129
+swap-uniba/LLaMAntino-3-ANITA-8B-Inst-DPO-ITA  ask_netload_forecast     0       0.681352
+                                                                        1       0.722771
+                                                                        3       0.706110
+                                                                        5       0.726433
+                                               ask_optimization         0       0.731492
+                                                                        1       0.733492
+                                                                        3       0.745210
+                                                                        5       0.750602
+                                               check_consumption        0       0.709738
+                                                                        1       0.740783
+                                                                        3       0.746014
+                                                                        5       0.742929
+                                               check_production         0       0.716573
+                                                                        1       0.733431
+                                                                        3       0.736655
+                                                                        5       0.744597
+Name: bertscore_f1, dtype: float64

@@ -1,0 +1,1253 @@
+intent;utterance;energy_data;gold
+check_consumption;puoi mostrarmi il riepilogo dei miei consumi di oggi?;"energia utilizzata dalla casa in tutta la giornata: 9.29 kWh
+energia acquistata dalla rete in tutta la giornata: 5.33 kWh
+potenza istantanea fornita dall'impianto solare: 0.00 kW
+potenza istantanea fornita dalla batteria: 0.26 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.26 kW";Oggi hai consumato in tutto 9,26 kWh, acquistandone dalla rete 5,33. In questo momento stai consumando 0,26 kW e li stai prendendo dalla batteria.
+check_consumption;quanta elettricità sto utilizzando in questo momento?;"energia utilizzata dalla casa in tutta la giornata: 9.29 kWh
+energia acquistata dalla rete in tutta la giornata: 5.33 kWh
+potenza istantanea fornita dall'impianto solare: 0.00 kW
+potenza istantanea fornita dalla batteria: 0.29 kW
+potenza istantanea fornita dalla rete: 0.05 kW
+potenza totale utilizzata: 0.34 kW";Stai utilizzando 0,34 kW in questo momento, principalmente dalla batteria (0,29 kW) e poi rete (0,05 kW).
+check_consumption;quanto sto spendendo di energia ora?;"energia utilizzata dalla casa in tutta la giornata: 9.29 kWh
+energia acquistata dalla rete in tutta la giornata: 5.33 kWh
+potenza istantanea fornita dall'impianto solare: 0.00 kW
+potenza istantanea fornita dalla batteria: 0.24 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.24 kW";Al momento stai usando 0,24 kW di potenza, ma tutta coperta dalla batteria, quindi non stai pagando nulla alla rete in questo istante.
+check_consumption;dimmi se sto usando troppa corrente;"energia utilizzata dalla casa in tutta la giornata: 8.92 kWh
+energia acquistata dalla rete in tutta la giornata: 4.11 kWh
+potenza istantanea fornita dall'impianto solare: 0.12 kW
+potenza istantanea fornita dalla batteria: 0.18 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Il tuo consumo istantaneo è di 0,30 kW, un valore piuttosto basso per una casa. Direi che non stai usando troppa corrente.
+check_consumption;vorrei sapere quanta energia ho già prelevato oggi;"energia utilizzata dalla casa in tutta la giornata: 10.34 kWh
+energia acquistata dalla rete in tutta la giornata: 6.45 kWh
+potenza istantanea fornita dall'impianto solare: 0.00 kW
+potenza istantanea fornita dalla batteria: 0.22 kW
+potenza istantanea fornita dalla rete: 0.08 kW
+potenza totale utilizzata: 0.30 kW";Hai prelevato 6,45 kWh dalla rete dall’inizio della giornata.
+check_consumption;analizza il consumo attuale della mia abitazione;"energia utilizzata dalla casa in tutta la giornata: 7.85 kWh
+energia acquistata dalla rete in tutta la giornata: 2.98 kWh
+potenza istantanea fornita dall'impianto solare: 0.28 kW
+potenza istantanea fornita dalla batteria: 0.00 kW
+potenza istantanea fornita dalla rete: 0.02 kW
+potenza totale utilizzata: 0.30 kW";Il consumo attuale è molto buono: in questo momento stai consumando 0,30 kW, coperti quasi interamente dal fotovoltaico (0,28 kW).  L’impatto sulla rete quindi è minimo (0,02 kW). 
+check_consumption;consumo più di ieri?;"energia utilizzata dalla casa in tutta la giornata: 12.44 kWh
+energia acquistata dalla rete in tutta la giornata: 7.80 kWh
+potenza istantanea fornita dall'impianto solare: 0.00 kW
+potenza istantanea fornita dalla batteria: 0.00 kW
+potenza istantanea fornita dalla rete: 0.30 kW
+potenza totale utilizzata: 0.30 kW";"Oggi hai già usato 12,.44 kWh. Per dirti con certezza se stai consumando più di ieri servirebbe il dato di ieri,
+ma 12,44 kWh è sopra la media giornaliera tipica, quindi probabilmente sì."
+check_consumption;quanto è il mio consumo medio orario?;"energia utilizzata dalla casa in tutta la giornata: 9.98 kWh
+energia acquistata dalla rete in tutta la giornata: 3.35 kWh
+potenza istantanea fornita dall'impianto solare: 0.30 kW
+potenza istantanea fornita dalla batteria: 0.00 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Con 9,98 kWh consumati finora, il tuo consumo medio orario è circa 0,42 kWh/h (ipotizzando 24 ore).
+check_consumption;indicami la potenza che sto usando adesso;"energia utilizzata dalla casa in tutta la giornata: 11.60 kWh
+energia acquistata dalla rete in tutta la giornata: 5.95 kWh
+potenza istantanea fornita dall'impianto solare: 0.04 kW
+potenza istantanea fornita dalla batteria: 0.16 kW
+potenza istantanea fornita dalla rete: 0.10 kW
+potenza totale utilizzata: 0.30 kW";Stai usando 0,30 kW di potenza in questo momento.
+check_consumption;hai dati sull'uso della rete oggi?;"energia utilizzata dalla casa in tutta la giornata: 6.90 kWh
+energia acquistata dalla rete in tutta la giornata: 1.84 kWh
+potenza istantanea fornita dall'impianto solare: 0.24 kW
+potenza istantanea fornita dalla batteria: 0.06 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Hai prelevato 1,84 kWh dalla rete oggi, e in questo istante non stai usando energia dalla rete.
+check_consumption;sto consumando molto rispetto alla settimana scorsa?;"energia utilizzata dalla casa in tutta la giornata: 13.25 kWh
+energia acquistata dalla rete in tutta la giornata: 8.55 kWh
+potenza istantanea fornita dall'impianto solare: 0.00 kW
+potenza istantanea fornita dalla batteria: 0.00 kW
+potenza istantanea fornita dalla rete: 0.30 kW
+potenza totale utilizzata: 0.30 kW";"Hai già consumato 13,25 kWh oggi: è un valore abbastanza alto.
+Senza il dato della settimana scorsa non posso confrontare,
+ma sei sicuramente su una fascia alta di utilizzo."
+check_consumption;com'è il mio consumo istantaneo?;"energia utilizzata dalla casa in tutta la giornata: 10.51 kWh
+energia acquistata dalla rete in tutta la giornata: 4.72 kWh
+potenza istantanea fornita dall'impianto solare: 0.10 kW
+potenza istantanea fornita dalla batteria: 0.20 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Il tuo consumo istantaneo è 0,30 kW, un valore medio-basso e del tutto normale.
+check_consumption;ho raggiunto il picco di consumo oggi?;"energia utilizzata dalla casa in tutta la giornata: 8.14 kWh
+energia acquistata dalla rete in tutta la giornata: 2.20 kWh
+potenza istantanea fornita dall'impianto solare: 0.27 kW
+potenza istantanea fornita dalla batteria: 0.03 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";"Adesso stai consumando 0,30 kW, che è un valore modesto.
+Probabilmente non è il picco della giornata."
+check_consumption;controlla quanto sto prendendo dalla rete elettrica;"energia utilizzata dalla casa in tutta la giornata: 12.88 kWh
+energia acquistata dalla rete in tutta la giornata: 6.92 kWh
+potenza istantanea fornita dall'impianto solare: 0.00 kW
+potenza istantanea fornita dalla batteria: 0.11 kW
+potenza istantanea fornita dalla rete: 0.19 kW
+potenza totale utilizzata: 0.30 kW";"In questo momento stai prelevando 0,19 kW dalla rete.
+Finora oggi ne hai prelevati 6,92 kWh complessivi."
+check_consumption;qual è il mio fabbisogno energetico attuale?;"energia utilizzata dalla casa in tutta la giornata: 7.34 kWh
+energia acquistata dalla rete in tutta la giornata: 1.20 kWh
+potenza istantanea fornita dall'impianto solare: 0.25 kW
+potenza istantanea fornita dalla batteria: 0.05 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";"Il fabbisogno istantaneo della tua casa è di 0,30 kW, coperti da fotovoltaico (0,25 kW) e batteria (0,05 kW).
+Non dipendi dalla rete ora."
+check_consumption;voglio un confronto tra i consumi di oggi e ieri;"energia utilizzata dalla casa in tutta la giornata: 9.42 kWh
+energia acquistata dalla rete in tutta la giornata: 4.06 kWh
+potenza istantanea fornita dall'impianto solare: 0.13 kW
+potenza istantanea fornita dalla batteria: 0.17 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";"Oggi hai consumato 9,42 kWh.
+Per dirti se è più o meno di ieri servirebbe il dato di ieri,
+ma 9,42 kWh è un consumo moderato, quindi probabilmente in linea con la norma."
+check_consumption;elencami i dispositivi che consumano di più ora;"energia utilizzata dalla casa in tutta la giornata: 10.02 kWh
+energia acquistata dalla rete in tutta la giornata: 5.97 kWh
+potenza istantanea fornita dall'impianto solare: 0.00 kW
+potenza istantanea fornita dalla batteria: 0.00 kW
+potenza istantanea fornita dalla rete: 0.30 kW
+potenza totale utilizzata: 0.30 kW";"La potenza totale è 0,30 kW, ma non ho i dettagli dei singoli dispositivi. Con 0,30 kW, probabilmente sono accesi elettrodomestici leggeri (luci, TV, PC, router).
+Nessun elettrodomestico energivoro."
+check_consumption;mi serve una panoramica dei consumi per fascia oraria;"energia utilizzata dalla casa in tutta la giornata: 11.77 kWh
+energia acquistata dalla rete in tutta la giornata: 3.60 kWh
+potenza istantanea fornita dall'impianto solare: 0.30 kW
+potenza istantanea fornita dalla batteria: 0.00 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";"Finora hai consumato 11,77 kWh.
+In questo momento stai usando 0,30 kW, provenienti tutti dal fotovoltaico.
+Le fasce ad alta intensità probabilmente sono state quelle mattutine o serali, ma ora non dispongo dei dati orari per i dettagli."
+check_consumption;verifica se sto superando la soglia di consumo;"energia utilizzata dalla casa in tutta la giornata: 6.55 kWh
+energia acquistata dalla rete in tutta la giornata: 1.02 kWh
+potenza istantanea fornita dall'impianto solare: 0.23 kW
+potenza istantanea fornita dalla batteria: 0.07 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Stai usando 0,30 kW, quindi sei ben sotto qualsiasi soglia critica domestica.
+check_consumption;dammi un aggiornamento sui consumi domestici in tempo reale;"energia utilizzata dalla casa in tutta la giornata: 14.44 kWh
+energia acquistata dalla rete in tutta la giornata: 9.10 kWh
+potenza istantanea fornita dall'impianto solare: 0.00 kW
+potenza istantanea fornita dalla batteria: 0.00 kW
+potenza istantanea fornita dalla rete: 0.30 kW
+potenza totale utilizzata: 0.30 kW";Stai consumando 0,30 kW adesso, e hai totalizzato 14,44 kWh oggi. Al momento l’intero fabbisogno è coperto dalla rete.
+check_consumption;eeh ma quanto sto bruciando di corrente adesso?;"energia utilizzata dalla casa in tutta la giornata: 8.77 kWh
+energia acquistata dalla rete in tutta la giornata: 3.01 kWh
+potenza istantanea fornita dall'impianto solare: 0.22 kW
+potenza istantanea fornita dalla batteria: 0.08 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Stai usando 0,30 kW, un valore basso: non stai “bruciando” molta corrente. È un consumo normale.
+check_consumption;mi sa che sto spendendo troppo, vero?;"energia utilizzata dalla casa in tutta la giornata: 10.65 kWh
+energia acquistata dalla rete in tutta la giornata: 5.75 kWh
+potenza istantanea fornita dall'impianto solare: 0.00 kW
+potenza istantanea fornita dalla batteria: 0.18 kW
+potenza istantanea fornita dalla rete: 0.12 kW
+potenza totale utilizzata: 0.30 kW";"In questo momento stai usando 0,30 kW, provenienti per 0,12 kW dalla rete e il resto dalla batteria.
+Non è un consumo elevato, ma il prelievo dalla rete c’è, quindi sì: qualcosa stai spendendo, anche se poco."
+check_consumption;puoi dirmi se sto andando oltre il solito consumo?;"energia utilizzata dalla casa in tutta la giornata: 7.91 kWh
+energia acquistata dalla rete in tutta la giornata: 2.10 kWh
+potenza istantanea fornita dall'impianto solare: 0.21 kW
+potenza istantanea fornita dalla batteria: 0.09 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";"Hai consumato 7,91 kWh oggi: un valore nella norma.
+In questo momento usi 0,30 kW, coperti da solare e batteria.
+Direi che sei perfettamente in linea col tuo solito andamento."
+check_consumption;boh, il contatore gira troppo veloce oggi?;"energia utilizzata dalla casa in tutta la giornata: 9.88 kWh
+energia acquistata dalla rete in tutta la giornata: 3.18 kWh
+potenza istantanea fornita dall'impianto solare: 0.30 kW
+potenza istantanea fornita dalla batteria: 0.00 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";"Hai usato 9,88 kWh, che è un consumo medio.
+Ora stai usando 0,30 kW, tutti dal fotovoltaico.
+Il contatore non sta correndo, sei in una situazione normale."
+check_consumption;è normale tutta 'sta luce accesa?;"energia utilizzata dalla casa in tutta la giornata: 11.35 kWh
+energia acquistata dalla rete in tutta la giornata: 6.81 kWh
+potenza istantanea fornita dall'impianto solare: 0.00 kW
+potenza istantanea fornita dalla batteria: 0.02 kW
+potenza istantanea fornita dalla rete: 0.28 kW
+potenza totale utilizzata: 0.30 kW";"Consumo giornaliero 11,35 kWh, un po’ alto.
+Ora stai usando 0,30 kW, quasi tutti dalla rete.
+Sì, hai degli elettrodomestici in funzione, ma nulla di anomalo."
+check_consumption;quanto consumo tipo in media, più o meno?;"energia utilizzata dalla casa in tutta la giornata: 8.11 kWh
+energia acquistata dalla rete in tutta la giornata: 1.99 kWh
+potenza istantanea fornita dall'impianto solare: 0.17 kW
+potenza istantanea fornita dalla batteria: 0.13 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";"Hai consumato oggi 8,11 kWh: un valore nella media quotidiana.
+In questo momento sei a 0,30 kW. Il tuo consumo tipico è proprio su valori come questo."
+check_consumption;fammi capire se ho sforato la soglia o no;"energia utilizzata dalla casa in tutta la giornata: 6.40 kWh
+energia acquistata dalla rete in tutta la giornata: 0.90 kWh
+potenza istantanea fornita dall'impianto solare: 0.19 kW
+potenza istantanea fornita dalla batteria: 0.11 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Oggi sei a 6,40 kWh, che è ancora basso. La potenza istantanea è 0,30 kW, tutta da solare e batteria. No, non hai sforato nulla.
+check_consumption;c'è modo di sapere se sto usando troppa roba insieme?;"energia utilizzata dalla casa in tutta la giornata: 12.02 kWh
+energia acquistata dalla rete in tutta la giornata: 7.35 kWh
+potenza istantanea fornita dall'impianto solare: 0.00 kW
+potenza istantanea fornita dalla batteria: 0.00 kW
+potenza istantanea fornita dalla rete: 0.30 kW
+potenza totale utilizzata: 0.30 kW";Stai usando 0,30 kW, un valore molto basso. Il grosso viene dalla rete perché solare e batteria non stanno contribuendo. No, non stai usando troppi apparecchi insieme.
+check_consumption;dimmi quanto sto pompando dalla rete;"energia utilizzata dalla casa in tutta la giornata: 8.44 kWh
+energia acquistata dalla rete in tutta la giornata: 3.15 kWh
+potenza istantanea fornita dall'impianto solare: 0.14 kW
+potenza istantanea fornita dalla batteria: 0.16 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";In questo momento 0,00 kW provengono dalla rete. Oggi ne hai prelevati 3,15 kWh. Ora non stai tirando nulla dalla rete.
+check_consumption;consumo o produco più ora? non capisco;"energia utilizzata dalla casa in tutta la giornata: 9.60 kWh
+energia acquistata dalla rete in tutta la giornata: 5.45 kWh
+potenza istantanea fornita dall'impianto solare: 0.03 kW
+potenza istantanea fornita dalla batteria: 0.07 kW
+potenza istantanea fornita dalla rete: 0.20 kW
+potenza totale utilizzata: 0.30 kW";Stai consumando 0,30 kW, ma ne produci solo 0,03 kW dal solare. Il resto arriva da batteria e rete. Quindi stai consumando più di quanto produci.
+check_consumption;i consumi di prima erano più alti, giusto?;"energia utilizzata dalla casa in tutta la giornata: 7.00 kWh
+energia acquistata dalla rete in tutta la giornata: 1.40 kWh
+potenza istantanea fornita dall'impianto solare: 0.20 kW
+potenza istantanea fornita dalla batteria: 0.10 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Sei a 7 kWh oggi, un valore moderato. Ora stai usando 0,30 kW, tutto da fotovoltaico+batteria. Sì, prima eri leggermente più alto, ora sei più leggero.
+check_consumption;è cambiato qualcosa nei miei consumi da ieri?;"energia utilizzata dalla casa in tutta la giornata: 10.77 kWh
+energia acquistata dalla rete in tutta la giornata: 6.00 kWh
+potenza istantanea fornita dall'impianto solare: 0.00 kW
+potenza istantanea fornita dalla batteria: 0.15 kW
+potenza istantanea fornita dalla rete: 0.15 kW
+potenza totale utilizzata: 0.30 kW";Hai consumato 10,77 kWh, un valore piuttosto alto. L’istantaneo è 03,0 kW. Senza i dati di ieri non si può confrontare, ma sei su livelli medio-alti.
+check_consumption;mi dici se la bolletta piangerà stavolta?;"energia utilizzata dalla casa in tutta la giornata: 8.56 kWh
+energia acquistata dalla rete in tutta la giornata: 2.44 kWh
+potenza istantanea fornita dall'impianto solare: 0.26 kW
+potenza istantanea fornita dalla batteria: 0.04 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";"Per ora: 8,56 kWh consumati, con soli 2,44 kWh presi dalla rete.
+Al momento non stai prelevando nulla. Direi che la bolletta non piange, stai andando bene."
+check_consumption;sto andando in overconsumo o ci siamo?;"energia utilizzata dalla casa in tutta la giornata: 9.35 kWh
+energia acquistata dalla rete in tutta la giornata: 3.55 kWh
+potenza istantanea fornita dall'impianto solare: 0.18 kW
+potenza istantanea fornita dalla batteria: 0.12 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Oggi sei a 9,35 kWh, nella parte media-alta. Ora consumi 0,30 kW, tutto coperto da solare e batteria. Non sei in overconsumo, sei in equilibrio.
+check_consumption;e rispetto a ieri sera, come sono messo?;"energia utilizzata dalla casa in tutta la giornata: 12.20 kWh
+energia acquistata dalla rete in tutta la giornata: 7.90 kWh
+potenza istantanea fornita dall'impianto solare: 0.00 kW
+potenza istantanea fornita dalla batteria: 0.00 kW
+potenza istantanea fornita dalla rete: 0.30 kW
+potenza totale utilizzata: 0.30 kW";Hai raggiunto 12,20 kWh, che è un consumo medio-alto. Ora usi 0,30 kW, tutti dalla rete, ma non posso confrontare con i dati di ieri.
+check_consumption;fammi vedere se la lavatrice ciuccia tanto;"energia utilizzata dalla casa in tutta la giornata: 6.88 kWh
+energia acquistata dalla rete in tutta la giornata: 1.05 kWh
+potenza istantanea fornita dall'impianto solare: 0.23 kW
+potenza istantanea fornita dalla batteria: 0.07 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";La potenza attuale è 0,30 kW, piuttosto bassa. Non sembra che stia girando un elettrodomestico pesante. La lavatrice non sta consumando molto ora.
+check_consumption;c'è un modo per sapere se sto sprecando?;"energia utilizzata dalla casa in tutta la giornata: 8.78 kWh
+energia acquistata dalla rete in tutta la giornata: 3.48 kWh
+potenza istantanea fornita dall'impianto solare: 0.09 kW
+potenza istantanea fornita dalla batteria: 0.21 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Oggi hai consumato 8,78 kWh, valore medio. Ora stai usando 0.30 kW, da fotovoltaico e batteria. Non stai sprecando, anzi: stai sfruttando bene il tuo impianto.
+check_consumption;sto usando più corrente del solito a quest'ora?;"energia utilizzata dalla casa in tutta la giornata: 10.11 kWh
+energia acquistata dalla rete in tutta la giornata: 4.99 kWh
+potenza istantanea fornita dall'impianto solare: 0.07 kW
+potenza istantanea fornita dalla batteria: 0.13 kW
+potenza istantanea fornita dalla rete: 0.10 kW
+potenza totale utilizzata: 0.30 kW";Sei a 10,11 kWh: forse leggermente sopra la media. Stai usando 0,30 kW, parte anche dalla rete, ma non dispongo dei dati degli altri giorni per un reale confronto.
+check_consumption;il consumo è stabile o mi sta impennando?;"energia utilizzata dalla casa in tutta la giornata: 7.30 kWh
+energia acquistata dalla rete in tutta la giornata: 2.00 kWh
+potenza istantanea fornita dall'impianto solare: 0.26 kW
+potenza istantanea fornita dalla batteria: 0.04 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Il consumo giornaliero è di 7,30 kWh, nella norma. La potenza attuale è 0.30 kW, tutta da fonti interne. La situazione è stabile, nessuna impennata.
+check_consumption;quant'è che sto tirando di energia in questo momento?;"energia utilizzata dalla casa in tutta la giornata: 11.78 kWh
+energia acquistata dalla rete in tutta la giornata: 6.15 kWh
+potenza istantanea fornita dall'impianto solare: 0.02 kW
+potenza istantanea fornita dalla batteria: 0.12 kW
+potenza istantanea fornita dalla rete: 0.16 kW
+potenza totale utilizzata: 0.30 kW";Stai usando 0,30 kW. La rete contribuisce per 0,16 kW, batteria per 0,12 kW. Quindi stai tirando 0,16 kW dalla rete in questo istante.
+check_consumption;aggiornamento sui consumi;"energia utilizzata dalla casa in tutta la giornata: 8.32 kWh
+energia acquistata dalla rete in tutta la giornata: 3.25 kWh
+potenza istantanea fornita dall'impianto solare: 0.11 kW
+potenza istantanea fornita dalla batteria: 0.19 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Hai consumato 8,32 kWh oggi. Ora stai usando 0,30 kW, da solare e batteria. Situazione sotto controllo.
+check_consumption;quanto sto tirando dalla rete rispetto a stamattina?;"energia utilizzata dalla casa in tutta la giornata: 9.77 kWh
+energia acquistata dalla rete in tutta la giornata: 5.22 kWh
+potenza istantanea fornita dall'impianto solare: 0.00 kW
+potenza istantanea fornita dalla batteria: 0.09 kW
+potenza istantanea fornita dalla rete: 0.21 kW
+potenza totale utilizzata: 0.30 kW";Ora stai prendendo 0,21 kW dalla rete. Oggi ne hai già prelevati 5,22 kWh. Stai tirando più di stamattina, quando la rete contribuiva meno.
+check_consumption;verifica il mio consumo totale dell'ultima ora;"energia utilizzata dalla casa in tutta la giornata: 6.60 kWh
+energia acquistata dalla rete in tutta la giornata: 0.95 kWh
+potenza istantanea fornita dall'impianto solare: 0.20 kW
+potenza istantanea fornita dalla batteria: 0.10 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Non ho il dettaglio dell’ultima ora, ma sei a 6,60 kWh totali oggi e 0,30 kW attuali: il consumo quindi è leggero.
+check_consumption;quanto sto usando;"energia utilizzata dalla casa in tutta la giornata: 10.88 kWh
+energia acquistata dalla rete in tutta la giornata: 6.23 kWh
+potenza istantanea fornita dall'impianto solare: 0.03 kW
+potenza istantanea fornita dalla batteria: 0.05 kW
+potenza istantanea fornita dalla rete: 0.22 kW
+potenza totale utilizzata: 0.30 kW";Stai usando 0,30 kW in questo momento. La rete ne fornisce 0,22 kW, il resto viene da batteria. Carico leggero ma dipendente dalla rete.
+check_consumption;quanto sto spendendo di luce;"energia utilizzata dalla casa in tutta la giornata: 7.55 kWh
+energia acquistata dalla rete in tutta la giornata: 1.35 kWh
+potenza istantanea fornita dall'impianto solare: 0.24 kW
+potenza istantanea fornita dalla batteria: 0.06 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Al momento non stai prendendo nulla dalla rete. Stai consumando 0,30 kW da solare+batteria: ora stai spendendo zero.
+check_consumption;sto esagerando con la corrent;"energia utilizzata dalla casa in tutta la giornata: 8.99 kWh
+energia acquistata dalla rete in tutta la giornata: 3.77 kWh
+potenza istantanea fornita dall'impianto solare: 0.16 kW
+potenza istantanea fornita dalla batteria: 0.14 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Il consumo attuale è 0,30 kW, molto basso. Oggi sei a 8,99 kWh, valore medio: no, non stai esagerando.
+check_consumption;luce a quanto;"energia utilizzata dalla casa in tutta la giornata: 12.55 kWh
+energia acquistata dalla rete in tutta la giornata: 7.48 kWh
+potenza istantanea fornita dall'impianto solare: 0.00 kW
+potenza istantanea fornita dalla batteria: 0.00 kW
+potenza istantanea fornita dalla rete: 0.30 kW
+potenza totale utilizzata: 0.30 kW";Consumi 0,30 kW, tutti dalla rete. Oggi sei a 12,55 kWh, abbastanza alto. In questo momento sei comunque su un carico leggero.
+check_consumption;come sono a consumi;"energia utilizzata dalla casa in tutta la giornata: 7.88 kWh
+energia acquistata dalla rete in tutta la giornata: 2.40 kWh
+potenza istantanea fornita dall'impianto solare: 0.27 kW
+potenza istantanea fornita dalla batteria: 0.03 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Sei a 7,88 kWh, perfettamente nella norma. Ora consumi 0,30 kW, quasi tutto dal solare. Situazione ottima.
+check_consumption;ho preso molto oggi. ora?;"energia utilizzata dalla casa in tutta la giornata: 9.12 kWh
+energia acquistata dalla rete in tutta la giornata: 3.80 kWh
+potenza istantanea fornita dall'impianto solare: 0.08 kW
+potenza istantanea fornita dalla batteria: 0.22 kW
+potenza istantanea fornita dalla rete: 0.00 kW
+potenza totale utilizzata: 0.30 kW";Oggi hai prelevato 3,80 kWh dalla rete. Ora non stai prendendo niente dalla rete.
+check_consumption;quanto dalla rete e quanto da batteria, per capire se ho fatto autoconsumo o altro;"energia utilizzata dalla casa in tutta la giornata: 11.92 kWh
+energia acquistata dalla rete in tutta la giornata: 6.55 kWh
+potenza istantanea fornita dall'impianto solare: 0.01 kW
+potenza istantanea fornita dalla batteria: 0.09 kW
+potenza istantanea fornita dalla rete: 0.20 kW
+potenza totale utilizzata: 0.30 kW";Ora: 0,20 kW dalla rete, 0,09 kW dalla batteria. Oggi: 6,55 kWh presi dalla rete. Stai facendo autoconsumo solo in parte.
+check_production;quanta energia stanno generando i miei pannelli adesso?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.98kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.00kW
+stato di carica attuale della batteria: 56%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00 kW
+potenza immessa dal fotovoltaico alla rete: 0.00";In giornata hanno prodotto 4,94 kWh ma al momento non stanno generando.
+check_production;mostrami la potenza attuale dei pannelli solari;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.98kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.00kW
+stato di carica attuale della batteria: 56%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00 kW
+potenza immessa dal fotovoltaico alla rete: 0.00";La potenza prodotta ora è 0 kW, i pannelli al momento non stanno lavorando.
+check_production;a che livello di carica è la batteria oggi?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.98kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.00kW
+stato di carica attuale della batteria: 56%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00 kW
+potenza immessa dal fotovoltaico alla rete: 0.00";La batteria è al 56% e sta erogando energia verso la casa.
+check_production;dimmi quanto sto producendo rispetto a ieri;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 1.12 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.04 kW
+stato di carica attuale della batteria: 48%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00 kW
+potenza immessa dal fotovoltaico alla rete: 0.00";Ora stai producendo 0,04 kW e fino ad ora hai prodotto complessivamente 4,94 kWh. Senza il dato di ieri non posso confrontare, ma la produzione oggi, anche se non altissima, è andata in buona parte in autoconsumo (circa l'80%), quindi il bilancio è positivo.
+check_production;sto immettendo energia in rete in questo momento?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.55 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.00 kW
+stato di carica attuale della batteria: 63%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.12 kW
+potenza immessa dal fotovoltaico alla rete: 0.00";No: 0 kW immessi. La batteria però sta caricando: stai trattenendo tutta la produzione.
+check_production;qual è il rendimento dell’impianto solare oggi?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 2.44 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.26 kW
+stato di carica attuale della batteria: 22%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00 kW
+potenza immessa dal fotovoltaico alla rete: 0.04";Ora stai producendo 0,26 kW e in tutta la giornata hai prodotto 4,94 kWh e immesso un surplus di 2,44 kWh in rete.
+check_production;la produzione è maggiore di ieri?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 3.10 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 1,30 kW
+stato di carica attuale della batteria: 100%
+status della batteria: in mantenimento
+potenza immessa dal fotovolatico alla batteria: 0.00 kW
+potenza immessa dal fotovoltaico alla rete: 0.30";Produci q,30 kW ora (ne hai prodotto 4,94 kWh in tutta la giornata). Non ho il dato di ieri, ma la produzione attuale è adeguata a coprire i tuoi consumi, anche grazie alla batteria pienamente carica.
+check_production;fammi un report sulla produzione rinnovabile di oggi;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.22 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.00 kW
+stato di carica attuale della batteria: 38%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00 kW
+potenza immessa dal fotovoltaico alla rete: 0.00";"Oggi hai prodotto 4,94 kWh e immesso 0,22 kWh. 
+Produzione attuale: 0 kW.
+Batteria al 38% e in scarica."
+check_production;quanto ha accumulato la batteria finora?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 1.66 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.09 kW
+stato di carica attuale della batteria: 75%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.09 kW
+potenza immessa dal fotovoltaico alla rete: 0.00";La batteria è al 75% e sta caricando con 0,09 kW. Ha accumulato una buona quantità di energia, ma l'impianto ora sta producendo molto poco, quindi attenzione all'uso degli elettrodomestici, se vuoi restare in autoconsumo.
+check_production;posso sapere se sto producendo più di quanto consumo?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 2.88 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.20 kW
+stato di carica attuale della batteria: 94%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.15 kW
+potenza immessa dal fotovoltaico alla rete: 0.05";"Stai producendo 0,20 kW e ne stai immettendo 0,05 kW.
+Il totale consumato non è fornito, ma stai producendo abbastanza bene."
+check_production;verifica la resa della mia produzione fotovoltaica;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.00 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.00 kW
+stato di carica attuale della batteria: 12%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00 kW
+potenza immessa dal fotovoltaico alla rete: 0.00";"Produzione attuale 0 kW.
+Batteria al 12%.
+Resa molto bassa in questo momento."
+check_production;mostra la potenza erogata dai pannelli ora;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 4.21 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.28 kW
+stato di carica attuale della batteria: 100%
+status della batteria: in mantenimento
+potenza immessa dal fotovolatico alla batteria: 0.00 kW
+potenza immessa dal fotovoltaico alla rete: 0.28";"Produzione attuale: 0,28 kW.
+I pannelli stanno lavorando bene."
+check_production;l'impianto sta generando a pieno regime?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 1.33 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.11 kW
+stato di carica attuale della batteria: 58%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.11 kW
+potenza immessa dal fotovoltaico alla rete: 0.00";Produci 0,11 kW, quindi no, l'impianto non sta andando a pieno regime.
+check_production;quanta energia verde ho generato finora?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.48 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.03 kW
+stato di carica attuale della batteria: 30%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.00";"Hai prodotto 4,94 kWh oggi e immesso 0,48 kWh. Ora ne stai producendo 0,03 kW.
+"
+check_production;quant'è la capacità residua della batteria?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 2.15 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.19 kW
+stato di carica attuale della batteria: 67%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.19
+potenza immessa dal fotovoltaico alla rete: 0.00";"La batteria è al 67%, in carica.
+Capacità residua buona."
+check_production;com'è il mio autoconsumo rispetto alla produzione?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 3.55 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.27 kW
+stato di carica attuale della batteria: 98%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.00";Ora stai producendo 0,27 kW: i tuoi consumi sono pertanto coperti principalmente dalla batteria (che ora è al 98%).
+check_production;aggiorna i dati di produzione fotovoltaica;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.77 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.05 kW
+stato di carica attuale della batteria: 42%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.00";"Produzione totale odierna: 4,94 kWh.
+Produzione attuale: 0,05 kW.
+Immissione totale: 0,77 kWh.
+"
+check_production;dimmi se la batteria è scarica o piena;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 1.90 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.14 kW
+stato di carica attuale della batteria: 83%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.14
+potenza immessa dal fotovoltaico alla rete: 0.00";"La batteria è all’83% e in carica. Non è interamente piena, ma 
+è tutt’altro che scarica."
+check_production;sto esportando energia in rete?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.12 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.00 kW
+stato di carica attuale della batteria: 20%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.00";No: 0 kW immessi. Tutta l’energia resta in casa.
+check_production;qual è la percentuale di energia autoprodotta adesso?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 4.01 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.30 kW
+stato di carica attuale della batteria: 100%
+status della batteria: in mantenimento
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.30";Stai producendo 0,30 kW, tutti immessi in rete. La batteria è interamente piena: stai autoproducendo al 100%.
+check_production;sto producendo qualcosa o è nuvolo e basta?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 2.60 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.17 kW
+stato di carica attuale della batteria: 71%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.17
+potenza immessa dal fotovoltaico alla rete: 0.00";Produci 0,17 kW. Quindi qualcosa stai producendo, molto poco,  ma non è zero.
+check_production;e i pannelli? fanno il loro lavoro o dormono?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.91 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.03 kW
+stato di carica attuale della batteria: 49%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.00";Stai producendo 0,03 kW. Stanno lavorando, ma molto poco.
+check_production;la batteria è ancora viva o si è scaricata tutta?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 1.75 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.15 kW
+stato di carica attuale della batteria: 89%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.15
+potenza immessa dal fotovoltaico alla rete: 0.00";La batteria è ben carica (89%) e sta caricando.
+check_production;quanto sto rendendo col sole di oggi?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.70 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.00 kW
+stato di carica attuale della batteria: 31%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.00";Produzione nulla in questo momento (0,00 kW), ma finora hai prodotto 4,94 kWh e di questi 3,96 kWh sono stati usati dalla casa. 
+check_production;ma sto caricando o scaricando la batteria?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 3.22 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.21 kW
+stato di carica attuale della batteria: 76%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.21
+potenza immessa dal fotovoltaico alla rete: 0.00";La batteria sta caricando (0,21 kW in ingresso).
+check_production;i miei pannelli si sono svegliati o no?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 1.09 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.06 kW
+stato di carica attuale della batteria: 40%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.06
+potenza immessa dal fotovoltaico alla rete: 0.00";Sì, un minimo stanno producendo (0,06 kW).
+check_production;la produzione è decente o da piangere?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.33 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.00 kW
+stato di carica attuale della batteria: 27%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.00";Nell'arco della giornata hai prodotto 4,94 kWh, ma in questo momento la proudzione è a 0. 
+check_production;fammi sapere se sto immettendo qualcosa in rete;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 2.98 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.24 kW
+stato di carica attuale della batteria: 91%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.24
+potenza immessa dal fotovoltaico alla rete: 0.00";No, tutta la produzione sta andando alla batteria (0,24 kW).
+check_production;il contatore gira al contrario o ancora no?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 1.44 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.10 kW
+stato di carica attuale della batteria: 54%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.10
+potenza immessa dal fotovoltaico alla rete: 0.00";Ancora no, tutto va in batteria.
+check_production;quanto sto facendo mo’?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.05 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.00 kW
+stato di carica attuale della batteria: 16%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.00";Ora non stai producendo niente.
+check_production;rispetto a ieri, meglio o peggio come produzione?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 3.55 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.29 kW
+stato di carica attuale della batteria: 100%
+status della batteria: in mantenimento
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.29";Non posso confrontare con ieri, comunque la tua produzione odierna complessiva è di 4,94 kWh. Ora ne stai producendo 0,29 kW, e stanno andando in rete.
+check_production;c'è un po’ di surplus o sto a zero?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 2.21 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.18 kW
+stato di carica attuale della batteria: 72%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.18
+potenza immessa dal fotovoltaico alla rete: 0.00";Zero: la produzione è interamente assorbita dalla batteria.
+check_production;e la resa? fa schifo o va bene?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.80 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.02 kW
+stato di carica attuale della batteria: 35%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.00";In giornata hai prodotto 4,49 kWh, ma ora la resa è pressoché nulla (0,02 kW).
+check_production;i pannelli fanno qualcosa anche col cielo coperto?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.91 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.03 kW
+stato di carica attuale della batteria: 45%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.00";Sì, qualcosina: 0,03 kW.
+check_production;sto producendo più di quanto consumo, sì o no?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 4.11 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.30 kW
+stato di carica attuale della batteria: 100%
+status della batteria: in mantenimento
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.30";Sì, stai producendo abbastanza da caricare la batteria e immettere 0,30 kW in rete.
+check_production;dammi un feedback veloce sulla produzione;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 1.73 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.13 kW
+stato di carica attuale della batteria: 59%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.13
+potenza immessa dal fotovoltaico alla rete: 0.00";Produzione molto modesta, ma comunque presente (0,13 kW).
+check_production;guarda se i miei pannelli stanno lavorando o no;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 3.00 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.25 kW
+stato di carica attuale della batteria: 95%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.10
+potenza immessa dal fotovoltaico alla rete: 0.15";Sì, stanno lavorando: 0,25 kW, con parte immessa in rete.
+check_production;produzione di oggi: buona o meh?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.62 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.01 kW
+stato di carica attuale della batteria: 33%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.00";Finora hai prodotto 4,94 kWh, ma adesso meh (0,01 kW).
+check_production;la batteria si è riempita o ancora scarica?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 1.56 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.12 kW
+stato di carica attuale della batteria: 68%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.12
+potenza immessa dal fotovoltaico alla rete: 0.00";È carica al 68% e continua a caricarsi.
+check_production;che dice la produzione? sale o scende?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.89 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.02 kW
+stato di carica attuale della batteria: 28%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.00";Non posso fare cnofronti, ma in questo momento è pressoché nulla (0,02 kW).
+check_production;e adesso energia quanta dai pannelli;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 2.77 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.22 kW
+stato di carica attuale della batteria: 84%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.22
+potenza immessa dal fotovoltaico alla rete: 0.00";Stai producendo 0,22 kW.
+check_production;i pannelli stanno spingendo o no?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 4.55 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.30 kW
+stato di carica attuale della batteria: 100%
+status della batteria: in mantenimento
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.30";Ora non molto (0,30 kW), però hai la batteria piena.
+check_production;produzione ok oggi?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.15 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.00 kW
+stato di carica attuale della batteria: 19%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.00";Oggi i pannelli hanno prodotto 4,94 kWh, quasi tutti usati dalla casa (3,96 kWh), quindi direi ok.
+check_production;FV sta andando;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 2.04 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.16 kW
+stato di carica attuale della batteria: 73%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.16
+potenza immessa dal fotovoltaico alla rete: 0.00";Sì, sta andando, e sta caricando la batteria.
+check_production;potenza erogata in kW al momento?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.92 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.04 kW
+stato di carica attuale della batteria: 39%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.00";Stai producendo 0,04 kW.
+check_production;batteria?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 3.33 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.26 kW
+stato di carica attuale della batteria: 99%
+status della batteria: in mantenimento
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.26";Batteria quasi piena (99%) e in mantenimento.
+check_production;produco abbastanza rispetto a stamattina;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 1.22 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.10 kW
+stato di carica attuale della batteria: 55%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.10
+potenza immessa dal fotovoltaico alla rete: 0.00";Produzione modesta, ma presente (0,10 kW).
+check_production;quanto ho fatto oggi;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 0.40 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.01 kW
+stato di carica attuale della batteria: 25%
+status della batteria: in scarica
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.00";"Oggi hai prodotto 4,94 kWh e immesso 0,40 kWh. 
+"
+check_production;sto mettendo qualcosa in batteria?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 2.67 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.20 kW
+stato di carica attuale della batteria: 81%
+status della batteria: in carica
+potenza immessa dal fotovolatico alla batteria: 0.20
+potenza immessa dal fotovoltaico alla rete: 0.00";Sì, 0,20 kW stanno entrando in batteria.
+check_production;il sole sta facendo qualcosa?;"energia totale prodotta dai pannelli in tutta la giornata: 4.94 kWh
+auto-consumo della giornata: 3.96kWh
+energia immessa in rete in tutta la giornata: 3.99 kWh
+potenza prodotta ora dall'impianto fotovoltaico: 0.30 kW
+stato di carica attuale della batteria: 100%
+status della batteria: in mantenimento
+potenza immessa dal fotovolatico alla batteria: 0.00
+potenza immessa dal fotovoltaico alla rete: 0.30";Sì, sta facendo qualcosa, anche se poco: 0,30 kW.
+ask_optimization;quale orario è più efficiente per lo scaldabagno?;"Consumo maggiore: 17:00–19:00 (2.90 kWh)
+Surplus maggiore: 15:00–17:00 (0.26 kWh)
+Stato di carica massimo della batteria:  22:00–00:00 (36%)
+Valori massimi di energia condivisa: 12:00-13:00 - (0.30 kWh)";Potresti sfruttare la fascia oraria 12:00-13:00 utilizzando l'energia condivisa nella comunità.
+ask_optimization;dammi indicazioni per massimizzare l’autoconsumo;"Consumo maggiore: 18:00–20:00 (3.10 kWh)
+Surplus maggiore: 13:00–15:00 (0.42 kWh)
+Stato di carica massimo della batteria: 01:00–03:00 (48%)
+Valori massimi di energia condivisa: 11:00–12:00 (0.36 kWh)";Nella fascia tra le 13:00 e le 15:00 è previsto un piccolo surplus di produzione, che potresti usare per massimizzare il tuo autoconusmo.
+ask_optimization;quando conviene avviare la lavastoviglie per risparmiare;"Consumo maggiore: 07:00–09:00 (2.40 kWh)
+Surplus maggiore: 14:00–16:00 (0.51 kWh)
+Stato di carica massimo della batteria: 10:00–12:00 (61%)
+Valori massimi di energia condivisa: 15:00–16:00 (0.28 kWh)";Potrebbe convenire farlo nella fascia 15:00–16:00, quando il surplus è massimo.
+ask_optimization;aiutami a pianificare i consumi in modo intelligente;"Consumo maggiore: 20:00–22:00 (3.45 kWh)
+Surplus maggiore: 12:00–14:00 (0.37 kWh)
+Stato di carica massimo della batteria: 08:00–10:00 (54%)
+Valori massimi di energia condivisa: 13:00–14:00 (0.33 kWh)";In mattinata (08:00-10:00) puoi utilizzare elettodomestici a basso consumo sfruttando la batteria. Concentra invece gli altri tra le 12:00 e le 14:00: in quell'orario potrai usare sia il tuo surplus che l'energia condivisa dagli altri prosumer.
+ask_optimization;è conveniente far funzionare le pompe ora?;"Consumo maggiore: 06:00–08:00 (1.95 kWh)
+Surplus maggiore: 11:00–13:00 (0.46 kWh)
+Stato di carica massimo della batteria: 14:00–16:00 (69%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.41 kWh)";Sarebbe meglio tra le 11:00 e le 13:00, quando hai il picco sia di surplus che di condivisione da parte degli altri prosumer.
+ask_optimization;come faccio a sfruttare il surplus energetico?;"Consumo maggiore: 16:00–18:00 (2.75 kWh)
+Surplus maggiore: 10:00–12:00 (0.33 kWh)
+Stato di carica massimo della batteria: 23:00–01:00 (44%)
+Valori massimi di energia condivisa: 11:00–12:00 (0.27 kWh)";Usa energia tra le 10:00 e le 12:00, quando hai il massimo surplus.
+ask_optimization;quando usare la roba grossa?;"Consumo maggiore: 11:00–13:00 (3.21 kWh)
+Surplus maggiore: 11:00 (0.01 kWh)
+Stato di carica massimo della batteria:  21:00–23:00 (16%)
+Valori massimi di energia condivisa: - (0.00 kWh)";Oggi la produzione è bassa, per cui non ci sono fasce orarie maggiormente indicate per l'autoconsumo. 
+ask_optimization;la lavatrice ora è una pessima idea?;"Consumo maggiore: 11:00–13:00 (2.10 kWh)
+Surplus maggiore: 15:00–17:00 (0.38 kWh)
+Stato di carica massimo della batteria: 07:00–09:00 (63%)
+Valori massimi di energia condivisa: 16:00–17:00 (0.29 kWh)";Sarebbe preferibile tra le 16:00 e le 17:00, quando puoi sfruttare un po' di produzione in eccedenza.
+ask_optimization;dimmi un orario buono per non far arrabbiare la bolletta;"Consumo maggiore: 21:00–23:00 (2.95 kWh)
+Surplus maggiore: 12:00–14:00 (0.55 kWh)
+Stato di carica massimo della batteria: 05:00–07:00 (51%)
+Valori massimi di energia condivisa: 13:00–14:00 (0.34 kWh)";Tra le 12:00 e le 14:00 avrai sia surplus che energia messa a disposizione dalla comunità: potrebbe essere un buon orario per usare gli elettrodomestici risparmiando.
+ask_optimization;ottimizzami tutto, non so da dove partire;"Consumo maggiore: 08:00–10:00 (1.85 kWh)
+Surplus maggiore: 16:00–18:00 (0.43 kWh)
+Stato di carica massimo della batteria: 12:00–14:00 (72%)
+Valori massimi di energia condivisa: 17:00–18:00 (0.32 kWh)";Se hai bisogno di avviare le pompe di calore, potresti farlo sfruttando la carica della batteria tra le 12 e le 14. Più tardi, nella fascia 16:00–18:00 puoi usare la lavatrice o la lavastoviglie, sfruttando o il tuo surplus o quello degli altri prosumer.
+ask_optimization;se accendo la pompa ora, spreco?;"Consumo maggiore: 17:00–19:00 (3.10 kWh)
+Surplus maggiore: 13:00–15:00 (0.44 kWh)
+Stato di carica massimo della batteria: 12:00–14:00 (68%)
+Valori massimi di energia condivisa: 11:00–12:00 (0.40 kWh)";Meglio attendere almeno alle 11:00, se vuoi comprare energia dagli altri prosumer a un prezzo vantaggioso. Altrimenti puoi usare la tua batteria dalle 12:00 alle 14.
+ask_optimization;posso lavare ora o meglio dopo pranzo?;"Consumo maggiore: 07:00–09:00 (2.20 kWh)
+Surplus maggiore: 10:00–12:00 (0.28 kWh)
+Stato di carica massimo della batteria: 14:00–16:00 (54%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.26 kWh)";Meglio dopo pranzo, quando la batteria avrà un po' più di carica.
+ask_optimization;c’è un momento in cui la corrente costa meno?;"Consumo maggiore: 19:00–21:00 (3.60 kWh)
+Surplus maggiore: 11:00–13:00 (0.33 kWh)
+Stato di carica massimo della batteria: 22:00–00:00 (42%)
+Valori massimi di energia condivisa: 13:00–14:00 (0.31 kWh)";La corrente costa meno nelle fasce serali e notturne, ma considera che tra le 22 e la mezzanotte avrai un po' di carica della batteria a dispozione. Se però hai bisogno di energia durante il giorno, tra le 13 e le 14:00 puoi sfruttare l'energia condivisa.
+ask_optimization;aiutami a non buttare via energia;"Consumo maggiore: 16:00–18:00 (2.85 kWh)
+Surplus maggiore: 15:00–17:00 (0.22 kWh)
+Stato di carica massimo della batteria: 09:00–11:00 (61%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.29 kWh)";Se vuoi massimizzare il tuo autoconsumo, usa la batteria quando è al suo stato massimo di carica (09:00-11:00). Il maggiore surplus stimato tra le 15 e le 17: fai partire in quell'orario i carichi flessibili. Tra le 12 e le 13 poi sarà disponibile anche acquistare energia condivisa da altri prosumer: potrai quindi coprire parte dei tuoi consumi a un costo inferiore.
+ask_optimization;se la produzione è bassa, cosa mi conviene fare?;"Consumo maggiore: 12:00–14:00 (2.05 kWh)
+Surplus maggiore: 11:00–13:00 (0.56 kWh)
+Stato di carica massimo della batteria: 12:00–14:00 (75%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.62 kWh)";Ti conviene sfruttare al massimo la batteria, che raggiunge il picco di carica tra le 12:00 e le 14:00. Nelle ore 12:00-13:00 hai anche il maggior supporto dalla comunità energetica, quindi puoi coprire parte dei consumi senza dover ricorrere troppo alla rete. Se puoi, sposta i carichi flessibili nella fascia 11:00–13:00, dove c’è comunque un po’ di surplus disponibile.
+ask_optimization;e se faccio tutto ora? male?;"Consumo maggiore: 18:00–20:00 (3.35 kWh)
+Surplus maggiore: 09:00–11:00 (0.18 kWh)
+Stato di carica massimo della batteria: 01:00–03:00 (39%)
+Valori massimi di energia condivisa: 10:00–11:00 (0.24 kWh)";Diciamo che non è il momento più conveniente :) Il surplus è concentrato al mattino (9:00–11:00) e la finestra migliore per ricevere energia condivisa è tra le 10:00 e le 11:00. Ora invece stai consumando senza alcun supporto dalla produzione o dalla comunità. Se puoi rimandare le attività più energivore, ti costerebbe meno farle in quelle fasce.
+ask_optimization;per evitare picchi di consumo;"Consumo maggiore: 06:00–08:00 (1.90 kWh)
+Surplus maggiore: 12:00–14:00 (0.47 kWh)
+Stato di carica massimo della batteria: 13:00–15:00 (66%)
+Valori massimi di energia condivisa: 13:00–14:00 (0.38 kWh)";Hai surplus tra le 12:00 e le 14:00 e la batteria è più carica tra le 13:00 e le 15:00, quindi quelle sono le ore ideali per far partire gli elettrodomestici più energivori. In più, tra le 13:00 e le 14:00 puoi anche sfruttare l'energia condivisa dalla comunità, riducendo ancora di più il picco mattutino.
+ask_optimization;lavatrice sì o no adesso?;"Consumo maggiore: 20:00–22:00 (3.75 kWh)
+Surplus maggiore: 14:00–16:00 (0.29 kWh)
+Stato di carica massimo della batteria: 17:00–19:00 (49%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.27 kWh)";Meglio di no: il tuo surplus migliore è tra le 14:00 e le 16:00, mentre la batteria è al massimo tra le 17:00 e le 19:00. Se puoi, aspetta una di queste due finestre orarie.
+ask_optimization;consigli veloci per usare meglio il solare;"Consumo maggiore: 11:00–13:00 (2.40 kWh)
+Surplus maggiore: 10:00–12:00 (0.60 kWh)
+Stato di carica massimo della batteria: 12:00–14:00 (80%)
+Valori massimi di energia condivisa: 11:00–12:00 (0.58 kWh)";Concentra gli elettrodomestici energivori tra le 10:00 e le 12:00, quando hai il maggior surplus. Tra le 12:00 e le 14:00, anche la batteria è al massimo: usala per coprire eventuali consumi extra senza prelevare dalla rete. Inoltre, tra le 11:00 e le 12:00 puoi beneficiare anche dell’energia condivisa dalla comunità, riducendo ulteriormente i costi.
+ask_optimization;suggerisci tu quando far partire le pompe;"Consumo maggiore: 15:00–17:00 (2.65 kWh)
+Surplus maggiore: 12:00–14:00 (0.34 kWh)
+Stato di carica massimo della batteria: 21:00–23:00 (45%)
+Valori massimi di energia condivisa: 13:00–14:00 (0.30 kWh)";Ti conviene far partire le pompe tra le 12:00 e le 14:00, quando hai il maggior surplus solare. In alternativa, puoi sfruttare la fascia 13:00–14:00, in cui è disponibile anche più energia condivisa dalla comunità. Evita invece le 15:00–17:00, perché coincidono con il tuo picco di consumo e potresti dover prelevare di più dalla rete.
+ask_optimization;come faccio a spremere il fotovoltaico al massimo?;"Consumo maggiore: 17:00–19:00 (2.50 kWh)
+Surplus maggiore: 16:00–18:00 (0.20 kWh)
+Stato di carica massimo della batteria: 10:00–12:00 (58%)
+Valori massimi di energia condivisa: 11:00–12:00 (0.22 kWh)";Per spremere il fotovoltaico al massimo, sposta il più possibile i consumi nelle ore in cui hai più energia disponibile: tra le 16 e le 18 sfrutti il tuo piccolo surplus, mentre tra le 10 e 12 la batteria è al massimo. Inoltre, tra le 11 e 12 puoi approfittare dell’energia condivisa dalla comunità. 
+ask_optimization;c’è un modo di risparmiare senza incasinarmi?;"Consumo maggiore: 08:00–10:00 (1.75 kWh)
+Surplus maggiore: 13:00–15:00 (0.48 kWh)
+Stato di carica massimo della batteria: 14:00–16:00 (70%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.45 kWh)";Sì, puoi risparmiare senza complicarti la vita: privilegia l’uso dei dispositivi durante il surplus (13:00–15:00) e cerca di evitare le ore di consumo massimo (08:00–10:00).
+ask_optimization;ok, ottimizza tutto per favore;"Consumo maggiore: 18:00–20:00 (3.00 kWh)
+Surplus maggiore: 11:00–13:00 (0.31 kWh)
+Stato di carica massimo della batteria: 23:00–00:00 (36%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.28 kWh)";Per ottimizzare tutto: usa i surplus di energia tra le 11:00–13:00, sfrutta la batteria quando è più carica (23:00–00:00) e cerca di distribuire i carichi lontano dai picchi di consumo serali (18:00–20:00).
+ask_optimization;come faccio a capire il momento giusto per attivare i dispositivi?;"Consumo maggiore: 13:00–15:00 (2.80 kWh)
+Surplus maggiore: 09:00–11:00 (0.14 kWh)
+Stato di carica massimo della batteria: 12:00–14:00 (50%)
+Valori massimi di energia condivisa: 13:00–14:00 (0.19 kWh)";Il momento giusto per attivare i dispositivi è quando c’è surplus e batteria carica, cioè tra le 09:00–11:00 e 12:00–14:00.
+ask_optimization;sono fuori casa, ha senso far andare la lavatrice?;"Consumo maggiore: 19:00–21:00 (4.10 kWh)
+Surplus maggiore: 12:00–14:00 (0.38 kWh)
+Stato di carica massimo della batteria: 20:00–22:00 (40%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.36 kWh)";Sì, ha senso far partire la lavatrice mentre sei fuori solo se puoi sfruttare il surplus (12:00–14:00) per risparmiare.
+ask_optimization;fammi trovare la casa fresca domani pomeriggio;"Consumo maggiore: 16:00–18:00 (2.20 kWh)
+Surplus maggiore: 10:00–12:00 (0.26 kWh)
+Stato di carica massimo della batteria: 11:00–13:00 (63%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.25 kWh)";Per trovare la casa fresca domani pomeriggio, sfrutta la batteria al massimo (11:00–13:00) e aziona il condizionatore prima del picco di consumo (16:00–18:00).
+ask_optimization;imposta la temperatura ideale per dormire;"Consumo maggiore: 07:00–09:00 (2.05 kWh)
+Surplus maggiore: 12:00–14:00 (0.52 kWh)
+Stato di carica massimo della batteria: 13:00–15:00 (77%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.50 kWh)";Temperatura ideale per dormire: mantieni il comfort usando la batteria quando è al 77% (13:00–15:00) e sfrutta il surplus (12:00–14:00) per riscaldare/raffreddare senza sprechi.
+ask_optimization;imposta il riscaldamento dalle 17 alle 22;"Consumo maggiore: 21:00–23:00 (3.25 kWh)
+Surplus maggiore: 15:00–17:00 (0.21 kWh)
+Stato di carica massimo della batteria: 02:00–04:00 (34%)
+Valori massimi di energia condivisa: 14:00–15:00 (0.23 kWh)";Imposta il riscaldamento dalle 17 alle 22 usando la batteria al massimo nelle prime ore (02:00–04:00 non serve) e evitando il picco di consumo serale (21:00–23:00).
+ask_optimization;voglio l’acqua a 55 gradi entro le 20;"Consumo maggiore: 12:00–14:00 (1.95 kWh)
+Surplus maggiore: 11:00–13:00 (0.68 kWh)
+Stato di carica massimo della batteria: 12:00–14:00 (85%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.70 kWh)";Per avere acqua a 55 °C entro le 20, programma lo scaldabagno durante il surplus e la massima carica della batteria (11:00–14:00).
+ask_optimization;regola le pompe per mantenere 24 gradi tutto il giorno;"Consumo maggiore: 17:00–19:00 (2.70 kWh)
+Surplus maggiore: 14:00–16:00 (0.30 kWh)
+Stato di carica massimo della batteria: 18:00–20:00 (46%)
+Valori massimi di energia condivisa: 11:00–12:00 (0.27 kWh)";Con dati attuali, se vuoi evitare sprechi, ti suggerisco di attivare le pompe tra le 14:00 e le 16:00, quando il surplus solare è massimo. La batteria raggiunge il picco di carica tra le 18:00 e le 20:00, quindi può integrare il fabbisogno serale senza dover prelevare troppo dalla rete. Puoi anche sfruttare l’energia condivisa tra le 11:00 e le 12:00 per anticipare un po’ il riscaldamento se serve.
+ask_optimization;pianifica che l'acqua sia calda in giornata;"Consumo maggiore: 06:00–08:00 (1.60 kWh)
+Surplus maggiore: 13:00–15:00 (0.35 kWh)
+Stato di carica massimo della batteria: 12:00–14:00 (60%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.32 kWh)";Per avere l’acqua calda senza sprecare energia, punta a far lavorare lo scaldabagno tra le 13:00 e le 15:00, quando hai il miglior surplus solare. In più, tra 12:00 e 14:00 la batteria è ben carica e può coprire parte del fabbisogno senza prelievo dalla rete. Se vuoi massimizzare il risparmio, puoi avviare il riscaldamento dell’acqua tra 12:00 e 13:00, quando è disponibile anche più energia condivisa dalla comunità.
+ask_optimization;metti lo scaldabagno tipo verso le 8, se puoi;"Consumo maggiore: 14:00–16:00 (2.95 kWh)
+Surplus maggiore: 09:00–11:00 (0.16 kWh)
+Stato di carica massimo della batteria: 15:00–17:00 (53%)
+Valori massimi di energia condivisa: 10:00–11:00 (0.18 kWh)";Mettere lo scaldabagno alle 8:00 non è l’ideale: a quell’ora non hai surplus e rischi di prendere tutto dalla rete. Se puoi, spostalo tra le 09:00 e le 11:00, quando hai un piccolo surplus e anche la comunità condivide di più (soprattutto tra le 10:00 e le 11:00). In alternativa, puoi sfruttare la batteria tra le 15:00 e le 17:00, quando è al massimo: meglio di uno start mattutino “a freddo” sulla rete.
+ask_optimization;fammi trovare l’acqua calda quando torno;"Consumo maggiore: 18:00–20:00 (3.45 kWh)
+Surplus maggiore: 11:00–13:00 (0.29 kWh)
+Stato di carica massimo della batteria: 21:00–23:00 (48%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.30 kWh)";Per avere acqua calda al tuo ritorno, accendilo durante il surplus (11:00–13:00) e quando la batteria è quasi piena (21:00–23:00).
+ask_optimization;metti i termosifoni ma non troppo presto;"Consumo maggiore: 10:00–12:00 (2.10 kWh)
+Surplus maggiore: 12:00–14:00 (0.61 kWh)
+Stato di carica massimo della batteria: 12:00–14:00 (72%)
+Valori massimi di energia condivisa: 13:00–14:00 (0.58 kWh)";Accendi i termosifoni a partire da 12:00, quando il surplus solare e lo stato di carica della batteria sono al massimo. Così riscaldi casa senza prelevare troppo dalla rete e puoi sfruttare anche l’energia condivisa disponibile tra le 13:00 e le 14:00.
+ask_optimization;che ne dici di far partire la pompa dopo cena?;"Consumo maggiore: 16:00–18:00 (2.40 kWh)
+Surplus maggiore: 15:00–17:00 (0.19 kWh)
+Stato di carica massimo della batteria: 22:00–00:00 (38%)
+Valori massimi di energia condivisa: 11:00–12:00 (0.21 kWh)";Se possibile, aspetta un po': la batteria raggiunge il picco tra le  22:00 e la mezzanotte.
+ask_optimization;voglio che la casa non si scaldi troppo;"Consumo maggiore: 08:00–10:00 (1.85 kWh)
+Surplus maggiore: 13:00–15:00 (0.45 kWh)
+Stato di carica massimo della batteria: 14:00–16:00 (65%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.41 kWh)";Per evitare il surriscaldamento, puoi usare il surplus disponibile tra le 13:00 e le 15:00, oppure la batteria tra le 14:00 e le 16:00. Sfruttare queste due fasce orarie ti permette di raggiungere un comfort adeguato minimizzando i consumi dalla rete.
+ask_optimization;temperatura a boh... vedi tu quanto;"Consumo maggiore: 19:00–21:00 (3.90 kWh)
+Surplus maggiore: 10:00–12:00 (0.22 kWh)
+Stato di carica massimo della batteria: 00:00–02:00 (35%)
+Valori massimi di energia condivisa: 11:00–12:00 (0.25 kWh)";Potresti impostare delle temperature miti sfruttando la carica della batteria tra le 00:00 e le 02:00.
+ask_optimization;accendi tutto ma non prima delle 7;"Consumo maggiore: 13:00–15:00 (2.30 kWh)
+Surplus maggiore: 12:00–14:00 (0.55 kWh)
+Stato di carica massimo della batteria: 12:00–14:00 (78%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.60 kWh)";Non posso agire direttamente sui tuoi elettrodomestici, ma posso suggerirti di usarli principalmente nella fascia oraria 12:00–14:00, sfruttando il surplus e la batteria carica.
+ask_optimization;evita di accendere roba quando dormo;"Consumo maggiore: 17:00–19:00 (2.95 kWh)
+Surplus maggiore: 09:00–11:00 (0.12 kWh)
+Stato di carica massimo della batteria: 11:00–13:00 (56%)
+Valori massimi di energia condivisa: 13:00–14:00 (0.17 kWh)";Non posso attivare i tuoi elettrodomestici, ma ti suggerisco di programmare i carichi più pesanti dopo le 09:00–11:00, quando la batteria e il surplus iniziano a crescere.
+ask_optimization;acqua calda al risveglio;"Consumo maggiore: 20:00–22:00 (3.05 kWh)
+Surplus maggiore: 14:00–16:00 (0.32 kWh)
+Stato di carica massimo della batteria: 16:00–18:00 (50%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.29 kWh)";Al mattino non hai energia a sufficienza per far partire l'acqua calda in autoconsumo. Potresti attivare lo scaldabagno più tardi, sfruttando il surplus (tra le 14 e le 16) oppure la batteria (tra le 16 e le 18).
+ask_optimization;tieni la casa sui 21 finché non esco;"Consumo maggiore: 09:00–11:00 (2.00 kWh)
+Surplus maggiore: 12:00–14:00 (0.49 kWh)
+Stato di carica massimo della batteria: 13:00–15:00 (69%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.43 kWh)";Per mantenere la casa sui 21 °C, tra le 12:00 e le 14:00 approfitta del surplus e dell'energia condivisa, per ridurre il prelievo dalla rete. La batteria sarà al massimo tra le 13:00 e le 15:00, quindi puoi pianificare eventuali picchi extra in quell’intervallo.
+ask_optimization;lavastoviglie non prima delle 10, per favore;"Consumo maggiore: 15:00–17:00 (2.75 kWh)
+Surplus maggiore: 11:00–13:00 (0.27 kWh)
+Stato di carica massimo della batteria: 19:00–21:00 (44%)
+Valori massimi di energia condivisa: 10:00–11:00 (0.23 kWh)";Puoi far partire la lavastoviglie subito dopo le 10, così eviti i picchi di consumo del pomeriggio (15:00–17:00) e sfrutti il surplus disponibile tra le 11 e le 13. La batteria non è ancora piena, ma il prelievo dalla rete sarà più contenuto.
+ask_optimization;quale può essere un orario intelligente per l’acqua?;"Consumo maggiore: 06:00–08:00 (1.70 kWh)
+Surplus maggiore: 13:00–15:00 (0.40 kWh)
+Stato di carica massimo della batteria: 12:00–14:00 (59%)
+Valori massimi di energia condivisa: 13:00–14:00 (0.35 kWh)";Un buon momento per scaldare l’acqua è tra le 12:00 e le 14:00, quando la batteria è più carica (59%) e puoi sfruttare parte del surplus. In alternativa, tra le 13:00 e le 14:00 puoi anche attingere energia condivisa da altri prosumer a un buon prezzo.
+ask_optimization;non far andare il riscaldamento troppo presto;"Consumo maggiore: 18:00–20:00 (3.15 kWh)
+Surplus maggiore: 12:00–14:00 (0.36 kWh)
+Stato di carica massimo della batteria: 21:00–23:00 (47%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.33 kWh)";Conviene posticipare l’accensione del riscaldamento fino a quando il surplus e la batteria sono disponibili: sfrutta l’energia condivisa tra le 12:00 e le 13:00 e la batteria al massimo tra le 21:00 e le 23:00, così eviti di consumare troppo nelle ore di picco.
+ask_optimization;la pompa dalle 8 ma solo se serve;"Consumo maggiore: 14:00–16:00 (2.60 kWh)
+Surplus maggiore: 10:00–12:00 (0.20 kWh)
+Stato di carica massimo della batteria: 15:00–17:00 (52%)
+Valori massimi di energia condivisa: 11:00–12:00 (0.22 kWh)";Puoi far partire la pompa dalle 8, ma meglio sfruttare il surplus tra le 10:00 e le 12:00 e la batteria al massimo tra le 15:00 e le 17:00: così consumi meno dalla rete e accendi la pompa solo se serve davvero.
+ask_optimization;controlla che la temperatura non superi i 25;"Consumo maggiore: 07:00–09:00 (2.35 kWh)
+Surplus maggiore: 12:00–14:00 (0.58 kWh)
+Stato di carica massimo della batteria: 12:00–14:00 (82%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.66 kWh)";Non posso regolare le impostazioni del tuo impianto, ma per mantenere la temperatura sotto i 25°C, sfrutta la batteria al massimo e il surplus tra le 12:00 e le 14:00, così puoi far funzionare eventuali pompe o condizionatori senza prelevare troppo dalla rete e senza surriscaldare la casa.
+ask_optimization;voglio il bagno caldo senza sprecare;"Consumo maggiore: 21:00–23:00 (3.55 kWh)
+Surplus maggiore: 13:00–15:00 (0.24 kWh)
+Stato di carica massimo della batteria: 02:00–04:00 (37%)
+Valori massimi di energia condivisa: 14:00–15:00 (0.26 kWh)";Per avere il bagno caldo senza sprechi, pianifica lo scaldabagno sfruttando il surplus e l’energia condivisa tra le 13:00 e le 15:00, così riduci il prelievo dalla rete. La batteria non è molto carica in questo momento, quindi meglio evitare di usarla per il bagno a tarda sera.
+ask_optimization;gestisci tu l’acqua calda, basta che non sia fredda alle 7;"Consumo maggiore: 11:00–13:00 (2.20 kWh)
+Surplus maggiore: 09:00–11:00 (0.30 kWh)
+Stato di carica massimo della batteria: 10:00–12:00 (57%)
+Valori massimi di energia condivisa: 11:00–12:00 (0.29 kWh)";Per avere l’acqua calda pronta alle 7 senza sprechi, puoi far partire lo scaldabagno tra le 09:00 e le 11:00 sfruttando il surplus disponibile, e completare eventualmente con energia dalla batteria tra le 10:00 e le 12:00.
+ask_optimization;dimmi tu quando accendo lo scaldabagno;"Consumo maggiore: 16:00–18:00 (2.48 kWh)
+Surplus maggiore: 12:00–14:00 (0.41 kWh)
+Stato di carica massimo della batteria: 13:00–15:00 (67%)
+Valori massimi di energia condivisa: 12:00–13:00 (0.39 kWh)";Ti conviene farlo partire tra le 12:00 e le 14:00, sfruttando il surplus solare disponibile e l’energia condivisa, e usare la batteria tra le 13:00 e le 15:00, se serve un supporto extra. 
+ask_optimization;aiutami a distribuire meglio i consumi;"Consumo maggiore: 18:00–20:00 (3.80 kWh)
+Surplus maggiore: 10:00–12:00 (0.18 kWh)
+Stato di carica massimo della batteria: 22:00–00:00 (43%)
+Valori massimi di energia condivisa: 11:00–12:00 (0.20 kWh)";Per distribuire meglio i consumi, cerca di spostare le attività più energivore fuori dall’orario di punta 18:00–20:00. Puoi sfruttare il surplus previsto tra le 10:00 e le 12:00 e l’energia condivisa nello stesso intervallo (11:00–12:00). La batteria sarà più carica dopo le 22:00, quindi puoi far partire alcuni elettrodomestici (come la lavatoviglie) a fine serata per ridurre il prelievo dalla rete.
+ask_netload_forecast;andamento previsto dei consumi;"Previsione consumi (kWh);Ora
+2025-12-09 18:00:00+01:00;0.28
+2025-12-09 19:00:00+01:00;0.25
+2025-12-09 20:00:00+01:00;0.26
+2025-12-09 21:00:00+01:00;0.31
+2025-12-09 22:00:00+01:00;0.34
+2025-12-09 23:00:00+01:00;0.32
+2025-12-10 00:00:00+01:00;0.16";I consumi saliranno progressivamente dalle 18:00 (0,28 kWh) fino alle 23:00 (0,32 kWh), per poi calare verso mezzanotte (0,16 kWh).
+ask_netload_forecast;quanto sarà il mio prelievo ;"Previsione consumi (kWh)\t\tOra
+2025-12-09 12:00:00+01:00\t0.18
+2025-12-09 13:00:00+01:00\t0.22
+2025-12-09 14:00:00+01:00\t0.20
+2025-12-09 15:00:00+01:00\t0.24
+2025-12-09 16:00:00+01:00\t0.27
+2025-12-09 17:00:00+01:00\t0.29
+2025-12-09 18:00:00+01:00\t0.33
+2025-12-09 19:00:00+01:00\t0.30
+2025-12-09 20:00:00+01:00\t0.28
+2025-12-09 21:00:00+01:00\t0.31
+2025-12-09 22:00:00+01:00\t0.35
+2025-12-09 23:00:00+01:00\t0.32";Sarà complessivamente moderato, con picchi tra le 15:00 e le 17:00 (0,26–0,29 kWh).
+ask_netload_forecast;quali ore avranno i consumi più alti oggi?;"Previsione consumi (kWh)\t\tOra
+2025-12-09 10:00:00+01:00\t0.14
+2025-12-09 11:00:00+01:00\t0.17
+2025-12-09 12:00:00+01:00\t0.19
+2025-12-09 13:00:00+01:00\t0.21
+2025-12-09 14:00:00+01:00\t0.23
+2025-12-09 15:00:00+01:00\t0.27
+2025-12-09 16:00:00+01:00\t0.30
+2025-12-09 17:00:00+01:00\t0.33
+2025-12-09 18:00:00+01:00\t0.36
+2025-12-09 19:00:00+01:00\t0.32
+2025-12-09 20:00:00+01:00\t0.28
+2025-12-09 21:00:00+01:00\t0.25";Prevedo i consumi più alti tra le 18 e le 20. 
+ask_netload_forecast;prevedi il mio consumo totale giornaliero;"Previsione consumi (kWh)\t\tOra
+2025-12-09 08:00:00+01:00\t0.12
+2025-12-09 09:00:00+01:00\t0.15
+2025-12-09 10:00:00+01:00\t0.16
+2025-12-09 11:00:00+01:00\t0.19
+2025-12-09 12:00:00+01:00\t0.22
+2025-12-09 13:00:00+01:00\t0.24
+2025-12-09 14:00:00+01:00\t0.26
+2025-12-09 15:00:00+01:00\t0.31
+2025-12-09 16:00:00+01:00\t0.29
+2025-12-09 17:00:00+01:00\t0.34
+2025-12-09 18:00:00+01:00\t0.36
+2025-12-09 19:00:00+01:00\t0.30";Il tuo consumo stimato fino alle 19 è di circa 2,92 kWh .
+ask_netload_forecast;come varia il consumo stimato nelle prossime ore?;"Previsione consumi (kWh)\t\tOra
+2025-12-09 13:00:00+01:00\t0.20
+2025-12-09 14:00:00+01:00\t0.22
+2025-12-09 15:00:00+01:00\t0.25
+2025-12-09 16:00:00+01:00\t0.27
+2025-12-09 17:00:00+01:00\t0.29
+2025-12-09 18:00:00+01:00\t0.33
+2025-12-09 19:00:00+01:00\t0.31
+2025-12-09 20:00:00+01:00\t0.30
+2025-12-09 21:00:00+01:00\t0.32
+2025-12-09 22:00:00+01:00\t0.35
+2025-12-09 23:00:00+01:00\t0.33
+2025-12-10 00:00:00+01:00\t0.18";Il consumo stimato aumenterà gradualmente da 0.,20 kWh (intorno alle 13:00) a 0,35 kWh (verso le 22:00).
+ask_netload_forecast;quant'è previsto il carico medio per domani?;"Previsione consumi (kWh)\t\tOra
+2025-12-09 11:00:00+01:00\t0.16
+2025-12-09 12:00:00+01:00\t0.18
+2025-12-09 13:00:00+01:00\t0.20
+2025-12-09 14:00:00+01:00\t0.23
+2025-12-09 15:00:00+01:00\t0.26
+2025-12-09 16:00:00+01:00\t0.28
+2025-12-09 17:00:00+01:00\t0.30
+2025-12-09 18:00:00+01:00\t0.33
+2025-12-09 19:00:00+01:00\t0.31
+2025-12-09 20:00:00+01:00\t0.29
+2025-12-09 21:00:00+01:00\t0.27
+2025-12-09 22:00:00+01:00\t0.24";Non posso prevedere il carico di domani, ma nelle prossime 12 ora sarà mediamente di circa 0,26 kWh, quindi ottimo.
+ask_netload_forecast;e domani quanto prendo, di più o di meno?;"Previsione consumi (kWh)\tOra
+2025-12-09 06:00:00+01:00\t0.10
+2025-12-09 07:00:00+01:00\t0.14
+2025-12-09 08:00:00+01:00\t0.18
+2025-12-09 09:00:00+01:00\t0.20
+2025-12-09 10:00:00+01:00\t0.22
+2025-12-09 11:00:00+01:00\t0.24
+2025-12-09 12:00:00+01:00\t0.21
+2025-12-09 13:00:00+01:00\t0.19
+2025-12-09 14:00:00+01:00\t0.23
+2025-12-09 15:00:00+01:00\t0.26
+2025-12-09 16:00:00+01:00\t0.29
+2025-12-09 17:00:00+01:00\t0.31";Non posso prevedere il carico di domani, ma nelle prossime 12 ora sarà leggermente più basso la mattina (mediamente 0,18 kWh circa) e più alto nel pomeriggio/sera (0,26 kWh circa).
+ask_netload_forecast; da qui a stasera quanto avrò consumato secondo te;"Previsione consumi (kWh)\tOra
+2025-12-09 07:00:00+01:00\t0.12
+2025-12-09 08:00:00+01:00\t0.16
+2025-12-09 09:00:00+01:00\t0.18
+2025-12-09 10:00:00+01:00\t0.20
+2025-12-09 11:00:00+01:00\t0.22
+2025-12-09 12:00:00+01:00\t0.25
+2025-12-09 13:00:00+01:00\t0.27
+2025-12-09 14:00:00+01:00\t0.24
+2025-12-09 15:00:00+01:00\t0.28
+2025-12-09 16:00:00+01:00\t0.32
+2025-12-09 17:00:00+01:00\t0.34
+2025-12-09 18:00:00+01:00\t0.36";Al momento posso prevedere i tuoi consumi solo fino alle 18, e dai dati risulta che fino a quell'ora prenderai dalla rete 2,94 kWh.
+ask_netload_forecast;quant'è che tirerò dalla rete stasera?;"Previsione consumi (kWh)\tOra
+2025-12-09 12:00:00+01:00\t0.17
+2025-12-09 13:00:00+01:00\t0.19
+2025-12-09 14:00:00+01:00\t0.21
+2025-12-09 15:00:00+01:00\t0.23
+2025-12-09 16:00:00+01:00\t0.26
+2025-12-09 17:00:00+01:00\t0.29
+2025-12-09 18:00:00+01:00\t0.33
+2025-12-09 19:00:00+01:00\t0.31
+2025-12-09 20:00:00+01:00\t0.30
+2025-12-09 21:00:00+01:00\t0.34
+2025-12-09 22:00:00+01:00\t0.37
+2025-12-09 23:00:00+01:00\t0.35";Considerando una previsione dei tuoi consumi netti nella fascia oraria 19:00-23:00, prenderai dalla rete 1,67 kWh.
+ask_netload_forecast;fammi una stima tipo “oggi vs domani”;"Previsione consumi (kWh)\tOra
+2025-12-09 05:00:00+01:00\t0.09
+2025-12-09 06:00:00+01:00\t0.11
+2025-12-09 07:00:00+01:00\t0.15
+2025-12-09 08:00:00+01:00\t0.18
+2025-12-09 09:00:00+01:00\t0.20
+2025-12-09 10:00:00+01:00\t0.22
+2025-12-09 11:00:00+01:00\t0.23
+2025-12-09 12:00:00+01:00\t0.21
+2025-12-09 13:00:00+01:00\t0.24
+2025-12-09 14:00:00+01:00\t0.27
+2025-12-09 15:00:00+01:00\t0.29
+2025-12-09 16:00:00+01:00\t0.28";Posso solo farti una previsione delle prossime 12 ore (fino alle 16:00), e dai dati risulta una stima totale dei consumi di 2,47 kWh.
+ask_netload_forecast;andrò oltre la soglia domani?;"Previsione consumi (kWh)\tOra
+2025-12-09 06:00:00+01:00\t0.12
+2025-12-09 07:00:00+01:00\t0.18
+2025-12-09 08:00:00+01:00\t0.27
+2025-12-09 09:00:00+01:00\t0.22
+2025-12-09 10:00:00+01:00\t0.19
+2025-12-09 11:00:00+01:00\t0.17
+2025-12-09 12:00:00+01:00\t0.16
+2025-12-09 13:00:00+01:00\t0.15
+2025-12-09 14:00:00+01:00\t0.18
+2025-12-09 15:00:00+01:00\t0.21
+2025-12-09 16:00:00+01:00\t0.25
+2025-12-09 17:00:00+01:00\t0.31";Ho a disposizione i dati fino alle 17:00 di oggi, non sono in grado di fornirti previsioni per domani.
+ask_netload_forecast;mi dici se avrò picchi oggi?;"Previsione consumi (kWh)\tOra
+2025-12-09 08:00:00+01:00\t0.14
+2025-12-09 09:00:00+01:00\t0.17
+2025-12-09 10:00:00+01:00\t0.21
+2025-12-09 11:00:00+01:00\t0.25
+2025-12-09 12:00:00+01:00\t0.30
+2025-12-09 13:00:00+01:00\t0.35
+2025-12-09 14:00:00+01:00\t0.38
+2025-12-09 15:00:00+01:00\t0.36
+2025-12-09 16:00:00+01:00\t0.32
+2025-12-09 17:00:00+01:00\t0.28
+2025-12-09 18:00:00+01:00\t0.24
+2025-12-09 19:00:00+01:00\t0.20";Dalle stime che ho a disposizione, è previsto un picco tra le 13 e le 15, per un totale di 1,09 kWh prelevati dalla rete.
+ask_netload_forecast;domani consumo di più o meno?;"Previsione consumi (kWh)\tOra
+2025-12-09 07:00:00+01:00\t0.20
+2025-12-09 08:00:00+01:00\t0.24
+2025-12-09 09:00:00+01:00\t0.22
+2025-12-09 10:00:00+01:00\t0.19
+2025-12-09 11:00:00+01:00\t0.18
+2025-12-09 12:00:00+01:00\t0.17
+2025-12-09 13:00:00+01:00\t0.16
+2025-12-09 14:00:00+01:00\t0.18
+2025-12-09 15:00:00+01:00\t0.20
+2025-12-09 16:00:00+01:00\t0.23
+2025-12-09 17:00:00+01:00\t0.27
+2025-12-09 18:00:00+01:00\t0.30";Non ho informazioni relative ai tuo consumi di domani. Posso solo stimare il prelievo dalla rete per le prossime 12 ore (che sarà di circa 2,54 kWh). 
+ask_netload_forecast;quanta energia mi servirà se uso tutto insieme?;"Previsione consumi (kWh)\tOra
+2025-12-09 10:00:00+01:00\t0.11
+2025-12-09 11:00:00+01:00\t0.13
+2025-12-09 12:00:00+01:00\t0.15
+2025-12-09 13:00:00+01:00\t0.18
+2025-12-09 14:00:00+01:00\t0.22
+2025-12-09 15:00:00+01:00\t0.25
+2025-12-09 16:00:00+01:00\t0.27
+2025-12-09 17:00:00+01:00\t0.29
+2025-12-09 18:00:00+01:00\t0.34
+2025-12-09 19:00:00+01:00\t0.36
+2025-12-09 20:00:00+01:00\t0.33
+2025-12-09 21:00:00+01:00\t0.28";In questo momento dispongo solo delle previsioni di consumi fino alle 21 di stasera. Se mi dici che cosa vuoi ottimizzare posso provare a fornirti un suggerimento al riguardo.
+ask_netload_forecast;se piove, avrò meno produzione?;"Previsione consumi (kWh)\tOra
+2025-12-09 00:00:00+01:00\t0.30
+2025-12-09 01:00:00+01:00\t0.28
+2025-12-09 02:00:00+01:00\t0.26
+2025-12-09 03:00:00+01:00\t0.25
+2025-12-09 04:00:00+01:00\t0.24
+2025-12-09 05:00:00+01:00\t0.22
+2025-12-09 06:00:00+01:00\t0.20
+2025-12-09 07:00:00+01:00\t0.21
+2025-12-09 08:00:00+01:00\t0.23
+2025-12-09 09:00:00+01:00\t0.26
+2025-12-09 10:00:00+01:00\t0.29
+2025-12-09 11:00:00+01:00\t0.31";Dalle stime disponibili fino alle 11 di questa mattina, importerai relativamente poco dalla rete, ma se dovesse piovere sicuramente la produzione sarà nettamente inferiore, e di conseguenza aumenteranno i consumi dalla rete.
+ask_netload_forecast;stima quanto preleverò la notte prossima;"Previsione consumi (kWh)\tOra
+2025-12-09 13:00:00+01:00\t0.19
+2025-12-09 14:00:00+01:00\t0.22
+2025-12-09 15:00:00+01:00\t0.26
+2025-12-09 16:00:00+01:00\t0.30
+2025-12-09 17:00:00+01:00\t0.35
+2025-12-09 18:00:00+01:00\t0.40
+2025-12-09 19:00:00+01:00\t0.42
+2025-12-09 20:00:00+01:00\t0.39
+2025-12-09 21:00:00+01:00\t0.36
+2025-12-09 22:00:00+01:00\t0.33
+2025-12-09 23:00:00+01:00\t0.29";Dispongo delle stime solo fino alle 23 di stasera, e considerando la fascia oraria 22:00-23:00 consumerai solo 0,62 kWh.
+ask_netload_forecast;considerato che ho già consumato 4kwh e devo ancora usare il forno: quanto sarà il mio consumo in kwh alla fine della giornata?;"Previsione consumi (kWh)\tOra
+2025-12-09 09:00:00+01:00\t0.18
+2025-12-09 10:00:00+01:00\t0.22
+2025-12-09 11:00:00+01:00\t0.26
+2025-12-09 12:00:00+01:00\t0.31
+2025-12-09 13:00:00+01:00\t0.36
+2025-12-09 14:00:00+01:00\t0.40
+2025-12-09 15:00:00+01:00\t0.38
+2025-12-09 16:00:00+01:00\t0.35
+2025-12-09 17:00:00+01:00\t0.33
+2025-12-09 18:00:00+01:00\t0.29
+2025-12-09 19:00:00+01:00\t0.25
+2025-12-09 20:00:00+01:00\t0.21";Aggiungendo alle previsioni attuali di consumo (fino alle 20:00) i 4 kWh già consumati e i consumi previsti per il forno (circa 3 kWh per un'ora di utilizzo), una stima possibile è di circa 10,54 kWh.
+ask_netload_forecast;dai, indovina il mio carico per stasera;"Previsione consumi (kWh)\tOra
+2025-12-09 11:00:00+01:00\t0.09
+2025-12-09 12:00:00+01:00\t0.10
+2025-12-09 13:00:00+01:00\t0.11
+2025-12-09 14:00:00+01:00\t0.12
+2025-12-09 15:00:00+01:00\t0.13
+2025-12-09 16:00:00+01:00\t0.14
+2025-12-09 17:00:00+01:00\t0.15
+2025-12-09 18:00:00+01:00\t0.16
+2025-12-09 19:00:00+01:00\t0.17
+2025-12-09 20:00:00+01:00\t0.16
+2025-12-09 21:00:00+01:00\t0.14
+2025-12-09 22:00:00+01:00\t0.12";Le stime di consumo dalle 19:00 alle 22:00 di stasera prevedono un totale di 0,59 kWh. 
+ask_netload_forecast;c’è rischio di overconsumo domani mattina?;"Previsione consumi (kWh)\tOra
+2025-12-09 06:00:00+01:00\t0.25
+2025-12-09 07:00:00+01:00\t0.32
+2025-12-09 08:00:00+01:00\t0.40
+2025-12-09 09:00:00+01:00\t0.45
+2025-12-09 10:00:00+01:00\t0.43
+2025-12-09 11:00:00+01:00\t0.38
+2025-12-09 12:00:00+01:00\t0.35
+2025-12-09 13:00:00+01:00\t0.33
+2025-12-09 14:00:00+01:00\t0.31
+2025-12-09 15:00:00+01:00\t0.29
+2025-12-09 16:00:00+01:00\t0.27
+2025-12-09 17:00:00+01:00\t0.24";Posso solo farti una previsione delle prossime 12 ore (fino alle 17:00), e dai dati risulta una stima totale dei consumi di 4,02 kWh.
+ask_netload_forecast;fammi la previsione giornaliera, anche spannata;"Previsione consumi (kWh)\tOra
+2025-12-09 05:00:00+01:00\t0.08
+2025-12-09 06:00:00+01:00\t0.14
+2025-12-09 07:00:00+01:00\t0.26
+2025-12-09 08:00:00+01:00\t0.30
+2025-12-09 09:00:00+01:00\t0.22
+2025-12-09 10:00:00+01:00\t0.18
+2025-12-09 11:00:00+01:00\t0.16
+2025-12-09 12:00:00+01:00\t0.15
+2025-12-09 13:00:00+01:00\t0.16
+2025-12-09 14:00:00+01:00\t0.19
+2025-12-09 15:00:00+01:00\t0.21
+2025-12-09 16:00:00+01:00\t0.23";Posso solo farti una previsione delle prossime 12 ore (fino alle 17:00), e dai dati risulta una stima a spanne dei consumi di poco più di 2 kWh.
+ask_netload_forecast;quanto è previsto che io assorba dalla rete;"Previsione consumi (kWh)\tOra
+2025-12-09 08:00:00+01:00\t0.28
+2025-12-09 09:00:00+01:00\t0.30
+2025-12-09 10:00:00+01:00\t0.33
+2025-12-09 11:00:00+01:00\t0.35
+2025-12-09 12:00:00+01:00\t0.34
+2025-12-09 13:00:00+01:00\t0.32
+2025-12-09 14:00:00+01:00\t0.31
+2025-12-09 15:00:00+01:00\t0.33
+2025-12-09 16:00:00+01:00\t0.36
+2025-12-09 17:00:00+01:00\t0.39
+2025-12-09 18:00:00+01:00\t0.41
+2025-12-09 19:00:00+01:00\t0.38";Fino alle 19 è prevista una stima dei consumi di 4,1 kWh.
+ask_netload_forecast;dimmi se il fabbisogno salirà nei prossimi giorni;"Previsione consumi (kWh)\tOra
+2025-12-09 10:00:00+01:00\t0.12
+2025-12-09 11:00:00+01:00\t0.14
+2025-12-09 12:00:00+01:00\t0.20
+2025-12-09 13:00:00+01:00\t0.26
+2025-12-09 14:00:00+01:00\t0.22
+2025-12-09 15:00:00+01:00\t0.18
+2025-12-09 16:00:00+01:00\t0.16
+2025-12-09 17:00:00+01:00\t0.15
+2025-12-09 18:00:00+01:00\t0.17
+2025-12-09 19:00:00+01:00\t0.19
+2025-12-09 20:00:00+01:00\t0.21
+2025-12-09 21:00:00+01:00\t0.20";Dispongo delle stime solo fino alle 21 di stasera, non so dirti se nei prossimi giorni il tuo fabbisogno salirà.
+ask_netload_forecast;sto accendendo il riscaldamento, quanti kw avrò consumato entro la fine della giornata;"Previsione consumi (kWh)\tOra
+2025-12-09 06:00:00+01:00\t0.11
+2025-12-09 07:00:00+01:00\t0.13
+2025-12-09 08:00:00+01:00\t0.16
+2025-12-09 09:00:00+01:00\t0.19
+2025-12-09 10:00:00+01:00\t0.22
+2025-12-09 11:00:00+01:00\t0.25
+2025-12-09 12:00:00+01:00\t0.29
+2025-12-09 13:00:00+01:00\t0.27
+2025-12-09 14:00:00+01:00\t0.24
+2025-12-09 15:00:00+01:00\t0.21
+2025-12-09 16:00:00+01:00\t0.20
+2025-12-09 17:00:00+01:00\t0.18";Sommando alle previsioni attuali di consumo (2,45 kWh fino alle 17:00) i circa 5 kWh ipotizzati per 2 ore di utilizzo del riscaldamento, potresti consumare approssimativamente sui 7,45 kWh. Nota bene che questo dipende però da quanto vorrai tenere il riscalmento acceso e se nell'arco della giornata vorrai usare altri elettrodomestici energivori. 
+ask_netload_forecast;che dici, consumerò tanto?;"Previsione consumi (kWh)\tOra
+2025-12-09 11:00:00+01:00\t0.10
+2025-12-09 12:00:00+01:00\t0.11
+2025-12-09 13:00:00+01:00\t0.12
+2025-12-09 14:00:00+01:00\t0.13
+2025-12-09 15:00:00+01:00\t0.15
+2025-12-09 16:00:00+01:00\t0.18
+2025-12-09 17:00:00+01:00\t0.22
+2025-12-09 18:00:00+01:00\t0.27
+2025-12-09 19:00:00+01:00\t0.31
+2025-12-09 20:00:00+01:00\t0.34
+2025-12-09 21:00:00+01:00\t0.30
+2025-12-09 22:00:00+01:00\t0.26";Non  direi: stando alle stime, oggi potresti prelevare dalla rete circa 2,50 kWh, che è relativamente poco. 
+ask_netload_forecast;cosa prevedi per oggi;"Previsione consumi (kWh)\tOra
+2025-12-09 09:00:00+01:00\t0.16
+2025-12-09 10:00:00+01:00\t0.18
+2025-12-09 11:00:00+01:00\t0.21
+2025-12-09 12:00:00+01:00\t0.29
+2025-12-09 13:00:00+01:00\t0.34
+2025-12-09 14:00:00+01:00\t0.31
+2025-12-09 15:00:00+01:00\t0.28
+2025-12-09 16:00:00+01:00\t0.27
+2025-12-09 17:00:00+01:00\t0.33
+2025-12-09 18:00:00+01:00\t0.40
+2025-12-09 19:00:00+01:00\t0.38
+2025-12-09 20:00:00+01:00\t0.30";Per oggi prevedo che, a meno di cambiamenti nell'uso dei tuoi elettrodomestici, preleverai dalla rete circa 3,45 kWh.

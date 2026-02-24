@@ -113,6 +113,7 @@ nlu:
     - quale energia in eccesso
     - e a quanto sono di batteria
     - ce la faccio con quel tanto di batteria a usare il riscaldamento restando in autoconsumo? se sì, per quanto?
+    - finora l'autosufficienza è stata buona oppure no
 - intent: check_consumption
   examples: |
     - come stanno andando i consumi?

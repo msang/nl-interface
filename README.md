@@ -21,7 +21,7 @@ The repository is organized as follows:
 
 ## Requirements
 To run the agent, please make sure you have the following installed:
-- Python 3.10
+- Python 3.9 or 3.10 (code tested with versions 3.9.2 and 3.10.10)
 - Rasa 3.6.21
 - Rasa SDK 3.6.2
 
@@ -59,8 +59,8 @@ To begin using the agent, follow these steps:
 	If you are using `pyenv`:
 	
 	```bash
-    pyenv install 3.10
-    pyenv virtualenv 3.10 <environment_name>   	
+    pyenv install 3.10.10
+    pyenv virtualenv 3.10.10 <environment_name>   	
 	cd nl-interface
 	pyenv local <environment_name> 
     ```
@@ -87,5 +87,5 @@ To begin using the agent, follow these steps:
    The script automatically starts the RASA server, the RASA Actions server and the NLG server.
    
 
-5. To interact with the agent via GUI, use the `ProsunAI` demo (see `dev-gui` branch).
+5. To interact with the agent via GUI, use the `ProsunAI` demo (see [`dev-gui`](https://github.com/msang/nl-interface/tree/dev-gui) branch).
 
